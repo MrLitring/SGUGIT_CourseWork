@@ -53,9 +53,12 @@ namespace SGUGIT_CourseWork.Additional_Commands
 
         private void Control_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseDown = true;
-            lastPosition = e.Location;
-        } 
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                lastPosition = e.Location;
+            }
+        }
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
         {

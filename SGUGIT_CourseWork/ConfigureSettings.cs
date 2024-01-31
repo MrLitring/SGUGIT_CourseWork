@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using System.Drawing;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.Reflection;
 
 
 namespace SGUGIT_CourseWork
@@ -17,29 +9,28 @@ namespace SGUGIT_CourseWork
         //
         // Цветовая Схема
         //
-        #region
         public static Color Colors(int Number)
         {
             // От яркого к самому темному
             switch (Number)
             {
                 case 1:
-                    return Color.FromArgb(237, 243, 255);
+                    return Color.FromArgb(255, 255, 255);
 
                 case 2:
-                    return Color.FromArgb(228, 236, 252);
+                    return Color.FromArgb(231, 231, 231);
 
                 case 3:
-                    return Color.FromArgb(209, 221, 248);
+                    return Color.FromArgb(209, 209, 209);
 
                 case 4:
-                    return Color.FromArgb(191, 202, 226);
+                    return Color.FromArgb(182, 182, 182);
 
                 case 5:
-                    return Color.FromArgb(174, 186, 210);
+                    return Color.FromArgb(155, 155, 155);
 
-                case 6:
-                    return Color.FromArgb(135, 146, 174);
+                //case 6:
+                //return Color.FromArgb(135, 146, 174);
 
                 case 7:
                     return Color.Black;
@@ -49,7 +40,6 @@ namespace SGUGIT_CourseWork
 
             }
         }
-        #endregion
 
         //
         // Font Settings
@@ -61,13 +51,13 @@ namespace SGUGIT_CourseWork
             switch (Number)
             {
                 case 1:
-                    return 18;
-
-                case 2:
                     return 16;
 
-                case 3:
+                case 2:
                     return 14;
+
+                case 3:
+                    return 12;
 
                 default:
                     return 16;

@@ -69,6 +69,7 @@ namespace SGUGIT_CourseWork.customControl.Updater
         public Cs_ControlGroup()
         {
             groups = new List<Items>();
+
         }
 
         public void ListUpdate()

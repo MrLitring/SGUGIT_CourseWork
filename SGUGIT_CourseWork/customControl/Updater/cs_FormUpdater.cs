@@ -10,22 +10,16 @@ using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.customControl
 {
-    internal class cs_FromUpdater : Component
+    internal class cs_FormUpdater : Component
     {
         public Form Form { get; set; }
 
-        public bool FullUpdate
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-                FullFormUpdate();
-            }
-        }
-        public bool MainSettingsUpdate
+        public Color BackColor { get; set; }
+        public Color ForeColor { get; set; }
+        public int BackColorNum { get; set; }
+        public int ForeColorNum { get; set; }
+
+        public bool onFormUpdate
         {
             get
             {
@@ -36,15 +30,25 @@ namespace SGUGIT_CourseWork.customControl
                 MainSettingUpdate();
             }
         }
-
+        public bool onColorUpdate
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+                ColorUpdate();
+            }
+        }
 
         private Size localeSize;
 
-        private void FullFormUpdate()
-        {
-            if (Form == null) return;
 
-            MainSettingUpdate();
+        public cs_FormUpdater()
+        {
+            BackColorNum = 1;
+            ForeColorNum = 1;
         }
 
         private void MainSettingUpdate()
@@ -58,8 +62,8 @@ namespace SGUGIT_CourseWork.customControl
 
             Form.Font = new System.Drawing.Font
                 (
-                ConfigureSettings.FontName, 
-                ConfigureSettings.FontSize(1),
+                ConfigureSettings.FontName,
+                ConfigureSettings.FontSize(2),
                 FontStyle.Regular
                 );
 
@@ -69,9 +73,12 @@ namespace SGUGIT_CourseWork.customControl
 
         public void ColorUpdate()
         {
+            if(Form == null) return;
 
-            Form.BackColor = ConfigureSettings.Colors(2);
-            Form.ForeColor = ConfigureSettings.Colors(7);
+            BackColor = ConfigureSettings.Colors(BackColorNum);
+            ForeColor = ConfigureSettings.Colors(ForeColorNum);
+            Form.BackColor = ConfigureSettings.Colors(BackColorNum);
+            Form.ForeColor = ConfigureSettings.Colors(ForeColorNum);
         }
     }
 }
