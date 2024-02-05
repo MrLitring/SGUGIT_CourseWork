@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Additional Commands\FormMoved.cs" />
+    <Compile Include="Additional Commands\GenerallCode.cs" />
     <Compile Include="Additional Commands\SQLquery.cs" />
     <Compile Include="customControl\Header.cs">
       <SubType>Component</SubType>
@@ -67,28 +68,37 @@
     <Compile Include="Forms\F0_MainLoad.Designer.cs">
       <DependentUpon>F0_MainLoad.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\F1_Main.cs">
+    <Compile Include="Forms\F1_Window.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F1_Main.Designer.cs">
-      <DependentUpon>F1_Main.cs</DependentUpon>
+    <Compile Include="Forms\F1_Window.Designer.cs">
+      <DependentUpon>F1_Window.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\F2_DataBase.cs">
+    <Compile Include="Forms\F2_NewDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F2_DataBase.Designer.cs">
-      <DependentUpon>F2_DataBase.cs</DependentUpon>
+    <Compile Include="Forms\F2_NewDataBase.Designer.cs">
+      <DependentUpon>F2_NewDataBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\P1_DataBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\P1_DataBase.Designer.cs">
+      <DependentUpon>P1_DataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">
       <DependentUpon>F0_MainLoad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\F1_Main.resx">
-      <DependentUpon>F1_Main.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\F1_Window.resx">
+      <DependentUpon>F1_Window.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\F2_DataBase.resx">
-      <DependentUpon>F2_DataBase.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\F2_NewDataBase.resx">
+      <DependentUpon>F2_NewDataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\P1_DataBase.resx">
+      <DependentUpon>P1_DataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

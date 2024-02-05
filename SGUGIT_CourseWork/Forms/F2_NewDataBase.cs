@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.Forms
 {
-    public partial class F2_DataBase : Form
+    public partial class F2_NewDataBase : Form
     {
-        public F2_DataBase()
+        public F2_NewDataBase()
         {
             InitializeComponent();
         }
