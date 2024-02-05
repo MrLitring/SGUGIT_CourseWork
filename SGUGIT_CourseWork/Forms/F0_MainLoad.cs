@@ -39,7 +39,7 @@ namespace SGUGIT_CourseWork.Forms
         private void FormMove()
         {
             FormMoved formMoved = new FormMoved(this);
-            //formMoved.ControlAdd(header1);
+            formMoved.ControlAdd(panel1);
         }
     }
 }

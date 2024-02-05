@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Additional Commands\FormMoved.cs" />
+    <Compile Include="Additional Commands\SQLquery.cs" />
     <Compile Include="customControl\Header.cs">
       <SubType>Component</SubType>
     </Compile>

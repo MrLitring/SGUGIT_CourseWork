@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cs_FormUpdater1 = new SGUGIT_CourseWork.customControl.cs_FormUpdater();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Strip_NewDB = new System.Windows.Forms.ToolStripMenuItem();
             this.Strip_OpenDB = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,18 +40,9 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cs_FormUpdater1 = new SGUGIT_CourseWork.customControl.cs_FormUpdater();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // cs_FormUpdater1
-            // 
-            this.cs_FormUpdater1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(231)))), ((int)(((byte)(231)))));
-            this.cs_FormUpdater1.BackColorNum = 2;
-            this.cs_FormUpdater1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cs_FormUpdater1.ForeColorNum = 1;
-            this.cs_FormUpdater1.Form = null;
-            this.cs_FormUpdater1.onColorUpdate = false;
-            this.cs_FormUpdater1.onFormUpdate = false;
             // 
             // файлToolStripMenuItem
             // 
@@ -68,24 +58,24 @@
             // Strip_NewDB
             // 
             this.Strip_NewDB.Name = "Strip_NewDB";
-            this.Strip_NewDB.Size = new System.Drawing.Size(180, 22);
+            this.Strip_NewDB.Size = new System.Drawing.Size(153, 22);
             this.Strip_NewDB.Text = "Новый проект";
             // 
             // Strip_OpenDB
             // 
             this.Strip_OpenDB.Name = "Strip_OpenDB";
-            this.Strip_OpenDB.Size = new System.Drawing.Size(180, 22);
+            this.Strip_OpenDB.Size = new System.Drawing.Size(153, 22);
             this.Strip_OpenDB.Text = "Открыть";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
             // 
             // Strip_Close
             // 
             this.Strip_Close.Name = "Strip_Close";
-            this.Strip_Close.Size = new System.Drawing.Size(180, 22);
+            this.Strip_Close.Size = new System.Drawing.Size(153, 22);
             this.Strip_Close.Text = "Выход";
             // 
             // окнаToolStripMenuItem
@@ -99,7 +89,7 @@
             // закрытьВсеToolStripMenuItem
             // 
             this.закрытьВсеToolStripMenuItem.Name = "закрытьВсеToolStripMenuItem";
-            this.закрытьВсеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.закрытьВсеToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.закрытьВсеToolStripMenuItem.Text = "Закрыть все";
             // 
             // menuStrip1
@@ -139,14 +129,24 @@
             this.panel1.Size = new System.Drawing.Size(784, 437);
             this.panel1.TabIndex = 1;
             // 
+            // cs_FormUpdater1
+            // 
+            this.cs_FormUpdater1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(231)))), ((int)(((byte)(231)))));
+            this.cs_FormUpdater1.BackColorNum = 2;
+            this.cs_FormUpdater1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cs_FormUpdater1.ForeColorNum = 1;
+            this.cs_FormUpdater1.Form = null;
+            this.cs_FormUpdater1.onColorUpdate = false;
+            this.cs_FormUpdater1.onFormUpdate = false;
+            // 
             // F0_MainLoad
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("Golos Text", 14F);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
