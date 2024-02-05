@@ -12,9 +12,20 @@ namespace SGUGIT_CourseWork.customControl
         [Category("Form")]
         public Form Form { get { return form; } set { form = value; } }
 
-        public Button ButtonClose { get; set; }
-        public Button ButtonMin { get; set; }
-        public Button ButtonMax { get; set; }
+        public Button buttonClose { get; set; }
+        public Button ButtonClose { get { return buttonClose; } }
+
+        public Button buttonMin { get; set; }
+        public Button ButtonMin { get { return buttonMin; } }
+
+        private Button buttonMax { get; set; }
+        public Button ButtonMax { get { return buttonMax; } }
+
+        private Panel panel{ get; set; }
+        public Panel Panel{ get { return panel; } }
+
+        private MenuStrip menuStrip {  get; set; }
+        public MenuStrip MenuStrip { get { return menuStrip; } }
 
         private bool isMax = false;
         private bool isMin = false;
@@ -26,22 +37,23 @@ namespace SGUGIT_CourseWork.customControl
 
         private void Initilization()
         {
-            ButtonClose = new Button();
-            ButtonMin = new Button();
-            ButtonMax = new Button();
+            buttonClose = new Button();
+            buttonMin = new Button();
+            buttonMax = new Button();
+            menuStrip = new MenuStrip();
+            panel = new Panel();
 
             this.Size = new Size(0, 25);
             this.MinimumSize = new Size(0, 25);
-            this.MaximumSize = new Size(0, 25);
             this.Dock = DockStyle.Top;
 
-            ButtonClose.Text = "X";
-            ButtonClose.FlatAppearance.MouseOverBackColor = Color.Red;
-            ButtonClose.MouseClick += (s, e) => { if (form != null) form.Close(); };
+            buttonClose.Text = "X";
+            buttonClose.FlatAppearance.MouseOverBackColor = Color.Red;
+            buttonClose.MouseClick += (s, e) => { if (form != null) form.Close(); };
 
-            ButtonMax.FlatAppearance.MouseOverBackColor = Color.Gray;
-            ButtonMax.Text = "\u25AD";
-            ButtonMax.MouseClick += (s, e) =>
+            buttonMax.FlatAppearance.MouseOverBackColor = Color.Gray;
+            buttonMax.Text = "\u25AD";
+            buttonMax.MouseClick += (s, e) =>
             {
                 if (isMax == true)
                 {
@@ -62,15 +74,15 @@ namespace SGUGIT_CourseWork.customControl
                         isMax = true;
                     }
 
-                    ButtonInit(ButtonMin);
-                    ButtonInit(ButtonMax);
-                    ButtonInit(ButtonClose);
+                    ButtonInit(buttonMin);
+                    ButtonInit(buttonMax);
+                    ButtonInit(buttonClose);
                 }
             };
 
-            ButtonMin.FlatAppearance.MouseOverBackColor = Color.Gray;
-            ButtonMin.Text = "-";
-            ButtonMin.MouseClick += (s, e) =>
+            buttonMin.FlatAppearance.MouseOverBackColor = Color.Gray;
+            buttonMin.Text = "-";
+            buttonMin.MouseClick += (s, e) =>
             {
                 if (isMin == true)
                 {
@@ -90,7 +102,7 @@ namespace SGUGIT_CourseWork.customControl
                 }
             };
 
-            this.MouseDoubleClick += (s, e) =>
+            menuStrip.MouseDoubleClick += (s, e) =>
             {
                 if (e.Button == MouseButtons.Left)
                 {
@@ -111,21 +123,35 @@ namespace SGUGIT_CourseWork.customControl
                             isMax = true;
                         }
 
-                        ButtonInit(ButtonMin);
-                        ButtonInit(ButtonMax);
-                        ButtonInit(ButtonClose);
+                        ButtonInit(buttonMin);
+                        ButtonInit(buttonMax);
+                        ButtonInit(buttonClose);
                     }
                     
                 }
             };
 
-            ButtonInit(ButtonMin);
-            ButtonInit(ButtonMax);
-            ButtonInit(ButtonClose);
+            menuStrip.Dock = DockStyle.Top;
+            menuStrip.Enabled = true;
+            menuStrip.Visible = true;
+            menuStrip.Show();
 
-            this.Controls.Add(ButtonMin);
-            this.Controls.Add(ButtonMax);
-            this.Controls.Add(ButtonClose);
+            panel.Dock = DockStyle.Fill;
+            panel.Enabled = true;
+            panel.Visible = true;
+            panel.Show();
+
+            ButtonInit(buttonMin);
+            ButtonInit(buttonMax);
+            ButtonInit(buttonClose);
+
+
+            panel.Controls.Add(menuStrip);
+            this.Controls.Add(buttonMin);
+            this.Controls.Add(buttonMax);
+            this.Controls.Add(buttonClose);
+            this.Controls.Add(panel);
+           
         }
 
         private void ButtonInit(Button button)

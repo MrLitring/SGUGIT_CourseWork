@@ -72,6 +72,12 @@
     <Compile Include="Forms\F1_Main.Designer.cs">
       <DependentUpon>F1_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\F2_DataBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F2_DataBase.Designer.cs">
+      <DependentUpon>F2_DataBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\F1_Main.resx">
       <DependentUpon>F1_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F2_DataBase.resx">
+      <DependentUpon>F2_DataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
