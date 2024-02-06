@@ -20,6 +20,16 @@ namespace SGUGIT_CourseWork.HelperCode
             return text;
         }
 
+        public static string SelectAll(string tableName)
+        {
+            return "Select * From " + tableName;
+        }
+
+        public static string Update(string tableName, int value, string column, int Where)
+        {
+            return $"Update {tableName} ";
+        }
+
 
         public static string TableInfoAdd(string tableName, string[] values, string[] columns = null)
         {
@@ -39,9 +49,9 @@ namespace SGUGIT_CourseWork.HelperCode
             return text;
         }
 
-        public static string TableUpdate(string tableName, int Where ,string ColumnName, int value)
+        public static string TableUpdate(string tableName, string ColumnName, int value, int Where)
         {
-            return $"";
+            return $"Update {tableName} set {ColumnName} = {value} WHERE time = {Where};";
         }
 
     }

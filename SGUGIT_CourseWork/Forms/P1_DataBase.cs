@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Collections.Generic;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class P1_DataBase : Form
     {
         private DataTable dTable;
+        private List<string> cellChanges = new List<string>();
 
         public P1_DataBase()
         {
@@ -24,7 +20,7 @@ namespace SGUGIT_CourseWork.Forms
 
         private void P1_DataBase_Load(object sender, EventArgs e)
         {
-            panel1.Width = 200;
+            //panel1.Width = 200;
             DataTable_Clear();
             DataTAble_SetData();
         }
@@ -33,7 +29,7 @@ namespace SGUGIT_CourseWork.Forms
         private void DataTAble_SetData()
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                "SELECT * FROM [Mama] order by 1",
+                $"{HelperCode.SqlCode.SelectAll("GenerallData")} order by 1",
                 HelperCode.SqlCode.SQLConnection);
             adapter.Fill(dTable);
 
@@ -65,6 +61,21 @@ namespace SGUGIT_CourseWork.Forms
             DataTable_Clear();
             DataTAble_SetData();
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            foreach()
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            cellChanges.Add(HelperCode.SqlCode.Update(
+                "GenerallData",
+                int.Parse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()),
+                "A",
+                1
+                ));
         }
     }
 }
