@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGUGIT_CourseWork.Additional_Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,13 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F2_NewDataBase : Form
     {
+        FormMoved formMoved;
+
         public F2_NewDataBase()
         {
             InitializeComponent();
+            formMoved = new FormMoved(this);
+            formMoved.ControlAdd(this);
         }
     }
 }
