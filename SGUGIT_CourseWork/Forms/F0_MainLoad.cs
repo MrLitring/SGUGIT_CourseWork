@@ -1,39 +1,63 @@
-﻿using SGUGIT_CourseWork.Additional_Commands;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using SGUGIT_CourseWork.HelperCode;
 using SGUGIT_CourseWork.Forms;
-using System.Security;
+using System;
+using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class F0_MainLoad : Form
     {
-        FormMoved formMoved;
-        F1_Window formShower;
-        private bool isOpenDB = false;
-
         public F0_MainLoad()
         {
             InitializeComponent();
-            formMoved = new FormMoved(this);
-            NewShoweGenerate();
-
-            FormMove();
+            HelperCode.SqlCode.SQLConnection = new SQLiteConnection();
+            SetActive(false);
         }
+
+        private void SetActive(bool isActive = false)
+        {
+            MenuWorkBench.Enabled = isActive;
+        }
+
+        //
+        //
+        //
+        private bool OpenDBFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = 
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.Filter = "База данных (*.db)|*.db|Все файлы (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                HelperCode.SqlCode.SQLConnection =
+                    new SQLiteConnection("Data Source=" + openFileDialog.FileName + ";Version = 3;");
+                HelperCode.SqlCode.SQLConnection.Open();
+                SQLiteCommand command = new SQLiteCommand();
+                command.Connection = HelperCode.SqlCode.SQLConnection;
+
+                HelperCode.SqlCode.dataBasePath = openFileDialog.FileName;
+                SetActive(true);
+                return true;
+            }
+            else
+            {
+                SetActive(false);
+                return false;
+            }
+
+            }
+
+        //
+        // Action MenuStrip onClick
+        //
+        #region
 
         private void MenuStrip_File_Click(object sender, EventArgs e)
         {
-            if ((sender is ToolStripItem) == false) GenerallCode.WarningMessage(
-                sender.GetType().Name, 
-                sender.ToString(), 
-                "ToolStripItem");
+            if (SampleWarning(sender) == true) return;
 
             if ((sender as ToolStripItem).Name == "StripClose") Application.Exit();
             string named = (sender as ToolStripItem).Name;
@@ -48,7 +72,7 @@ namespace SGUGIT_CourseWork.Forms
                     }
                 case "StripOpenDataBase":
                     {
-                        
+                        OpenDBFile();
                         break;
                     }
 
@@ -64,17 +88,28 @@ namespace SGUGIT_CourseWork.Forms
             }
         }
 
+        private void MenuStrip_WorkBench_Click(object sender, EventArgs e)
+        {
+            if (SampleWarning(sender) == true) return;
+
+            switch((sender as ToolStripMenuItem).Name)
+            {
+                case "StripDataBase":
+                    {
+                        HelperCode.FormOpenCode.OpenForm(new P1_DataBase(), panel1);
+                        break;
+                    }
+            }
+        }
+
         private void MenuStrip_Windows_Click(object sender, EventArgs e)
         {
-            if ((sender is ToolStripItem) == false) GenerallCode.WarningMessage(
-                sender.GetType().Name,
-                sender.ToString(),
-                "ToolStripItem");
+            if (SampleWarning(sender) == true) return;
 
             string named = (sender as ToolStripItem).Name;
             switch (named)
             {
-                case "StripOneWindow":
+                case "StripNewWindow":
                     {
 
                         break;
@@ -86,40 +121,25 @@ namespace SGUGIT_CourseWork.Forms
                     }
                 case "StripCloseAllWindow":
                     {
-                        NewShoweGenerate();
+
                         break;
                     }
             }
         }
 
+        #endregion
 
-        private void NewShoweGenerate()
+        private bool SampleWarning(object sender)
         {
-            if (formShower != null)
+            if ((sender is ToolStripItem) == false)
             {
-                panel1.Controls.Remove(formShower);
-                formShower.Close();
-
-                formShower = null;
-                panel1.Update();
+                HelperCode.Message.WarningMessage(
+                sender.GetType().Name,
+                sender.ToString(),
+                "ToolStripItem");
+                return true;
             }
-
-            formShower = new F1_Window();
-            formShower.TopLevel = false;
-            formShower.Dock = DockStyle.Fill;
-
-            panel1.Controls.Add(formShower);
-            formShower.Show();
-            panel1.Update();
+            return false;
         }
-
-
-
-        private void FormMove()
-        {
-            formMoved.ControlAdd(panel1);
-        }
-
-
     }
 }

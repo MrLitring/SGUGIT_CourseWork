@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Data.SQLite;
 
-namespace SGUGIT_CourseWork.Additional_Commands
+namespace SGUGIT_CourseWork.HelperCode
 {
-    public static class SQLquery
+    internal class SqlCode
     {
+        public static SQLiteConnection SQLConnection;
+        public static string dataBasePath;
+
+
         public static string CreateTable(string tableName, string[] columns, string[] types)
         {
             string text = $"Create table {tableName} (";
@@ -38,14 +39,10 @@ namespace SGUGIT_CourseWork.Additional_Commands
             return text;
         }
 
-        public static string TableInfoUpdate(string tableName, string[] columnNames, string[] values)
+        public static string TableUpdate(string tableName, int Where ,string ColumnName, int value)
         {
-            return "";
+            return $"";
         }
 
-        public static string TableInfoUpdate(string tableName, string where, string[] columnNames, string[] values)
-        {
-            return "";
-        }
     }
 }

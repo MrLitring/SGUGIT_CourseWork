@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SGUGIT_CourseWork.Additional_Commands
+namespace SGUGIT_CourseWork.HelperCode
 {
-    public class FormMoved
+    internal class FormMoved
     {
         private List<Control> controls;
         public List<Control> Controls { get { return controls; } }
@@ -18,7 +18,7 @@ namespace SGUGIT_CourseWork.Additional_Commands
         private Point lastPosition;
         private bool mouseDown = false;
 
-        public FormMoved(Form form) 
+        public FormMoved(Form form)
         {
             this.form = form;
             controls = new List<Control>();
@@ -31,7 +31,7 @@ namespace SGUGIT_CourseWork.Additional_Commands
         }
 
         public void ControllRemove(Control control)
-        { 
+        {
             controls.Remove(control);
             MoveUpdate();
         }
@@ -62,7 +62,7 @@ namespace SGUGIT_CourseWork.Additional_Commands
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
         {
-            if(mouseDown == true)
+            if (mouseDown == true)
             {
                 form.Location = new Point(
                     (form.Location.X - lastPosition.X) + e.X,
@@ -76,6 +76,5 @@ namespace SGUGIT_CourseWork.Additional_Commands
         {
             mouseDown = false;
         }
-
     }
 }
