@@ -3,6 +3,7 @@ using SGUGIT_CourseWork.Forms;
 using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Linq;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -18,6 +19,13 @@ namespace SGUGIT_CourseWork.Forms
         private void SetActive(bool isActive = false)
         {
             MenuWorkBench.Enabled = isActive;
+            string sql = "";
+            if (HelperCode.SqlClass.MainData.dataBasePath != null)
+            {
+                sql = HelperCode.SqlClass.MainData.dataBasePath.Split('\\')
+                [HelperCode.SqlClass.MainData.dataBasePath.Split('\\').Count() - 1];
+                toolStripStatusLabel1.Text = sql;
+            }
         }
 
         //
