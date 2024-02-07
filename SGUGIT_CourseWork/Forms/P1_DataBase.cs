@@ -2,35 +2,37 @@
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using System.Data.SQLite;
+using SGUGIT_CourseWork.HelperCode.SqlClass;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class P1_DataBase : Form
     {
-        private DataTable dTable;
-        private List<string> cellChanges = new List<string>();
-
         public P1_DataBase()
         {
             InitializeComponent();
             dTable = new DataTable();
         }
 
+        private DataTable dTable;
+        private List<DataToSave> commandChanges = new List<DataToSave>();
+
+
         private void P1_DataBase_Load(object sender, EventArgs e)
         {
             //panel1.Width = 200;
             DataTable_Clear();
-            DataTAble_SetData();
+            DataTable_SetData();
         }
 
-
-        private void DataTAble_SetData()
+        private void DataTable_SetData()
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"{HelperCode.SqlCode.SelectAll("GenerallData")} order by 1",
-                HelperCode.SqlCode.SQLConnection);
+                $"{HelperCode.SqlClass.MainData.SelectAll("GenerallData")} order by 1",
+                HelperCode.SqlClass.MainData.SQLConnection);
             adapter.Fill(dTable);
 
             for (int col = 0; col < dTable.Columns.Count; col++)
@@ -55,27 +57,50 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
         }
-
+        
+        //
+        //
+        //
         private void button1_Click(object sender, EventArgs e)
         {
             DataTable_Clear();
-            DataTAble_SetData();
+            DataTable_SetData();
 
         }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        
+        //
+        //  Сохранение
+        //
+        private async void toolStripButton1_Click(object sender, EventArgs e)
         {
-            foreach()
+            //DataToCreateTable dataToCreateTable = new DataToCreateTable
+                //( HelperCode.SqlCode.SQLConnection ,"Xed", new string[] { "asd"}, new string[] { "Integer" });
+
+            //dataToCreateTable.ExecuteCreate();
+
+            //if (commandChanges.Count == 0) return;
+
+            //foreach (DataToSave elem in commandChanges) 
+                //elem.ExecuteSave();
+
+            //commandChanges.Clear();
+            //await Task.Run(() => { GC.Collect(); });
         }
 
+        //
+        // Изменение ячейки приводит к изменению и добавление к сохранению
+        //
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            cellChanges.Add(HelperCode.SqlCode.Update(
+            DataToSave dataToSave = new DataToSave
+                (
                 "GenerallData",
+                dataGridView1.Columns[e.ColumnIndex].HeaderText,
                 int.Parse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()),
-                "A",
                 1
-                ));
+                );
+
+            commandChanges.Add(dataToSave);
         }
     }
 }

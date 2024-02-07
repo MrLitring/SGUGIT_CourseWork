@@ -11,7 +11,7 @@ namespace SGUGIT_CourseWork.Forms
         public F0_MainLoad()
         {
             InitializeComponent();
-            HelperCode.SqlCode.SQLConnection = new SQLiteConnection();
+            HelperCode.SqlClass.MainData.SQLConnection = new SQLiteConnection();
             SetActive(false);
         }
 
@@ -32,13 +32,13 @@ namespace SGUGIT_CourseWork.Forms
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                HelperCode.SqlCode.SQLConnection =
+                HelperCode.SqlClass.MainData.SQLConnection =
                     new SQLiteConnection("Data Source=" + openFileDialog.FileName + ";Version = 3;");
-                HelperCode.SqlCode.SQLConnection.Open();
+                HelperCode.SqlClass.MainData.SQLConnection.Open();
                 SQLiteCommand command = new SQLiteCommand();
-                command.Connection = HelperCode.SqlCode.SQLConnection;
+                command.Connection = HelperCode.SqlClass.MainData.SQLConnection;
 
-                HelperCode.SqlCode.dataBasePath = openFileDialog.FileName;
+                HelperCode.SqlClass.MainData.dataBasePath = openFileDialog.FileName;
                 SetActive(true);
                 return true;
             }
@@ -94,7 +94,7 @@ namespace SGUGIT_CourseWork.Forms
 
             switch((sender as ToolStripMenuItem).Name)
             {
-                case "StripDataBase":
+                case "StripEditDataBase":
                     {
                         HelperCode.FormOpenCode.OpenForm(new P1_DataBase(), panel1);
                         break;

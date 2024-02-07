@@ -35,7 +35,7 @@
             this.StripClose = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuWorkBench = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripDataBase = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripEditDataBase = new System.Windows.Forms.ToolStripMenuItem();
             this.рабочиеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StripNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,18 +105,18 @@
             // MenuWorkBench
             // 
             this.MenuWorkBench.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripDataBase});
+            this.StripEditDataBase});
             this.MenuWorkBench.Name = "MenuWorkBench";
             this.MenuWorkBench.Size = new System.Drawing.Size(144, 20);
             this.MenuWorkBench.Text = "Рабочее пространство";
             this.MenuWorkBench.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
-            // StripDataBase
+            // StripEditDataBase
             // 
-            this.StripDataBase.Name = "StripDataBase";
-            this.StripDataBase.Size = new System.Drawing.Size(180, 22);
-            this.StripDataBase.Text = "База данных";
-            this.StripDataBase.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            this.StripEditDataBase.Name = "StripEditDataBase";
+            this.StripEditDataBase.Size = new System.Drawing.Size(180, 22);
+            this.StripEditDataBase.Text = "База данных";
+            this.StripEditDataBase.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // рабочиеОкнаToolStripMenuItem
             // 
@@ -130,7 +130,7 @@
             // StripNewWindow
             // 
             this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(139, 22);
+            this.StripNewWindow.Size = new System.Drawing.Size(180, 22);
             this.StripNewWindow.Text = "Новое окно";
             // 
             // справкаToolStripMenuItem
@@ -236,7 +236,7 @@
         private System.Windows.Forms.ToolStripMenuItem обПрограммеToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem MenuWorkBench;
-        private System.Windows.Forms.ToolStripMenuItem StripDataBase;
+        private System.Windows.Forms.ToolStripMenuItem StripEditDataBase;
         private System.Windows.Forms.ToolStripMenuItem рабочиеОкнаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StripNewWindow;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
