@@ -29,6 +29,9 @@ namespace SGUGIT_CourseWork.Forms
             DataText_SetClear();
             DataText_SetData();
 
+            dataGridView1.FirstDisplayedScrollingRowIndex = 0;
+            dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
+
             if (this.toolStripLabel1.Text.EndsWith("*") == true)
                 this.toolStripLabel1.Text = this.toolStripLabel1.Text.Replace("*", "");
             isHasSaved = false;
