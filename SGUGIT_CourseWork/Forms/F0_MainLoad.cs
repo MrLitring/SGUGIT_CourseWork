@@ -33,10 +33,11 @@ namespace SGUGIT_CourseWork.Forms
         //
         private bool OpenDBFile()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = 
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            openFileDialog.Filter = "База данных (*.db)|*.db|Все файлы (*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = "База данных (*.db)|*.db|Все файлы (*.*)|*.*"
+            };
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
