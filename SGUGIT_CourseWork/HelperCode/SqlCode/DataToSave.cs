@@ -49,7 +49,8 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
         public void ExecuteSave()
         {
-            SQLiteCommand command = new SQLiteCommand(UpdateQuery(), connection);
+            string content = UpdateQuery();
+            SQLiteCommand command = new SQLiteCommand(content, connection);
             command.ExecuteNonQuery();
             command.Dispose();
         }
@@ -57,9 +58,9 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         private string UpdateQuery()
         {
             if(time >= 0)
-                return $"UPDATE {this.tableName} SET {this.columnName} = {this.value} WHERE time = {this.time};";
+                return $"UPDATE {this.tableName} SET \"{this.columnName}\" = {this.value} WHERE Эпоха = {this.time};";
             else
-                return $"UPDATE {this.tableName} SET {this.columnName} = {this.value};";
+                return $"UPDATE {this.tableName} SET \"{this.columnName}\" = {this.value};";
         }
     }
 }

@@ -121,10 +121,10 @@ namespace SGUGIT_CourseWork.Forms
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
             DataToSave dataToSave = new DataToSave(
-                "GenerallData",
+                "FirstData",
                 dataGridView1.Columns[e.ColumnIndex].HeaderText,
                 int.Parse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()),
-                1 );
+                e.RowIndex );
 
             commandChanges.Add(dataToSave);
 

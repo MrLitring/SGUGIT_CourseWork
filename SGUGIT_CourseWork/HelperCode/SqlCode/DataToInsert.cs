@@ -38,7 +38,8 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
         public void ExecuteInsert()
         {
-            SQLiteCommand command = new SQLiteCommand(InsertQuery(), connection);
+            string content = InsertQuery();
+            SQLiteCommand command = new SQLiteCommand(content, connection);
             command.ExecuteNonQuery();
             command.Dispose();
         }

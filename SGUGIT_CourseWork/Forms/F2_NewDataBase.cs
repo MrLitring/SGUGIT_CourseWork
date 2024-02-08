@@ -12,8 +12,8 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F2_NewDataBase : Form
     {
-        public string pathExcell;
-        public string pathDB;
+        public string pathOldDataBase;
+        public string pathNewDataBase;
         public string pathTxt;
         public string nameDB;
 
@@ -44,7 +44,7 @@ namespace SGUGIT_CourseWork.Forms
 
                 case "buttonCreate":
                     {
-                        string fullPath = Path.Combine(pathDB, $"{textBox1.Text}.db");
+                        string fullPath = Path.Combine(pathNewDataBase, $"{textBox1.Text}.db");
 
                         CreateDataBase(fullPath);
 
@@ -55,21 +55,21 @@ namespace SGUGIT_CourseWork.Forms
                     {
                         FolderBrowserDialog dialog = new FolderBrowserDialog();
                         dialog.Description = "Выберите папку для сохранения файла";
-                        
+
                         DialogResult result = dialog.ShowDialog();
 
                         if (result == DialogResult.OK)
-                            pathDB = @dialog.SelectedPath;
+                            pathNewDataBase = @dialog.SelectedPath;
                         else
-                            pathDB = @Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                        textBox2.Text = @pathDB;
+                            pathNewDataBase = @Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        textBox2.Text = pathNewDataBase;
                         break;
                     }
 
                 case "buttonBrowser2":
                     {
-                        pathExcell = FIleBrowser("SQLite файл (*.sqlite)|*.sqlite");
-                        textBox3.Text = pathExcell;
+                        pathOldDataBase = FIleBrowser("SQLite файл (*.sqlite)|*.sqlite");
+                        textBox3.Text = pathOldDataBase;
                         break;
                     }
 
@@ -110,27 +110,145 @@ namespace SGUGIT_CourseWork.Forms
         private void CreateDataBase(string fullPath)
         {
             SQLiteConnection.CreateFile(fullPath);
+            DataBaseCreate baseCreate = new DataBaseCreate(
+                pathTxt,
+                pathOldDataBase,
+                fullPath
+                );
+
+            baseCreate.CreateNewTables();
+            this.Close();
+        }
 
 
 
-            using (SQLiteConnection connection = new SQLiteConnection($@"Data Source = {fullPath}; Version = 3;"))
+
+    }
+
+    internal class DataBaseCreate
+    {
+        string pathTxt;
+        string pathOldDataBase;
+        string pathNewDataBase;
+
+        SQLiteConnection oldConnect;
+        SQLiteConnection newConnect;
+        int CountColumn = 0;
+
+
+        public DataBaseCreate(string pathTxt, string pathOldDataBase, string pathNewDataBase)
+        {
+            this.pathTxt = pathTxt;
+            this.pathOldDataBase = pathOldDataBase;
+            this.pathNewDataBase = pathNewDataBase;
+        }
+
+        public void CreateNewTables()
+        {
+            oldConnect = new SQLiteConnection($"Data Source = {pathOldDataBase}; Version = 3;");
+            newConnect = new SQLiteConnection($"Data Source = {pathNewDataBase}; Version = 3;");
+
+            oldConnect.Open();
+            newConnect.Open();
+
+            if (pathOldDataBase.EndsWith(".sqlite"))
+                DataBase_Sqlite();
+
+            SecondTable();
+            MessageBox.Show("База данных создана - Успешно");
+            newConnect.Close();
+            oldConnect.Close();
+        }
+
+        private void DataBase_Sqlite()
+        {
+            string query = "PRAGMA table_info(Данные)";
+
+            using (SQLiteCommand command = new SQLiteCommand(query, oldConnect))
             {
-                HelperCode.SqlCode.SqlMainData.SQLConnection = connection;
+                SQLiteDataReader reader = command.ExecuteReader();
 
-                //DataToCreateTable table = new DataToCreateTable()
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        CountColumn++;
+                    }
+                }
             }
+
+            string[] columns = new string[CountColumn];
+            for (int i = 0; i < CountColumn; i++)
+            {
+                columns[i] =$"\" {i}\"";
+            }
+            string[] types = new string[CountColumn];
+            for (int i = 0; i < CountColumn; i++)
+            {
+                types[i] = "Real";
+            }
+            columns[0] = "Эпоха";
+            types[0] = "Integer";
+
+            HelperCode.SqlCode.DataToCreateTable tableCreater = new DataToCreateTable(
+                "FirstData",
+                columns,
+                types
+                );
+
+            tableCreater.SetConnection(newConnect);
+            tableCreater.ExecuteCreate();
+
+
+            query = "Select * from (Данные);";
+            using(SQLiteCommand command = new SQLiteCommand(query,oldConnect))
+            {
+                SQLiteDataReader reader = command.ExecuteReader();
+                HelperCode.SqlCode.DataToInsert insert = new DataToInsert("FirstData", columns, new object[] { });
+                insert.SetConnection(newConnect);
+
+                if (reader.HasRows)
+                {
+                    object[] doubles = new object[CountColumn];
+                    while (reader.Read())
+                    {
+                        for(int i = 0 ; i < CountColumn; i++)
+                        {
+                            doubles[i] = reader.GetDouble(i);
+                        }
+                        insert.UpdateValues(doubles);
+                        insert.ExecuteInsert();
+                    }
+                    
+                }
+            }
+        }
+
+
+        private void FisrtTable()
+        {
 
         }
-        private class DataBaseCreate
+
+        private void SecondTable()
         {
-            int CountColumn = 0;
-            int countRow = 0;
+            HelperCode.SqlCode.DataToCreateTable createTable = new DataToCreateTable(
+                "SecondData",
+                new string[] { "A", "E", "BlockCount", "Image" },
+                new string[] { "Real", "Real", "integer", "BLOB"}
+                );
 
+            createTable.SetConnection(newConnect);
+            createTable.ExecuteCreate();
 
-            DataBaseCreate()
-            {
+            HelperCode.SqlCode.DataToInsert insert = new DataToInsert(
+                "SecondData",
+                new string[] { "A", "E", "BlockCount", "Image" },
+                new object[] {0.1, 0.01, 1, 0}
+                );
 
-            }
+            insert.SetConnection(newConnect);
+            insert.ExecuteInsert();
         }
 
 

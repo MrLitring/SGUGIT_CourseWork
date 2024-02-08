@@ -25,7 +25,8 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
         public void ExecuteCreate()
         {
-            SQLiteCommand command = new SQLiteCommand(createQuery(), connection);
+            string content = createQuery();
+            SQLiteCommand command = new SQLiteCommand(content, connection);
             command.ExecuteNonQuery();
         }
 
@@ -35,12 +36,12 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
             for(int i = 0; (i < columnNames.Count()) &&( i < columTypes.Count()); i++)
             {
-                query += columnNames[i] + " " + columTypes[i].ToUpper();
+                query += $"{columnNames[i]}" + " " + columTypes[i].ToUpper();
 
                 if ((i < columnNames.Count() - 1) && (i < columTypes.Count() - 1))
                     query += ",\n";
             }
-            query += ")" ;
+            query += ");" ;
 
             return query;
         }
