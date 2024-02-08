@@ -1,38 +1,44 @@
-﻿using System;
+﻿using SGUGIT_CourseWork.HelperCode.SqlCode;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using SGUGIT_CourseWork.HelperCode.SqlCode;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class P1_DataBase : Form
     {
+        public bool isHasSaved = false;
+
+        private List<DataToSave> commandChanges = new List<DataToSave>();
+        private DataTable dTable;
+        
+
         public P1_DataBase()
         {
             InitializeComponent();
             dTable = new DataTable();
         }
 
-        private DataTable dTable;
-        private List<DataToSave> commandChanges = new List<DataToSave>();
-
-
         private void P1_DataBase_Load(object sender, EventArgs e)
         {
-            //panel1.Width = 200;
             DataTable_Clear();
             DataTable_SetData();
+
+            DataText_SetClear();
+            DataText_SetData();
+
+            if (this.toolStripLabel1.Text.EndsWith("*") == true)
+                this.toolStripLabel1.Text = this.toolStripLabel1.Text.Replace("*", "");
+            isHasSaved = false;
         }
 
         private void DataTable_SetData()
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"{HelperCode.SqlCode.MainData.SelectAll("GenerallData")} order by 1",
-                HelperCode.SqlCode.MainData.SQLConnection);
+                $"{SqlMainData.SelectAll("FirstData")} order by 1",
+                SqlMainData.SQLConnection);
             adapter.Fill(dTable);
 
             for (int col = 0; col < dTable.Columns.Count; col++)
@@ -57,50 +63,93 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
         }
-        
+
+        private void DataText_SetData()
+        {
+            SQLiteCommand command = new SQLiteCommand(SqlMainData.SelectAll("SecondData"), SqlMainData.SQLConnection);
+
+            using(SQLiteDataReader reader = command.ExecuteReader())
+            {
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    textBox1.Text = reader.GetDouble(0).ToString();
+                    textBox2.Text = reader.GetDouble(1).ToString();
+                    textBox3.Text = reader.GetInt32(2).ToString();
+                }
+            }
+        }
+
+        private void DataText_SetClear()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+        }
+
         //
+        // 
         //
-        //
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             DataTable_Clear();
             DataTable_SetData();
-
         }
         
         //
         //  Сохранение
         //
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void Save()
         {
-            //DataToCreateTable dataToCreateTable = new DataToCreateTable
-                //( HelperCode.SqlCode.SQLConnection ,"Xed", new string[] { "asd"}, new string[] { "Integer" });
+            if (commandChanges.Count == 0) return;
 
-            //dataToCreateTable.ExecuteCreate();
+            foreach (DataToSave elem in commandChanges)
+                elem.ExecuteSave();
 
-            //if (commandChanges.Count == 0) return;
+            commandChanges.Clear();
 
-            //foreach (DataToSave elem in commandChanges) 
-                //elem.ExecuteSave();
-
-            //commandChanges.Clear();
-            //await Task.Run(() => { GC.Collect(); });
+            if (this.toolStripLabel1.Text.EndsWith("*") == true)
+                this.toolStripLabel1.Text = this.toolStripLabel1.Text.Replace("*", "");
+            isHasSaved = false;
         }
 
-        //
-        // Изменение ячейки приводит к изменению и добавление к сохранению
-        //
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
-            DataToSave dataToSave = new DataToSave
-                (
+            Save();
+        }
+
+        private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
+        {
+            DataToSave dataToSave = new DataToSave(
                 "GenerallData",
                 dataGridView1.Columns[e.ColumnIndex].HeaderText,
                 int.Parse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()),
-                1
-                );
+                1 );
 
             commandChanges.Add(dataToSave);
+
+            if (toolStripLabel1.Text.EndsWith("*") == false)
+                toolStripLabel1.Text += "*";
+            isHasSaved = true;
+        }
+
+        private void TextBox_ValueChange(object sender, EventArgs e)
+        {
+            string tableName = "SecondData";
+            DataToSave dataToSave = new DataToSave();
+            if ((sender as TextBox).Name == "textBox1") 
+                dataToSave.UpdateValues(tableName, "A", textBox1.Text);
+            if ((sender as TextBox).Name == "textBox2") 
+                dataToSave.UpdateValues(tableName, "E", textBox2.Text);
+            if ((sender as TextBox).Name == "textBox3") 
+                dataToSave.UpdateValues(tableName, "BlockCount", int.Parse(textBox3.Text));
+
+            commandChanges.Add(dataToSave);
+
+            if (toolStripLabel1.Text.EndsWith("*") == false)
+                toolStripLabel1.Text += "*";
+            isHasSaved = true;
         }
     }
+
 }

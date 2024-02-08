@@ -6,17 +6,21 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToCreateTable
     {
-        private SQLiteConnection connection = null;
+        private SQLiteConnection connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
         private string tableName;
         private string[] columnNames;
         private string[] columTypes;
 
         public DataToCreateTable(string tableName, string[] columnNames, string[] columTypes) 
         {
-            this.connection = this.connection = HelperCode.SqlCode.MainData.SQLConnection;
             this.tableName = tableName;
             this.columnNames = columnNames;
             this.columTypes = columTypes;
+        }
+
+        public void SetConnection(SQLiteConnection connection)
+        {
+            this.connection = connection;
         }
 
         public void ExecuteCreate()

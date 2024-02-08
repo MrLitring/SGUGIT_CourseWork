@@ -59,46 +59,49 @@
             this.toolStripSeparator2,
             this.StripClose});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // StripNewDataBase
             // 
             this.StripNewDataBase.Name = "StripNewDataBase";
-            this.StripNewDataBase.Size = new System.Drawing.Size(153, 22);
+            this.StripNewDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripNewDataBase.Text = "Новый проект";
             this.StripNewDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // StripOpenDataBase
             // 
             this.StripOpenDataBase.Name = "StripOpenDataBase";
-            this.StripOpenDataBase.Size = new System.Drawing.Size(153, 22);
+            this.StripOpenDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripOpenDataBase.Text = "Открыть";
             this.StripOpenDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // StripClose
             // 
             this.StripClose.Name = "StripClose";
-            this.StripClose.Size = new System.Drawing.Size(153, 22);
+            this.StripClose.Size = new System.Drawing.Size(180, 22);
             this.StripClose.Text = "Выход";
             this.StripClose.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.menuStrip1.Font = new System.Drawing.Font("Golos Text", 10F);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.MenuWorkBench,
             this.рабочиеОкнаToolStripMenuItem,
             this.справкаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.MinimumSize = new System.Drawing.Size(0, 32);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(816, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(816, 32);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -107,7 +110,7 @@
             this.MenuWorkBench.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StripEditDataBase});
             this.MenuWorkBench.Name = "MenuWorkBench";
-            this.MenuWorkBench.Size = new System.Drawing.Size(144, 20);
+            this.MenuWorkBench.Size = new System.Drawing.Size(165, 20);
             this.MenuWorkBench.Text = "Рабочее пространство";
             this.MenuWorkBench.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
@@ -123,14 +126,14 @@
             this.рабочиеОкнаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StripNewWindow});
             this.рабочиеОкнаToolStripMenuItem.Name = "рабочиеОкнаToolStripMenuItem";
-            this.рабочиеОкнаToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.рабочиеОкнаToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
             this.рабочиеОкнаToolStripMenuItem.Text = "Рабочие окна";
             this.рабочиеОкнаToolStripMenuItem.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
             // StripNewWindow
             // 
             this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(180, 22);
+            this.StripNewWindow.Size = new System.Drawing.Size(149, 22);
             this.StripNewWindow.Text = "Новое окно";
             // 
             // справкаToolStripMenuItem
@@ -139,19 +142,19 @@
             this.обАвтореToolStripMenuItem,
             this.обПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
             // 
             // обАвтореToolStripMenuItem
             // 
             this.обАвтореToolStripMenuItem.Name = "обАвтореToolStripMenuItem";
-            this.обАвтореToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.обАвтореToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.обАвтореToolStripMenuItem.Text = "Об авторе";
             // 
             // обПрограммеToolStripMenuItem
             // 
             this.обПрограммеToolStripMenuItem.Name = "обПрограммеToolStripMenuItem";
-            this.обПрограммеToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.обПрограммеToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.обПрограммеToolStripMenuItem.Text = "Об программе";
             // 
             // toolStripMenuItem4
@@ -175,9 +178,10 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Location = new System.Drawing.Point(0, 32);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(816, 486);
+            this.panel1.Size = new System.Drawing.Size(816, 478);
             this.panel1.TabIndex = 1;
             // 
             // statusStrip1
@@ -186,6 +190,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 488);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 11, 0);
             this.statusStrip1.Size = new System.Drawing.Size(816, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
@@ -198,16 +203,16 @@
             // 
             // F0_MainLoad
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(816, 510);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.ForeColor = System.Drawing.Color.Black;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "F0_MainLoad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F0_MainLoad";

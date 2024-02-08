@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
-    public static class MainData
+    public static class SqlMainData
     {
         public static SQLiteConnection SQLConnection = null;
-        public static string dataBasePath;
-
 
         public static string SelectAll(string tableName)
         {

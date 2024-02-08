@@ -26,6 +26,9 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static void OpenForm(Form chilldForm, Control controlShow)
         {
+            if(controlShow.Controls.Count != 0)
+                controlShow.Controls.Clear();
+
             chilldForm.TopLevel = false;
             chilldForm.Size = controlShow.Size;
             chilldForm.BringToFront();

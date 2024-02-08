@@ -9,17 +9,21 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToInsert
     {
-        private SQLiteConnection connection;
+        private SQLiteConnection connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
         private string tableName;
         private string[] columnNames;
-        private int[] values;
+        private object[] values;
 
-        public DataToInsert(string tableName, string[] columnNames, int[] values)
+        public DataToInsert(string tableName, string[] columnNames, object[] values)
         {
-            this.connection = HelperCode.SqlCode.MainData.SQLConnection;
             this.tableName = tableName;
             this.columnNames = columnNames;
             this.values = values;
+        }
+
+        public void SetConnection(SQLiteConnection connection)
+        {
+            this.connection = connection;
         }
 
         public void UpdateColumnNames(string[] columnNames)
@@ -27,7 +31,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             this.columnNames = columnNames;
         }
 
-        public void UpdateValues(int[] values)
+        public void UpdateValues(object[] values)
         {
             this.values = values;
         }
