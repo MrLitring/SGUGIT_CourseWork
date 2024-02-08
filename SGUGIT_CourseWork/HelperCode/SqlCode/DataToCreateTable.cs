@@ -2,7 +2,7 @@
 using System.Linq;
 
 
-namespace SGUGIT_CourseWork.HelperCode.SqlClass
+namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToCreateTable
     {
@@ -13,7 +13,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlClass
 
         public DataToCreateTable(string tableName, string[] columnNames, string[] columTypes) 
         {
-            this.connection = this.connection = HelperCode.SqlClass.MainData.SQLConnection;
+            this.connection = this.connection = HelperCode.SqlCode.MainData.SQLConnection;
             this.tableName = tableName;
             this.columnNames = columnNames;
             this.columTypes = columTypes;

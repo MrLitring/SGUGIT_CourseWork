@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using SGUGIT_CourseWork.HelperCode.SqlClass;
+using SGUGIT_CourseWork.HelperCode.SqlCode;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -31,8 +31,8 @@ namespace SGUGIT_CourseWork.Forms
         private void DataTable_SetData()
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"{HelperCode.SqlClass.MainData.SelectAll("GenerallData")} order by 1",
-                HelperCode.SqlClass.MainData.SQLConnection);
+                $"{HelperCode.SqlCode.MainData.SelectAll("GenerallData")} order by 1",
+                HelperCode.SqlCode.MainData.SQLConnection);
             adapter.Fill(dTable);
 
             for (int col = 0; col < dTable.Columns.Count; col++)
@@ -71,7 +71,7 @@ namespace SGUGIT_CourseWork.Forms
         //
         //  Сохранение
         //
-        private async void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
             //DataToCreateTable dataToCreateTable = new DataToCreateTable
                 //( HelperCode.SqlCode.SQLConnection ,"Xed", new string[] { "asd"}, new string[] { "Integer" });

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGUGIT_CourseWork.HelperCode.SqlClass
+namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToInsert
     {
@@ -16,7 +16,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlClass
 
         public DataToInsert(string tableName, string[] columnNames, int[] values)
         {
-            this.connection = HelperCode.SqlClass.MainData.SQLConnection;
+            this.connection = HelperCode.SqlCode.MainData.SQLConnection;
             this.tableName = tableName;
             this.columnNames = columnNames;
             this.values = values;
@@ -34,12 +34,12 @@ namespace SGUGIT_CourseWork.HelperCode.SqlClass
 
         public void ExecuteInsert()
         {
-            SQLiteCommand command = new SQLiteCommand(insertQuery(), connection);
+            SQLiteCommand command = new SQLiteCommand(InsertQuery(), connection);
             command.ExecuteNonQuery();
             command.Dispose();
         }
 
-        private string insertQuery()
+        private string InsertQuery()
         {
             string query = $"INSERT INTO {tableName} (";
 

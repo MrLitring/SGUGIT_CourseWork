@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGUGIT_CourseWork.HelperCode.SqlClass
+namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public static class MainData
     {

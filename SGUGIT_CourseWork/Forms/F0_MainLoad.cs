@@ -12,7 +12,7 @@ namespace SGUGIT_CourseWork.Forms
         public F0_MainLoad()
         {
             InitializeComponent();
-            HelperCode.SqlClass.MainData.SQLConnection = new SQLiteConnection();
+            HelperCode.SqlCode.MainData.SQLConnection = new SQLiteConnection();
             SetActive(false);
         }
 
@@ -20,10 +20,10 @@ namespace SGUGIT_CourseWork.Forms
         {
             MenuWorkBench.Enabled = isActive;
             string sql = "";
-            if (HelperCode.SqlClass.MainData.dataBasePath != null)
+            if (HelperCode.SqlCode.MainData.dataBasePath != null)
             {
-                sql = HelperCode.SqlClass.MainData.dataBasePath.Split('\\')
-                [HelperCode.SqlClass.MainData.dataBasePath.Split('\\').Count() - 1];
+                sql = HelperCode.SqlCode.MainData.dataBasePath.Split('\\')
+                [HelperCode.SqlCode.MainData.dataBasePath.Split('\\').Count() - 1];
                 toolStripStatusLabel1.Text = sql;
             }
         }
@@ -40,13 +40,13 @@ namespace SGUGIT_CourseWork.Forms
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                HelperCode.SqlClass.MainData.SQLConnection =
+                HelperCode.SqlCode.MainData.SQLConnection =
                     new SQLiteConnection("Data Source=" + openFileDialog.FileName + ";Version = 3;");
-                HelperCode.SqlClass.MainData.SQLConnection.Open();
+                HelperCode.SqlCode.MainData.SQLConnection.Open();
                 SQLiteCommand command = new SQLiteCommand();
-                command.Connection = HelperCode.SqlClass.MainData.SQLConnection;
+                command.Connection = HelperCode.SqlCode.MainData.SQLConnection;
 
-                HelperCode.SqlClass.MainData.dataBasePath = openFileDialog.FileName;
+                HelperCode.SqlCode.MainData.dataBasePath = openFileDialog.FileName;
                 SetActive(true);
                 return true;
             }

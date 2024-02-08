@@ -103,10 +103,10 @@
     <Compile Include="HelperCode\FormMoved.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
     <Compile Include="HelperCode\Message.cs" />
-    <Compile Include="HelperCode\SqlClass\DataToCreateTable.cs" />
-    <Compile Include="HelperCode\SqlClass\DataToInsert.cs" />
-    <Compile Include="HelperCode\SqlClass\DataToSave.cs" />
-    <Compile Include="HelperCode\SqlClass\MainData.cs" />
+    <Compile Include="HelperCode\SqlCode\DataToCreateTable.cs" />
+    <Compile Include="HelperCode\SqlCode\DataToInsert.cs" />
+    <Compile Include="HelperCode\SqlCode\DataToSave.cs" />
+    <Compile Include="HelperCode\SqlCode\MainData.cs" />
     <Compile Include="HelperCode\TImeCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,7 +145,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HelperCode\ExcellCode\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
