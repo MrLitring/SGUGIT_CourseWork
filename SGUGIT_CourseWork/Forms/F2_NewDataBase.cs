@@ -29,12 +29,21 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "buttonCancel":
                     {
-                        this.Close();
+                        this.Close(); 
                         break;
                     }
 
                 case "buttonCreate":
                     {
+                        if(
+                            ((textBox1.Text.Replace(" ","") == "") ||
+                            (textBox2.Text.Replace(" ", "") == "") ||
+                            (textBox3.Text.Replace(" ", "") == "")) == true)
+                        {
+                            MessageBox.Show("Не должно быть пустых строк", "Owubka", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
                         string fullPath = Path.Combine(@textBox2.Text, $"{textBox1.Text}.db");
                         CreateDataBase(fullPath);
                         break;

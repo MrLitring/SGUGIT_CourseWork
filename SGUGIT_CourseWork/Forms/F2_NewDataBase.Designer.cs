@@ -38,19 +38,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Golos Text", 12F);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.textBox1.Location = new System.Drawing.Point(12, 80);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(250, 27);
+            this.textBox1.Size = new System.Drawing.Size(250, 26);
             this.textBox1.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.label1.Location = new System.Drawing.Point(9, 57);
             this.label1.Name = "label1";
@@ -61,7 +62,7 @@
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCreate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonCreate.Location = new System.Drawing.Point(9, 303);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(250, 37);
@@ -72,7 +73,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonCancel.Location = new System.Drawing.Point(9, 346);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(250, 37);
@@ -83,7 +84,7 @@
             // 
             // label3
             // 
-            this.label3.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.label3.Location = new System.Drawing.Point(9, 125);
             this.label3.Name = "label3";
@@ -94,7 +95,7 @@
             // 
             // buttonBrowser1
             // 
-            this.buttonBrowser1.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonBrowser1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonBrowser1.Location = new System.Drawing.Point(165, 174);
             this.buttonBrowser1.Name = "buttonBrowser1";
             this.buttonBrowser1.Size = new System.Drawing.Size(98, 27);
@@ -105,7 +106,7 @@
             // 
             // buttonBrowser2
             // 
-            this.buttonBrowser2.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonBrowser2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonBrowser2.Location = new System.Drawing.Point(165, 246);
             this.buttonBrowser2.Name = "buttonBrowser2";
             this.buttonBrowser2.Size = new System.Drawing.Size(98, 27);
@@ -116,7 +117,7 @@
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Golos Text", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.label2.Location = new System.Drawing.Point(9, 197);
             this.label2.Name = "label2";
@@ -127,7 +128,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Font = new System.Drawing.Font("Golos Text", 8F);
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.textBox2.Location = new System.Drawing.Point(12, 148);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
@@ -136,18 +137,30 @@
             // 
             // textBox3
             // 
-            this.textBox3.Font = new System.Drawing.Font("Golos Text", 8F);
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.textBox3.Location = new System.Drawing.Point(12, 220);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(251, 20);
             this.textBox3.TabIndex = 12;
             // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label4.Location = new System.Drawing.Point(9, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(250, 20);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Создание/Слияние";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // F2_NewDataBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(274, 411);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.buttonBrowser2);
@@ -158,7 +171,7 @@
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Font = new System.Drawing.Font("Golos Text", 14F);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
@@ -181,5 +194,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label4;
     }
 }
