@@ -5,7 +5,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToSave
     {
-        private SQLiteConnection connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
+        private SQLiteConnection connection = GeneralData.MainConnection;
         private string tableName;
         private string columnName;
         private object value;

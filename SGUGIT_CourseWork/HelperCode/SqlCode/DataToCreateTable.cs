@@ -6,7 +6,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToCreateTable
     {
-        private SQLiteConnection connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
+        private SQLiteConnection connection = GeneralData.MainConnection;
         private string tableName;
         private string[] columnNames;
         private string[] columTypes;

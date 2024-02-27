@@ -9,16 +9,10 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F2_NewDataBase : Form
     {
-        private FormMoved formMoved;
 
         public F2_NewDataBase()
         {
             InitializeComponent();
-            formMoved = new FormMoved(this);
-            formMoved.ControlAdd(this);
-            formMoved.ControlAdd(label1);
-            formMoved.ControlAdd(label2);
-            formMoved.ControlAdd(label3);
 
             textBox2.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }

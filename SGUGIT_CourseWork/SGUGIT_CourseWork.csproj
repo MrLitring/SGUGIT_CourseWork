@@ -91,15 +91,13 @@
     <Compile Include="Forms\P1_DataBase.Designer.cs">
       <DependentUpon>P1_DataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperCode\FormMoved.cs" />
+    <Compile Include="HelperCode\EventBus.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
-    <Compile Include="HelperCode\FirstData.cs" />
-    <Compile Include="HelperCode\Message.cs" />
+    <Compile Include="HelperCode\GeneralData.cs" />
+    <Compile Include="HelperCode\PointColumn.cs" />
     <Compile Include="HelperCode\SqlCode\DataToCreateTable.cs" />
     <Compile Include="HelperCode\SqlCode\DataToInsert.cs" />
     <Compile Include="HelperCode\SqlCode\DataToSave.cs" />
-    <Compile Include="HelperCode\SqlCode\SqlMainData.cs" />
-    <Compile Include="HelperCode\TImeCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">

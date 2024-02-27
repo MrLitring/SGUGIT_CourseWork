@@ -12,7 +12,7 @@ namespace SGUGIT_CourseWork.Forms
         public F0_MainLoad()
         {
             InitializeComponent();
-            HelperCode.SqlCode.SqlMainData.SQLConnection = new SQLiteConnection();
+            GeneralData.MainConnection = new SQLiteConnection();
             SetActive(false);
         }
 
@@ -20,10 +20,10 @@ namespace SGUGIT_CourseWork.Forms
         {
             MenuWorkBench.Enabled = isActive;
             string sql = "";
-            if (HelperCode.FirstData.dataBasePath != null)
+            if (GeneralData.DataBasePath != null)
             {
-                sql = HelperCode.FirstData.dataBasePath.Split('\\')
-                [HelperCode.FirstData.dataBasePath.Split('\\').Count() - 1];
+                sql = GeneralData.DataBasePath.Split('\\')
+                [GeneralData.DataBasePath.Split('\\').Count() - 1];
                 toolStripStatusLabel1.Text = sql;
             }
         }
@@ -41,13 +41,13 @@ namespace SGUGIT_CourseWork.Forms
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                HelperCode.SqlCode.SqlMainData.SQLConnection =
+                GeneralData.MainConnection =
                     new SQLiteConnection("Data Source=" + openFileDialog.FileName + ";Version = 3;");
-                HelperCode.SqlCode.SqlMainData.SQLConnection.Open();
+                GeneralData.MainConnection.Open();
                 SQLiteCommand command = new SQLiteCommand();
-                command.Connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
+                command.Connection = GeneralData.MainConnection;
 
-                HelperCode.FirstData.dataBasePath = openFileDialog.FileName;
+                GeneralData.DataBasePath = openFileDialog.FileName;
                 SetActive(true);
                 return true;
             }
@@ -66,8 +66,6 @@ namespace SGUGIT_CourseWork.Forms
 
         private void MenuStrip_File_Click(object sender, EventArgs e)
         {
-            if (SampleWarning(sender) == true) return;
-
             if ((sender as ToolStripItem).Name == "StripClose") Application.Exit();
             string named = (sender as ToolStripItem).Name;
 
@@ -99,7 +97,6 @@ namespace SGUGIT_CourseWork.Forms
 
         private void MenuStrip_WorkBench_Click(object sender, EventArgs e)
         {
-            if (SampleWarning(sender) == true) return;
 
             switch((sender as ToolStripMenuItem).Name)
             {
@@ -113,8 +110,6 @@ namespace SGUGIT_CourseWork.Forms
 
         private void MenuStrip_Windows_Click(object sender, EventArgs e)
         {
-            if (SampleWarning(sender) == true) return;
-
             string named = (sender as ToolStripItem).Name;
             switch (named)
             {
@@ -137,18 +132,5 @@ namespace SGUGIT_CourseWork.Forms
         }
 
         #endregion
-
-        private bool SampleWarning(object sender)
-        {
-            if ((sender is ToolStripItem) == false)
-            {
-                HelperCode.Message.WarningMessage(
-                sender.GetType().Name,
-                sender.ToString(),
-                "ToolStripItem");
-                return true;
-            }
-            return false;
-        }
     }
 }

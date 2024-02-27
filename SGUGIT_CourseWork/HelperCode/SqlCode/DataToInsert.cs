@@ -9,7 +9,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToInsert
     {
-        private SQLiteConnection connection = HelperCode.SqlCode.SqlMainData.SQLConnection;
+        private SQLiteConnection connection = GeneralData.MainConnection;
         private string tableName;
         private string[] columnNames;
         private object[] values;
@@ -20,6 +20,12 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             this.columnNames = columnNames;
             this.values = values;
         }
+
+        public DataToInsert(string tableName)
+        {
+            this.tableName = tableName;
+        }
+
 
         public void SetConnection(SQLiteConnection connection)
         {
@@ -46,18 +52,27 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
         private string InsertQuery()
         {
-            string query = $"INSERT INTO {tableName} (";
+            string query = $"INSERT INTO {tableName}";
+            int n = values.Count();
 
-            int n = columnNames.Count();
-            if (values.Count() < columnNames.Count()) n = values.Count();
-
-            for (int i = 0; i < n; i++)
+            if (columnNames != null)
             {
-                query += columnNames[i];
-                if(i < n - 1) query += ",";
+                if (columnNames.Count() >= 0)
+                {
+                    query += "(";
+                    if (values.Count() < columnNames.Count()) n = values.Count();
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        query += columnNames[i];
+                        if (i < n - 1) query += ",";
+                    }
+
+                    query += ") ";
+                }
             }
 
-            query += ") VALUES(" ;
+            query += " VALUES(" ;
 
             for (int i = 0; i < n; i++)
             {

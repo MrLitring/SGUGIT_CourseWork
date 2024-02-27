@@ -16,12 +16,6 @@ namespace SGUGIT_CourseWork.Forms
 
         private void StripMenu_Space_Click(object sender, EventArgs e)
         {
-            if ((sender is ToolStripItem) == false) 
-                HelperCode.Message.WarningMessage(
-                sender.GetType().Name,
-                sender.ToString(),
-                "ToolStripItem");
-
             switch((sender as ToolStripItem).Name)
             {
                 case "StripDataBase":
