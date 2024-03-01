@@ -26,9 +26,6 @@ namespace SGUGIT_CourseWork.Forms
             DataText_SetData();
             dataGridView1.FirstDisplayedScrollingRowIndex = 0;
             dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
-
-            if (toolStripLabel1.Text.EndsWith("*"))
-                toolStripLabel1.Text.Replace("*", "");
         }
 
         private void DataTable_SetData()
@@ -189,7 +186,7 @@ namespace SGUGIT_CourseWork.Forms
             dataToInsert.ExecuteInsert();
 
             DataTable_SetData();
-            dataGridView1.Focus();
+            dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellColumnIndex];
         }
 
         // Удалить цикл измерения
@@ -232,10 +229,6 @@ namespace SGUGIT_CourseWork.Forms
             }
         }
 
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            //cellRowIndex = e.RowIndex;
-        }
     }
 
 }
