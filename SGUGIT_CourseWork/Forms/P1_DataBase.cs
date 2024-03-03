@@ -5,16 +5,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class P1_DataBase : Form
     {
-        public bool isHasSaved = false;
-
+        private bool isHasSaved = false;  // Есть ли сохранение?
+        private bool isFirstStart = true;
         private List<DataToSave> commandChanges = new List<DataToSave>();
         private DataTable dTable;
+        private int cellRowIndex;
+        private int cellColumnIndex;
 
 
         public P1_DataBase()
@@ -26,8 +30,15 @@ namespace SGUGIT_CourseWork.Forms
             DataText_SetData();
             dataGridView1.FirstDisplayedScrollingRowIndex = 0;
             dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
+
+            isFirstStart = false;
+            DataSaving(false);
         }
 
+        //
+        // Установление данных
+        //
+        #region
         private void DataTable_SetData()
         {
             dTable.Columns.Clear();
@@ -73,30 +84,15 @@ namespace SGUGIT_CourseWork.Forms
                 }
             }
         }
-
+        #endregion
         //
-        //  Сохранение
+        //  Сохранение данных
         //
         #region
-        private void DataChange()
-        {
-            if (commandChanges.Count > 0)
-            {
-                if (toolStripLabel1.Text.EndsWith("*") == false)
-                    toolStripLabel1.Text += "*";
-            }
-            else
-            {
-                if (toolStripLabel1.Text.EndsWith("*") == true)
-                    toolStripLabel1.Text.Remove(toolStripLabel1.Text.Length - 1);
-            }
-        }
-
-        private void Save_Click(object sender, EventArgs e)
+        private void Save()
         {
             if (commandChanges.Count == 0)
             {
-                DataChange();
                 return;
             }
 
@@ -104,58 +100,79 @@ namespace SGUGIT_CourseWork.Forms
                 elem.ExecuteSave();
 
             commandChanges.Clear();
-            DataChange();
+            
 
             if (EventBus.onDataBaseChange != null)
                 EventBus.onDataBaseChange.Invoke();
         }
 
+        private void Delete()
+        {
+            if (cellRowIndex >= 0 && cellRowIndex < dTable.Rows.Count)
+            {
+                SQLiteConnection connection = GeneralData.MainConnection;
+
+                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellRowIndex][0]}";
+                SQLiteCommand command = new SQLiteCommand(content, connection);
+                command.ExecuteNonQuery();
+                command.Dispose();
+
+                DataTable_SetData();
+                dataGridView1.CurrentCell = dataGridView1.Rows[cellRowIndex].Cells[cellColumnIndex];
+            }
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            Save();
+            DataSaving(false);
+        }
+        #endregion
+
+        //
+        // Изменение данных
+        //
+        #region
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
-            DataToSave dataToSave = new DataToSave(
+            commandChanges.Add(new DataToSave(
                 GeneralData.TableName_First,
                 dataGridView1.Columns[e.ColumnIndex].HeaderText,
-                int.Parse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()),
-                e.RowIndex);
-
-            commandChanges.Add(dataToSave);
-            DataChange();
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value,
+                cellRowIndex+1
+                ));
+            DataSaving(true);
         }
 
         private void TextBox_ValueChange(object sender, EventArgs e)
         {
             string tableName = GeneralData.TableName_Second;
-            bool isSave = false;
 
-            DataToSave dataToSave = new DataToSave();
             if ((sender as TextBox).Name == "textBox1")
             {
-                dataToSave.UpdateValues(tableName, "A", textBox1.Text);
-                isSave = true;
+                commandChanges.Add(new DataToSave(tableName, "A", textBox1.Text));
+                DataSaving(true);
             }
             if ((sender as TextBox).Name == "textBox2")
             {
-                dataToSave.UpdateValues(tableName, "E", textBox2.Text);
-                isSave = true;
+                commandChanges.Add(new DataToSave(tableName, "E", textBox2.Text));
+                DataSaving(true);
             }
             if ((sender as TextBox).Name == "textBox3")
             {
-                dataToSave.UpdateValues(tableName, "BlockCount", int.Parse(textBox3.Text));
-                isSave = true;
+                commandChanges.Add(new DataToSave(tableName, "BlockCount", int.Parse(textBox3.Text)));
+                DataSaving(true);
             }
 
-            if (isSave == true)
-            {
-                commandChanges.Add(dataToSave);
-                DataChange();
-            }
         }
         #endregion
         //
         // Циклы измерений
         //
         #region 
+        //
         // Новый цикл измерения
+        //
         private void button1_Click(object sender, EventArgs e)
         {
             if (dTable.Rows.Count <= 0) return;
@@ -164,7 +181,7 @@ namespace SGUGIT_CourseWork.Forms
 
             for (int i = 0; i < dTable.Columns.Count; i++)
             {
-                HelperCode.PointColumn pointColumn = new PointColumn(5, dTable.Rows[dTable.Rows.Count - 1][0]);
+                PointColumn pointColumn = new PointColumn(5, dTable.Rows[dTable.Rows.Count - 1][0]);
                 for (int j = 0; j < dTable.Rows.Count; j++)
                 {
                     pointColumn.PointAdd(dTable.Rows[j][i]);
@@ -172,7 +189,7 @@ namespace SGUGIT_CourseWork.Forms
                 points.Add(pointColumn);
             }
 
-            HelperCode.SqlCode.DataToInsert dataToInsert = new DataToInsert(GeneralData.TableName_First);
+            DataToInsert dataToInsert = new DataToInsert(GeneralData.TableName_First);
 
 
             object[] newPoints = new object[points.Count];
@@ -189,46 +206,53 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellColumnIndex];
         }
 
+        //
         // Удалить цикл измерения
-        private int cellRowIndex;
-        private int cellColumnIndex;
+        //
         private void button2_Click(object sender, EventArgs e)
         {
             Delete();
         }
+
         #endregion
 
-        private void Delete()
+        //
+        // Какие-то методы
+        //
+        #region
+        private void DataSaving(bool value)
         {
-            if (cellRowIndex >= 0 && cellRowIndex < dTable.Rows.Count)
+            if (isFirstStart == true) return;
+
+            if(value == true)
             {
-                SQLiteConnection connection = GeneralData.MainConnection;
-
-                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellRowIndex][0]}";
-                SQLiteCommand command = new SQLiteCommand(content, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                
-                DataTable_SetData();
-                dataGridView1.CurrentCell = dataGridView1.Rows[cellRowIndex].Cells[cellColumnIndex];
+                if(toolStripLabelSave.Text.EndsWith("*") == false)
+                {
+                    toolStripLabelSave.Text += "*";
+                }
             }
-        }
 
+            if(value == false)
+            {
+                if (toolStripLabelSave.Text.EndsWith("*") == true)
+                {
+                    toolStripLabelSave.Text.Replace("*", "");
+                }
+            }
+
+        }
+        #endregion
+
+        //
+        // Какие-то события
+        //
+        #region
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             cellRowIndex = e.RowIndex;
-           cellColumnIndex = e.ColumnIndex;
+            cellColumnIndex = e.ColumnIndex;
         }
-
-        private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if((int)e.KeyChar == 46)
-            {
-                Debug.Write(((int)e.KeyChar).ToString());
-                Delete();
-            }
-        }
-
+        #endregion
     }
 
 }

@@ -9,5 +9,6 @@ namespace SGUGIT_CourseWork.HelperCode
     public static class EventBus
     {
         public static Action onDataBaseChange;
+        public static Action<int> onError;
     }
 }

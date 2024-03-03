@@ -11,11 +11,6 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         private object value;
         private int time = -1;
 
-        public DataToSave()
-        {
-
-        }
-
         public DataToSave(string tableName, string columnName, object value)
         {
             this.tableName = tableName;
