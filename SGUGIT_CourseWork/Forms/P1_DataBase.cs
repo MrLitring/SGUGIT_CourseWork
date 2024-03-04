@@ -14,7 +14,7 @@ namespace SGUGIT_CourseWork.Forms
     public partial class P1_DataBase : Form
     {
         private bool isHasSaved = false;  // Есть ли сохранение?
-        private bool isFirstStart = true;
+        private bool isFirstStart = true; // Первый ли старт ?
         private List<DataToSave> commandChanges = new List<DataToSave>();
         private DataTable dTable;
         private int cellRowIndex;
@@ -28,11 +28,14 @@ namespace SGUGIT_CourseWork.Forms
 
             DataTable_SetData();
             DataText_SetData();
+            textBox1.TextChanged += (s,e) => { TextBox_ValueChange(s, e); };
+            textBox2.TextChanged += (s, e) => { TextBox_ValueChange(s, e); };
+            textBox3.TextChanged += (s, e) => { TextBox_ValueChange(s, e); };
+
             dataGridView1.FirstDisplayedScrollingRowIndex = 0;
             dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
 
             isFirstStart = false;
-            DataSaving(false);
         }
 
         //
@@ -100,7 +103,7 @@ namespace SGUGIT_CourseWork.Forms
                 elem.ExecuteSave();
 
             commandChanges.Clear();
-            
+            LabelText_UnSave();
 
             if (EventBus.onDataBaseChange != null)
                 EventBus.onDataBaseChange.Invoke();
@@ -125,7 +128,6 @@ namespace SGUGIT_CourseWork.Forms
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             Save();
-            DataSaving(false);
         }
         #endregion
 
@@ -141,28 +143,10 @@ namespace SGUGIT_CourseWork.Forms
                 dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value,
                 cellRowIndex+1
                 ));
-            DataSaving(true);
         }
 
         private void TextBox_ValueChange(object sender, EventArgs e)
         {
-            string tableName = GeneralData.TableName_Second;
-
-            if ((sender as TextBox).Name == "textBox1")
-            {
-                commandChanges.Add(new DataToSave(tableName, "A", textBox1.Text));
-                DataSaving(true);
-            }
-            if ((sender as TextBox).Name == "textBox2")
-            {
-                commandChanges.Add(new DataToSave(tableName, "E", textBox2.Text));
-                DataSaving(true);
-            }
-            if ((sender as TextBox).Name == "textBox3")
-            {
-                commandChanges.Add(new DataToSave(tableName, "BlockCount", int.Parse(textBox3.Text)));
-                DataSaving(true);
-            }
 
         }
         #endregion
@@ -220,26 +204,20 @@ namespace SGUGIT_CourseWork.Forms
         // Какие-то методы
         //
         #region
-        private void DataSaving(bool value)
+        private void LabelText_Save()
         {
-            if (isFirstStart == true) return;
-
-            if(value == true)
+            if (toolStripLabelSave.Text.EndsWith("*") == false)
             {
-                if(toolStripLabelSave.Text.EndsWith("*") == false)
-                {
-                    toolStripLabelSave.Text += "*";
-                }
+                toolStripLabelSave.Text += "*";
             }
+        }
 
-            if(value == false)
+        private void LabelText_UnSave()
+        {
+            if(toolStripLabelSave.Text.EndsWith("*") == true)
             {
-                if (toolStripLabelSave.Text.EndsWith("*") == true)
-                {
-                    toolStripLabelSave.Text.Replace("*", "");
-                }
+                toolStripLabelSave.Text = toolStripLabelSave.Text.Replace("*","");
             }
-
         }
         #endregion
 
