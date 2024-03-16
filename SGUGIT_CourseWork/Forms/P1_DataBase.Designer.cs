@@ -37,12 +37,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSave = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -85,14 +85,16 @@
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.textBox1);
             this.splitContainer1.Panel1.Controls.Add(this.toolStrip1);
-            this.splitContainer1.Panel1MinSize = 130;
+            this.splitContainer1.Panel1MinSize = 10;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
+            this.splitContainer1.Panel2MinSize = 610;
             this.splitContainer1.Size = new System.Drawing.Size(816, 478);
             this.splitContainer1.SplitterDistance = 202;
             this.splitContainer1.TabIndex = 3;
+            this.splitContainer1.Resize += new System.EventHandler(this.splitContainer1_Resize);
             // 
             // button2
             // 
@@ -103,7 +105,7 @@
             this.button2.TabIndex = 20;
             this.button2.Text = "Удалить цикл";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.buttonDeleteCycle_Click);
             // 
             // button1
             // 
@@ -114,7 +116,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "Новый цикл";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.buttonNewCycle_Click);
             // 
             // label3
             // 
@@ -156,13 +158,6 @@
             this.label1.Size = new System.Drawing.Size(176, 16);
             this.label1.TabIndex = 15;
             this.label1.Text = "Коэф. сглаживания";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(15, 59);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 30);
-            this.textBox1.TabIndex = 14;
             // 
             // toolStrip1
             // 
@@ -220,6 +215,13 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(15, 59);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(173, 30);
+            this.textBox1.TabIndex = 14;
+            // 
             // P1_DataBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
@@ -259,12 +261,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSave;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

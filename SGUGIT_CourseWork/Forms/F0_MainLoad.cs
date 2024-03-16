@@ -110,11 +110,14 @@ namespace SGUGIT_CourseWork.Forms
 
         private void MenuStrip_Windows_Click(object sender, EventArgs e)
         {
-            string named = (sender as ToolStripItem).Name;
+            string named = (sender as ToolStripMenuItem).Name;
             switch (named)
             {
                 case "StripNewWindow":
                     {
+                        F1_Window form = new F1_Window();
+                        form.Show();
+                        form.FormBorderStyle = FormBorderStyle.SizableToolWindow;
 
                         break;
                     }

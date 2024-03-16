@@ -104,6 +104,7 @@
     <Compile Include="HelperCode\SqlCode\DataToCreateTable.cs" />
     <Compile Include="HelperCode\SqlCode\DataToInsert.cs" />
     <Compile Include="HelperCode\SqlCode\DataToSave.cs" />
+    <Compile Include="HelperCode\SqlCode\SQLData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">
@@ -114,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\F2_NewDataBase.resx">
       <DependentUpon>F2_NewDataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F3_ErrorForm.resx">
+      <DependentUpon>F3_ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\P1_DataBase.resx">
       <DependentUpon>P1_DataBase.cs</DependentUpon>

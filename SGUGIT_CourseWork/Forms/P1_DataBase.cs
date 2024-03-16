@@ -15,11 +15,11 @@ namespace SGUGIT_CourseWork.Forms
     {
         private bool isHasSaved = false;  // Есть ли сохранение?
         private bool isFirstStart = true; // Первый ли старт ?
-        private List<DataToSave> commandChanges = new List<DataToSave>();
+        private List<SQLData> commandChanges = new List<SQLData>();
         private DataTable dTable;
         private int cellRowIndex;
         private int cellColumnIndex;
-
+        private const string formName = "База данных";
 
         public P1_DataBase()
         {
@@ -28,14 +28,15 @@ namespace SGUGIT_CourseWork.Forms
 
             DataTable_SetData();
             DataText_SetData();
-            textBox1.TextChanged += (s,e) => { TextBox_ValueChange(s, e); };
-            textBox2.TextChanged += (s, e) => { TextBox_ValueChange(s, e); };
-            textBox3.TextChanged += (s, e) => { TextBox_ValueChange(s, e); };
+            textBox1.TextChanged += TextBox_ValueChange;
+            textBox2.TextChanged += TextBox_ValueChange;
+            textBox3.TextChanged += TextBox_ValueChange;
 
             dataGridView1.FirstDisplayedScrollingRowIndex = 0;
             dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
 
             isFirstStart = false;
+
         }
 
         //
@@ -87,7 +88,9 @@ namespace SGUGIT_CourseWork.Forms
                 }
             }
         }
+
         #endregion
+
         //
         //  Сохранение данных
         //
@@ -99,29 +102,17 @@ namespace SGUGIT_CourseWork.Forms
                 return;
             }
 
-            foreach (DataToSave elem in commandChanges)
-                elem.ExecuteSave();
 
-            commandChanges.Clear();
-            LabelText_UnSave();
-
-            if (EventBus.onDataBaseChange != null)
-                EventBus.onDataBaseChange.Invoke();
-        }
-
-        private void Delete()
-        {
-            if (cellRowIndex >= 0 && cellRowIndex < dTable.Rows.Count)
+            foreach (SQLData elem in commandChanges)
             {
-                SQLiteConnection connection = GeneralData.MainConnection;
-
-                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellRowIndex][0]}";
-                SQLiteCommand command = new SQLiteCommand(content, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-
-                DataTable_SetData();
-                dataGridView1.CurrentCell = dataGridView1.Rows[cellRowIndex].Cells[cellColumnIndex];
+                elem.UpdateExecute();
+                LabelText_UnSave();
+            }
+             
+            commandChanges.Clear();
+            if(EventBus.onDataBaseChange != null)
+            {
+                EventBus.onDataBaseChange.Invoke();
             }
         }
 
@@ -129,37 +120,96 @@ namespace SGUGIT_CourseWork.Forms
         {
             Save();
         }
+
         #endregion
 
         //
         // Изменение данных
         //
         #region
+        private void LabelText_Save()
+        {
+            if (toolStripLabelSave.Text.EndsWith("*") == false)
+            {
+                toolStripLabelSave.Text = formName + "*" + commandChanges.Count.ToString();
+                isHasSaved = true;
+            }
+        }
+
+        private void LabelText_UnSave()
+        {
+            isHasSaved = false;
+            toolStripLabelSave.Text = formName;
+        }
+
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
-            commandChanges.Add(new DataToSave(
-                GeneralData.TableName_First,
-                dataGridView1.Columns[e.ColumnIndex].HeaderText,
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value,
-                cellRowIndex+1
-                ));
+            SQLData data = new SQLData(GeneralData.TableName_First);
+            data.AddName($"\'{dataGridView1.Columns[e.ColumnIndex].HeaderText}\'");
+            data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            data.AddWhere(dataGridView1.Columns[0].HeaderText , Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
+
+            commandChanges.Add(data);
+            LabelText_Save();
         }
 
         private void TextBox_ValueChange(object sender, EventArgs e)
         {
+            if (isFirstStart == true) return;
 
+            string senderName = (sender as TextBox).Name;
+            SQLData dataSave = new SQLData(GeneralData.TableName_Second);
+
+            switch(senderName)
+            {
+                case "textBox1":
+                    {
+                        dataSave.AddName("A");
+                        break;
+                    }
+                case "textBox2":
+                    {
+                        dataSave.AddName("E");
+                        break;
+                    }
+                case "textBox3":
+                    {
+                        dataSave.AddName("A");
+                        break;
+                    }
+                default:
+                    {
+                        return;
+                    }
+            }
+
+            dataSave.AddValue((sender as TextBox).Text);
+            commandChanges.Add(dataSave);
+
+            LabelText_Save();
         }
+
         #endregion
+
         //
         // Циклы измерений
         //
         #region 
-        //
-        // Новый цикл измерения
-        //
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonNewCycle_Click(object sender, EventArgs e)
         {
+            if(isHasSaved == true)
+            {
+                DialogResult result = MessageBox.Show("У вас есть несохранённые данные, сохранить эти данные?", "", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    Save();
+                }
+                else
+                    return;
+            }
+
             if (dTable.Rows.Count <= 0) return;
+
 
             List<PointColumn> points = new List<PointColumn>();
 
@@ -188,37 +238,26 @@ namespace SGUGIT_CourseWork.Forms
 
             DataTable_SetData();
             dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellColumnIndex];
+            dataGridView1.Focus();
         }
 
-        //
-        // Удалить цикл измерения
-        //
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonDeleteCycle_Click(object sender, EventArgs e)
         {
-            Delete();
-        }
-
-        #endregion
-
-        //
-        // Какие-то методы
-        //
-        #region
-        private void LabelText_Save()
-        {
-            if (toolStripLabelSave.Text.EndsWith("*") == false)
+            if (cellRowIndex >= 0 && cellRowIndex < dTable.Rows.Count)
             {
-                toolStripLabelSave.Text += "*";
+                SQLiteConnection connection = GeneralData.MainConnection;
+
+                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellRowIndex][0]}";
+                SQLiteCommand command = new SQLiteCommand(content, connection);
+                command.ExecuteNonQuery();
+                command.Dispose();
+
+                DataTable_SetData();
+                dataGridView1.CurrentCell = dataGridView1.Rows[cellRowIndex].Cells[cellColumnIndex];
+                dataGridView1.Focus();
             }
         }
 
-        private void LabelText_UnSave()
-        {
-            if(toolStripLabelSave.Text.EndsWith("*") == true)
-            {
-                toolStripLabelSave.Text = toolStripLabelSave.Text.Replace("*","");
-            }
-        }
         #endregion
 
         //
@@ -230,7 +269,13 @@ namespace SGUGIT_CourseWork.Forms
             cellRowIndex = e.RowIndex;
             cellColumnIndex = e.ColumnIndex;
         }
+
         #endregion
+
+        private void splitContainer1_Resize(object sender, EventArgs e)
+        {
+            
+        }
     }
 
 }

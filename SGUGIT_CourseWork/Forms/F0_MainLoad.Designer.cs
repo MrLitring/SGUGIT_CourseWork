@@ -65,26 +65,26 @@
             // StripNewDataBase
             // 
             this.StripNewDataBase.Name = "StripNewDataBase";
-            this.StripNewDataBase.Size = new System.Drawing.Size(174, 22);
+            this.StripNewDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripNewDataBase.Text = "Новый проект";
             this.StripNewDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // StripOpenDataBase
             // 
             this.StripOpenDataBase.Name = "StripOpenDataBase";
-            this.StripOpenDataBase.Size = new System.Drawing.Size(174, 22);
+            this.StripOpenDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripOpenDataBase.Text = "Открыть";
             this.StripOpenDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // StripClose
             // 
             this.StripClose.Name = "StripClose";
-            this.StripClose.Size = new System.Drawing.Size(174, 22);
+            this.StripClose.Size = new System.Drawing.Size(180, 22);
             this.StripClose.Text = "Выход";
             this.StripClose.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
@@ -112,12 +112,11 @@
             this.MenuWorkBench.Name = "MenuWorkBench";
             this.MenuWorkBench.Size = new System.Drawing.Size(178, 28);
             this.MenuWorkBench.Text = "Рабочее пространство";
-            this.MenuWorkBench.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // StripEditDataBase
             // 
             this.StripEditDataBase.Name = "StripEditDataBase";
-            this.StripEditDataBase.Size = new System.Drawing.Size(164, 22);
+            this.StripEditDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripEditDataBase.Text = "База данных";
             this.StripEditDataBase.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
@@ -128,13 +127,13 @@
             this.рабочиеОкнаToolStripMenuItem.Name = "рабочиеОкнаToolStripMenuItem";
             this.рабочиеОкнаToolStripMenuItem.Size = new System.Drawing.Size(115, 28);
             this.рабочиеОкнаToolStripMenuItem.Text = "Рабочие окна";
-            this.рабочиеОкнаToolStripMenuItem.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
             // StripNewWindow
             // 
             this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(156, 22);
+            this.StripNewWindow.Size = new System.Drawing.Size(180, 22);
             this.StripNewWindow.Text = "Новое окно";
+            this.StripNewWindow.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
             // справкаToolStripMenuItem
             // 
