@@ -8,7 +8,6 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
     {
         public string Name;
 
-
         private SQLiteConnection connection = GeneralData.MainConnection;
         private List<string> colNames;
         private List<object> colValues;

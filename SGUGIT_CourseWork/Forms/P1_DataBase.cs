@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Drawing;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,12 @@ namespace SGUGIT_CourseWork.Forms
         private bool isHasSaved = false;  // Есть ли сохранение?
         private bool isFirstStart = true; // Первый ли старт ?
         private List<SQLData> commandChanges = new List<SQLData>();
+        // [A] [E] [B] [image]
+        private int[] indexSave = new int[4];
         private DataTable dTable;
-        private int cellRowIndex;
-        private int cellColumnIndex;
+        private Point cellFocus;
         private const string formName = "База данных";
+
 
         public P1_DataBase()
         {
@@ -237,23 +240,23 @@ namespace SGUGIT_CourseWork.Forms
             dataToInsert.ExecuteInsert();
 
             DataTable_SetData();
-            dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellColumnIndex];
+            dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellFocus.Y];
             dataGridView1.Focus();
         }
 
         private void buttonDeleteCycle_Click(object sender, EventArgs e)
         {
-            if (cellRowIndex >= 0 && cellRowIndex < dTable.Rows.Count)
+            if (cellFocus.X >= 0 && cellFocus.X < dTable.Rows.Count)
             {
                 SQLiteConnection connection = GeneralData.MainConnection;
 
-                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellRowIndex][0]}";
+                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellFocus.X][0]}";
                 SQLiteCommand command = new SQLiteCommand(content, connection);
                 command.ExecuteNonQuery();
                 command.Dispose();
 
                 DataTable_SetData();
-                dataGridView1.CurrentCell = dataGridView1.Rows[cellRowIndex].Cells[cellColumnIndex];
+                dataGridView1.CurrentCell = dataGridView1.Rows[cellFocus.X].Cells[cellFocus.Y];
                 dataGridView1.Focus();
             }
         }
@@ -266,15 +269,15 @@ namespace SGUGIT_CourseWork.Forms
         #region
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            cellRowIndex = e.RowIndex;
-            cellColumnIndex = e.ColumnIndex;
+            cellFocus = new Point(e.RowIndex, e.ColumnIndex);
         }
+
 
         #endregion
 
-        private void splitContainer1_Resize(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 
