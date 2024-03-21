@@ -279,6 +279,31 @@ namespace SGUGIT_CourseWork.Forms
         {
 
         }
+
+        private void tool_ImageSet_Click(object sender, EventArgs e)
+        {
+            string imagePath = FIleBrowser("png (*.png)|*.png");
+            pictureBox1.Image = new Bitmap(imagePath);
+        }
+
+
+
+        private string FIleBrowser(string filter)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = filter
+            };
+
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                return openFileDialog.FileName; ;
+            }
+            else
+                return null;
+
+        }
     }
 
 }

@@ -196,7 +196,7 @@
             this.tool_ImageClear});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(24, 310);
+            this.toolStrip2.Size = new System.Drawing.Size(32, 310);
             this.toolStrip2.TabIndex = 22;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -222,9 +222,9 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(32, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(586, 310);
+            this.pictureBox1.Size = new System.Drawing.Size(578, 310);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -235,8 +235,9 @@
             this.tool_ImageSet.Image = global::SGUGIT_CourseWork.Properties.Resources.Save_picture;
             this.tool_ImageSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_ImageSet.Name = "tool_ImageSet";
-            this.tool_ImageSet.Size = new System.Drawing.Size(21, 20);
+            this.tool_ImageSet.Size = new System.Drawing.Size(29, 20);
             this.tool_ImageSet.Text = "установить изображение";
+            this.tool_ImageSet.Click += new System.EventHandler(this.tool_ImageSet_Click);
             // 
             // tool_ImageClear
             // 
