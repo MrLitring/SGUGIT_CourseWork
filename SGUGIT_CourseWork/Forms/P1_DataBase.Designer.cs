@@ -39,12 +39,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabelSave = new System.Windows.Forms.ToolStripLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tool_ImageSet = new System.Windows.Forms.ToolStripButton();
             this.tool_ImageClear = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabelSave = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -55,9 +55,9 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -187,6 +187,17 @@
             this.splitContainer3.SplitterDistance = 139;
             this.splitContainer3.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(586, 310);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Left;
@@ -196,9 +207,28 @@
             this.tool_ImageClear});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(32, 310);
+            this.toolStrip2.Size = new System.Drawing.Size(24, 310);
             this.toolStrip2.TabIndex = 22;
             this.toolStrip2.Text = "toolStrip2";
+            // 
+            // tool_ImageSet
+            // 
+            this.tool_ImageSet.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tool_ImageSet.Image = global::SGUGIT_CourseWork.Properties.Resources.Save_picture;
+            this.tool_ImageSet.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_ImageSet.Name = "tool_ImageSet";
+            this.tool_ImageSet.Size = new System.Drawing.Size(21, 20);
+            this.tool_ImageSet.Text = "установить изображение";
+            this.tool_ImageSet.Click += new System.EventHandler(this.tool_ImageSet_Click);
+            // 
+            // tool_ImageClear
+            // 
+            this.tool_ImageClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tool_ImageClear.Image = global::SGUGIT_CourseWork.Properties.Resources.Delete;
+            this.tool_ImageClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_ImageClear.Name = "tool_ImageClear";
+            this.tool_ImageClear.Size = new System.Drawing.Size(21, 20);
+            this.tool_ImageClear.Text = "Очистить изображение";
             // 
             // toolStrip1
             // 
@@ -215,38 +245,8 @@
             // toolStripLabelSave
             // 
             this.toolStripLabelSave.Name = "toolStripLabelSave";
-            this.toolStripLabelSave.Size = new System.Drawing.Size(91, 22);
+            this.toolStripLabelSave.Size = new System.Drawing.Size(90, 22);
             this.toolStripLabelSave.Text = "База данных";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(32, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(578, 310);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // tool_ImageSet
-            // 
-            this.tool_ImageSet.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tool_ImageSet.Image = global::SGUGIT_CourseWork.Properties.Resources.Save_picture;
-            this.tool_ImageSet.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_ImageSet.Name = "tool_ImageSet";
-            this.tool_ImageSet.Size = new System.Drawing.Size(29, 20);
-            this.tool_ImageSet.Text = "установить изображение";
-            this.tool_ImageSet.Click += new System.EventHandler(this.tool_ImageSet_Click);
-            // 
-            // tool_ImageClear
-            // 
-            this.tool_ImageClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tool_ImageClear.Image = global::SGUGIT_CourseWork.Properties.Resources.Delete;
-            this.tool_ImageClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_ImageClear.Name = "tool_ImageClear";
-            this.tool_ImageClear.Size = new System.Drawing.Size(21, 20);
-            this.tool_ImageClear.Text = "Очистить изображение";
             // 
             // toolStripButton1
             // 
@@ -282,11 +282,11 @@
             this.splitContainer3.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

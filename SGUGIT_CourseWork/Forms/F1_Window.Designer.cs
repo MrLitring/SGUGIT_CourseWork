@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.режимРедактированияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripDataBase = new System.Windows.Forms.ToolStripMenuItem();
             this.рабочиеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.горизонтальноеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.одноОкноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,8 +41,6 @@
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StripDataBase = new System.Windows.Forms.ToolStripMenuItem();
-            this.режимРедактированияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +54,21 @@
             this.menuStrip1.Size = new System.Drawing.Size(780, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // режимРедактированияToolStripMenuItem
+            // 
+            this.режимРедактированияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StripDataBase});
+            this.режимРедактированияToolStripMenuItem.Name = "режимРедактированияToolStripMenuItem";
+            this.режимРедактированияToolStripMenuItem.Size = new System.Drawing.Size(144, 20);
+            this.режимРедактированияToolStripMenuItem.Text = "Рабочее пространство";
+            // 
+            // StripDataBase
+            // 
+            this.StripDataBase.Name = "StripDataBase";
+            this.StripDataBase.Size = new System.Drawing.Size(142, 22);
+            this.StripDataBase.Text = "База данных";
+            this.StripDataBase.Click += new System.EventHandler(this.StripMenu_Space_Click);
             // 
             // рабочиеОкнаToolStripMenuItem
             // 
@@ -72,41 +87,41 @@
             // горизонтальноеToolStripMenuItem
             // 
             this.горизонтальноеToolStripMenuItem.Name = "горизонтальноеToolStripMenuItem";
-            this.горизонтальноеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.горизонтальноеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.горизонтальноеToolStripMenuItem.Text = "Горизонтальное";
             // 
             // одноОкноToolStripMenuItem
             // 
             this.одноОкноToolStripMenuItem.Name = "одноОкноToolStripMenuItem";
-            this.одноОкноToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.одноОкноToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.одноОкноToolStripMenuItem.Text = "Одно окно";
             // 
             // дваОкнаToolStripMenuItem
             // 
             this.дваОкнаToolStripMenuItem.Name = "дваОкнаToolStripMenuItem";
-            this.дваОкнаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.дваОкнаToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.дваОкнаToolStripMenuItem.Text = "Два окна";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
             // новоеОкноToolStripMenuItem
             // 
             this.новоеОкноToolStripMenuItem.Name = "новоеОкноToolStripMenuItem";
-            this.новоеОкноToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.новоеОкноToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.новоеОкноToolStripMenuItem.Text = "Новое окно";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
             // 
             // закрытьToolStripMenuItem
             // 
             this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.закрытьToolStripMenuItem.Text = "Закрыть";
             // 
             // panel1
@@ -124,21 +139,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(780, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // StripDataBase
-            // 
-            this.StripDataBase.Name = "StripDataBase";
-            this.StripDataBase.Size = new System.Drawing.Size(180, 22);
-            this.StripDataBase.Text = "База данных";
-            this.StripDataBase.Click += new System.EventHandler(this.StripMenu_Space_Click);
-            // 
-            // режимРедактированияToolStripMenuItem
-            // 
-            this.режимРедактированияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripDataBase});
-            this.режимРедактированияToolStripMenuItem.Name = "режимРедактированияToolStripMenuItem";
-            this.режимРедактированияToolStripMenuItem.Size = new System.Drawing.Size(144, 20);
-            this.режимРедактированияToolStripMenuItem.Text = "Рабочее пространство";
             // 
             // F1_Window
             // 
@@ -172,8 +172,8 @@
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem новоеОкноToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem режимРедактированияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StripDataBase;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

@@ -5,11 +5,19 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     public class DataToSave
     {
+        public string Name = null;
+
         private SQLiteConnection connection = GeneralData.MainConnection;
         private string tableName;
         private string columnName;
         private object value;
         private int time = -1;
+
+        public DataToSave(string tableName, string columnName)
+        {
+            this.tableName = tableName;
+            this.columnName = columnName;
+        }
 
         public DataToSave(string tableName, string columnName, object value)
         {
@@ -50,8 +58,23 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             command.Dispose();
         }
 
+        public void ExecuteSave(byte[] bytes)
+        {
+            string content = UpdateQuery();
+            SQLiteCommand command = new SQLiteCommand(content, connection);
+            if (Name != null) command.Parameters.AddWithValue("@Image", bytes);
+
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
         private string UpdateQuery()
         {
+            if(Name.StartsWith("Image"))
+            {
+                return $"UPDATE {this.tableName} SET \"{this.columnName}\" = @Image;";
+            }
+
             if(time >= 0)
                 return $"UPDATE {this.tableName} SET \"{this.columnName}\" = {this.value} WHERE Эпоха = {this.time};";
             else

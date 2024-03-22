@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -31,6 +33,7 @@ namespace SGUGIT_CourseWork.Forms
 
             DataTable_SetData();
             DataText_SetData();
+            DataImage_SetData();
             textBox1.TextChanged += TextBox_ValueChange;
             textBox2.TextChanged += TextBox_ValueChange;
             textBox3.TextChanged += TextBox_ValueChange;
@@ -90,6 +93,34 @@ namespace SGUGIT_CourseWork.Forms
                     textBox3.Text = reader.GetInt32(2).ToString();
                 }
             }
+        }
+
+        private void DataImage_SetData()
+        {
+            pictureBox1.Image = null;
+            string query = $"SELECT Image FROM {GeneralData.TableName_Second};";
+            
+
+            SQLiteCommand command = new SQLiteCommand (query , GeneralData.MainConnection);
+            using(SQLiteDataReader reader = command.ExecuteReader())
+            {
+                if(reader.Read())
+                {
+                    if (!(reader["Image"] is DBNull))
+                    {
+                        byte[] bytes = (byte[])reader["Image"];
+
+                        Image image;
+                        using (MemoryStream stream = new MemoryStream(bytes))
+                        {
+                            image = Image.FromStream(stream);
+                        }
+                    }
+                }
+            }
+
+
+
         }
 
         #endregion
@@ -284,6 +315,11 @@ namespace SGUGIT_CourseWork.Forms
         {
             string imagePath = FIleBrowser("png (*.png)|*.png");
             pictureBox1.Image = new Bitmap(imagePath);
+
+            DataToSave dataToSave = new DataToSave
+                (GeneralData.TableName_Second, "Image");
+            dataToSave.Name = "Image";
+            dataToSave.ExecuteSave(File.ReadAllBytes(imagePath));
         }
 
 
