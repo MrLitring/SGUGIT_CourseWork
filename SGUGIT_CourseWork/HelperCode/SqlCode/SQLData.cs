@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Windows;
 
 namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {

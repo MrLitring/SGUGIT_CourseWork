@@ -104,16 +104,18 @@ namespace SGUGIT_CourseWork.Forms
             SQLiteCommand command = new SQLiteCommand (query , GeneralData.MainConnection);
             using(SQLiteDataReader reader = command.ExecuteReader())
             {
-                if(reader.Read())
+                if(reader.HasRows)
                 {
-                    if (!(reader["Image"] is DBNull))
+                    reader.Read();
+                    if (!(reader.GetValue(0) is null))
                     {
                         byte[] bytes = (byte[])reader["Image"];
 
-                        Image image;
-                        using (MemoryStream stream = new MemoryStream(bytes))
+                        MemoryStream ms = new MemoryStream(bytes);
+                        
+                        using (ms = new MemoryStream(bytes))
                         {
-                            image = Image.FromStream(stream);
+                             pictureBox1.Image = Image.FromStream(ms);
                         }
                     }
                 }
