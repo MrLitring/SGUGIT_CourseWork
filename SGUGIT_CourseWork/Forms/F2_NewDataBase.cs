@@ -175,7 +175,7 @@ namespace SGUGIT_CourseWork.Forms
             DataToInsert insert = new DataToInsert(
                 secondTableName,
                 new string[] { "A", "E", "BlockCount", "Image" },
-                new object[] { 0.1, 0.01, 1, -1 }
+                new object[] { 0.1, 0.01, 1 }
                 );
 
             createTable.SetConnection(newConnect);

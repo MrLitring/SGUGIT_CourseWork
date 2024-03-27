@@ -107,7 +107,7 @@ namespace SGUGIT_CourseWork.Forms
                 if(reader.HasRows)
                 {
                     reader.Read();
-                    if (!(reader.GetValue(0) is null))
+                    if (!reader.IsDBNull(0))
                     {
                         byte[] bytes = (byte[])reader["Image"];
 
@@ -138,12 +138,9 @@ namespace SGUGIT_CourseWork.Forms
                 return;
             }
 
-
             foreach (SQLData elem in commandChanges)
             {
-                SQLData s = elem + elem;
-
-                elem.UpdateExecute(SQLData.Command.Save);
+                elem.Execute(SQLData.executionNumber.Update);
                 LabelText_UnSave();
             }
              
@@ -182,7 +179,7 @@ namespace SGUGIT_CourseWork.Forms
 
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
-            SQLData data = new SQLData(GeneralData.TableName_First);
+            SQLData data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection);
             data.AddName($"\'{dataGridView1.Columns[e.ColumnIndex].HeaderText}\'");
             data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             data.AddWhere(dataGridView1.Columns[0].HeaderText , Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
@@ -196,7 +193,7 @@ namespace SGUGIT_CourseWork.Forms
             if (isFirstStart == true) return;
 
             string senderName = (sender as TextBox).Name;
-            SQLData dataSave = new SQLData(GeneralData.TableName_Second);
+            SQLData dataSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection);
 
             switch(senderName)
             {
@@ -283,13 +280,11 @@ namespace SGUGIT_CourseWork.Forms
         {
             if (cellFocus.X >= 0 && cellFocus.X < dTable.Rows.Count)
             {
-                SQLiteConnection connection = GeneralData.MainConnection;
-
-                string content = $"DELETE FROM {GeneralData.TableName_First} WHERE Эпоха = {dTable.Rows[cellFocus.X][0]}";
-                SQLiteCommand command = new SQLiteCommand(content, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-
+                SQLData data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Delete);
+                data.AddWhere("Эпоха", dTable.Rows[cellFocus.X][0]);
+                data.Execute(SQLData.executionNumber.Delete);
+                //commandChanges.Add(data);
+                
                 DataTable_SetData();
                 dataGridView1.CurrentCell = dataGridView1.Rows[cellFocus.X].Cells[cellFocus.Y];
                 dataGridView1.Focus();

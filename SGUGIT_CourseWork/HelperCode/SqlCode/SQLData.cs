@@ -7,60 +7,47 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     internal class SQLData
     {
-        public enum Command
+        public enum executionNumber
         {
             None = 0,
             Update = 1,
             Insert = 2,
             Delete = 3,
-            Save = 1
         }
-        
+
 
         public string Name;
+        public executionNumber ExecutionCommand; // Первостепенная важность
 
-        private SQLiteConnection connection = GeneralData.MainConnection;
+        private SQLiteConnection connection;
         private List<string> colNames;
         private List<object> colValues;
         private string tableName;
         private string where;
-        private int time = 0;
+        private object time;
 
-
-        public SQLData(string tableName) 
+        private SQLData() 
         {
-            this.tableName = tableName;
-
-            colNames = new List<string>();
-            colValues = new List<object>(); 
-        }
-
-        public SQLData(string tableName, string colName, object colValue)
-        {
-            this.tableName = tableName;
             colNames = new List<string>();
             colValues = new List<object>();
-
-            this.colNames.Add(colName);
-            this.colValues.Add(colValue);
+            where = string.Empty;
+            time = 0;
         }
-        public SQLData(string tableName, string[] colName, object[] colValue)
+        public SQLData(string tableName, SQLiteConnection connection) : this()
         {
+            this.ExecutionCommand = executionNumber.None;
             this.tableName = tableName;
-            colNames = new List<string>();
-            colValues = new List<object>();
+            this.connection = connection;
 
-            foreach(string elem in colName)
-                this.colNames.Add((string)elem);
-            this.colValues.Add(colValue);
         }
-
-        public static SQLData operator +(SQLData s1, SQLData s2)
+        public SQLData(string tableName, SQLiteConnection connection, executionNumber command) : this(tableName, connection)
         {
-            SQLData data = new SQLData(s1.tableName);
-            return data;
+            this.ExecutionCommand = command;
         }
 
+        //
+        // Добавление Значений
+        //
         public void AddValue(object value)
         {
             colValues.Add(value);
@@ -68,10 +55,13 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
         public void AddValue(object[] value)
         {
-            foreach(object elem in value)
+            foreach (object elem in value)
                 colValues.Add(elem);
         }
 
+        //
+        // Добавление Колонок
+        //
         public void AddName(string value)
         {
             colNames.Add(value);
@@ -83,29 +73,47 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
                 colValues.Add(elem);
         }
 
+        //
+        // Добавить эпоху
+        //
         public void AddWhere(string where, object time)
         {
             this.where = where;
-            this.time = (int)time;
+            this.time = time;
         }
 
-
-        public void UpdateExecute(Command command)
+        //
+        // Execution order 66 
+        //
+        public void Execute(executionNumber numCommand)
         {
-            //System.Windows.Forms.MessageBox.Show(command.ToString());
-            //Execute(Update());
-        }
+            if(numCommand != ExecutionCommand && ExecutionCommand != executionNumber.None) numCommand = ExecutionCommand;
 
-        private void Execute(Command numCommand)
-        {
             string query = "";
-            switch(numCommand)
-            {
-                case Command.Save:
-                    {
 
+            switch (numCommand)
+            {
+                case executionNumber.None:
+                    return;
+
+                case executionNumber.Update: 
+                    {
+                        query = Update();
                         break;
                     }
+
+                case executionNumber.Insert:
+                    {
+                        query = Insert();
+                        break;
+                    }
+
+                case executionNumber.Delete:
+                    {
+                        query = Delete();
+                        break;
+                    }
+
             }
 
             SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -113,38 +121,64 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             command.Dispose();
         }
 
+        //
+        // Yes, Palpatin
+        //
+        private string Insert()
+        {
+            string[] query = new string[3];
+
+            int min = Math.Min(colNames.Count, colValues.Count);
+            if (min == 0) return "";
+            
+            query[0] = $"INSERT INTO [{tableName}] ";
+            query[1] += " (";
+            query[2] += " (";
+            for (int i = 0; i < min; i++)
+            {
+                query[1] += colNames[i];
+                query[2] += colValues[i];
+
+                if(i < min - 1)
+                {
+                    query[1] += ",";
+                    query[2] += ",";
+                }
+            }
+            query[1] += ") ";
+            query[2] += ") ";
+
+            return query[0] + query[1] + query[2] + ";";
+        }
 
         private string Update()
         {
-            string query = "";
-            if(where != null && where != "")
-            {
-                query = $"UPDATE {this.tableName} SET ";
-                int min = Math.Min(colNames.Count, colValues.Count);
-                for (int i = 0; i < min; i++)
-                {
-                    query += $"{colNames[i]} = {colValues[i]}";
+            string query = $"UPDATE [{tableName}] SET ";
 
-                    if (i != min - 1)
-                        query += ",";
-                }
-                query += $" WHERE {where} = {time};";
-            }
-            else
-            {
-                query = $"UPDATE {this.tableName} SET ";
-                int min = Math.Min(colNames.Count, colValues.Count);
-                for (int i = 0; i < min; i++)
-                {
-                    query += $"\'{colNames[i]}\' = {colValues[i]}";
+            int min = Math.Min(colNames.Count, colValues.Count);
+            if (min == 0) return "";
 
-                    if (i != min - 1)
-                        query += ",";
-                }
-                query += $";";
+            for (int i = 0; i < min; i++)
+            {
+                query += $"{colNames[i]} = {colValues[i]}";
+
+                if (i != min - 1)
+                    query += ", ";
             }
 
-            return query;
+            if (where != string.Empty)
+                query += $" WHERE {where} = {time}";
+
+            return query + ";";
         }
+
+        private string Delete()
+        {
+            if (where != string.Empty)
+                return $"DELETE FROM [{tableName}] WHERE [{where}] = {time}";
+
+            return "";
+        }
+
     }
 }
