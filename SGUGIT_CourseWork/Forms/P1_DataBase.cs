@@ -141,7 +141,9 @@ namespace SGUGIT_CourseWork.Forms
 
             foreach (SQLData elem in commandChanges)
             {
-                elem.UpdateExecute();
+                SQLData s = elem + elem;
+
+                elem.UpdateExecute(SQLData.Command.Save);
                 LabelText_UnSave();
             }
              

@@ -7,6 +7,16 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
     internal class SQLData
     {
+        public enum Command
+        {
+            None = 0,
+            Update = 1,
+            Insert = 2,
+            Delete = 3,
+            Save = 1
+        }
+        
+
         public string Name;
 
         private SQLiteConnection connection = GeneralData.MainConnection;
@@ -14,7 +24,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         private List<object> colValues;
         private string tableName;
         private string where;
-        private int time = -1;
+        private int time = 0;
 
 
         public SQLData(string tableName) 
@@ -43,6 +53,12 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             foreach(string elem in colName)
                 this.colNames.Add((string)elem);
             this.colValues.Add(colValue);
+        }
+
+        public static SQLData operator +(SQLData s1, SQLData s2)
+        {
+            SQLData data = new SQLData(s1.tableName);
+            return data;
         }
 
         public void AddValue(object value)
@@ -74,23 +90,24 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         }
 
 
-        public void UpdateExecute()
+        public void UpdateExecute(Command command)
         {
-            Execute(Update());
+            //System.Windows.Forms.MessageBox.Show(command.ToString());
+            //Execute(Update());
         }
 
-        public void InsertExecute()
+        private void Execute(Command numCommand)
         {
+            string query = "";
+            switch(numCommand)
+            {
+                case Command.Save:
+                    {
 
-        }
+                        break;
+                    }
+            }
 
-        public void DeleteExecute()
-        {
-
-        }
-
-        private void Execute(string query)
-        {
             SQLiteCommand command = new SQLiteCommand(query, connection);
             command.ExecuteNonQuery();
             command.Dispose();
