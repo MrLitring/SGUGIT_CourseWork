@@ -32,15 +32,15 @@
             this.режимРедактированияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StripDataBase = new System.Windows.Forms.ToolStripMenuItem();
             this.рабочиеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.горизонтальноеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.одноОкноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.дваОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.новоеОкноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StripLevel1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripLevel2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripLevel3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripLevel4 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +58,11 @@
             // режимРедактированияToolStripMenuItem
             // 
             this.режимРедактированияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripDataBase});
+            this.StripDataBase,
+            this.StripLevel1,
+            this.StripLevel2,
+            this.StripLevel3,
+            this.StripLevel4});
             this.режимРедактированияToolStripMenuItem.Name = "режимРедактированияToolStripMenuItem";
             this.режимРедактированияToolStripMenuItem.Size = new System.Drawing.Size(144, 20);
             this.режимРедактированияToolStripMenuItem.Text = "Рабочее пространство";
@@ -66,46 +70,19 @@
             // StripDataBase
             // 
             this.StripDataBase.Name = "StripDataBase";
-            this.StripDataBase.Size = new System.Drawing.Size(142, 22);
+            this.StripDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripDataBase.Text = "База данных";
             this.StripDataBase.Click += new System.EventHandler(this.StripMenu_Space_Click);
             // 
             // рабочиеОкнаToolStripMenuItem
             // 
             this.рабочиеОкнаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.горизонтальноеToolStripMenuItem,
-            this.одноОкноToolStripMenuItem,
-            this.дваОкнаToolStripMenuItem,
-            this.toolStripSeparator1,
             this.новоеОкноToolStripMenuItem,
             this.toolStripSeparator2,
             this.закрытьToolStripMenuItem});
             this.рабочиеОкнаToolStripMenuItem.Name = "рабочиеОкнаToolStripMenuItem";
             this.рабочиеОкнаToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
             this.рабочиеОкнаToolStripMenuItem.Text = "Рабочие окна";
-            // 
-            // горизонтальноеToolStripMenuItem
-            // 
-            this.горизонтальноеToolStripMenuItem.Name = "горизонтальноеToolStripMenuItem";
-            this.горизонтальноеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.горизонтальноеToolStripMenuItem.Text = "Горизонтальное";
-            // 
-            // одноОкноToolStripMenuItem
-            // 
-            this.одноОкноToolStripMenuItem.Name = "одноОкноToolStripMenuItem";
-            this.одноОкноToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.одноОкноToolStripMenuItem.Text = "Одно окно";
-            // 
-            // дваОкнаToolStripMenuItem
-            // 
-            this.дваОкнаToolStripMenuItem.Name = "дваОкнаToolStripMenuItem";
-            this.дваОкнаToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.дваОкнаToolStripMenuItem.Text = "Два окна";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
             // новоеОкноToolStripMenuItem
             // 
@@ -140,6 +117,30 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // StripLevel1
+            // 
+            this.StripLevel1.Name = "StripLevel1";
+            this.StripLevel1.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel1.Text = "I Уровень";
+            // 
+            // StripLevel2
+            // 
+            this.StripLevel2.Name = "StripLevel2";
+            this.StripLevel2.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel2.Text = "II Уровень";
+            // 
+            // StripLevel3
+            // 
+            this.StripLevel3.Name = "StripLevel3";
+            this.StripLevel3.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel3.Text = "III Уровень";
+            // 
+            // StripLevel4
+            // 
+            this.StripLevel4.Name = "StripLevel4";
+            this.StripLevel4.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel4.Text = "IV Уровень";
+            // 
             // F1_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,15 +166,15 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem рабочиеОкнаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem одноОкноToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem дваОкнаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem горизонтальноеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem новоеОкноToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem режимРедактированияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StripDataBase;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripMenuItem StripLevel1;
+        private System.Windows.Forms.ToolStripMenuItem StripLevel2;
+        private System.Windows.Forms.ToolStripMenuItem StripLevel3;
+        private System.Windows.Forms.ToolStripMenuItem StripLevel4;
     }
 }

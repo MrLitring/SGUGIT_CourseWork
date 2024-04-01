@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Security.Cryptography;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -24,6 +23,8 @@ namespace SGUGIT_CourseWork.Forms
         private DataTable dTable;
         private Point cellFocus;
         private const string formName = "База данных";
+        private double currentValue;
+
 
 
         public P1_DataBase()
@@ -48,7 +49,6 @@ namespace SGUGIT_CourseWork.Forms
         //
         // Установление данных
         //
-        #region
         private void DataTable_SetData()
         {
             dTable.Columns.Clear();
@@ -125,114 +125,17 @@ namespace SGUGIT_CourseWork.Forms
 
         }
 
-        #endregion
-
         //
-        //  Сохранение данных
+        // Кнопки 
         //
-        #region
-        private void Save()
-        {
-            if (commandChanges.Count == 0)
-            {
-                return;
-            }
-
-            foreach (SQLData elem in commandChanges)
-            {
-                elem.Execute(SQLData.executionNumber.Update);
-                LabelText_UnSave();
-            }
-             
-            commandChanges.Clear();
-            if(EventBus.onDataBaseChange != null)
-            {
-                EventBus.onDataBaseChange.Invoke();
-            }
-        }
-
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             Save();
         }
 
-        #endregion
-
-        //
-        // Изменение данных
-        //
-        #region
-        private void LabelText_Save()
-        {
-            if (toolStripLabelSave.Text.EndsWith("*") == false)
-            {
-                toolStripLabelSave.Text = formName + "*" + commandChanges.Count.ToString();
-                isHasSaved = true;
-            }
-        }
-
-        private void LabelText_UnSave()
-        {
-            isHasSaved = false;
-            toolStripLabelSave.Text = formName;
-        }
-
-        private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
-        {
-            SQLData data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection);
-            data.AddName($"\'{dataGridView1.Columns[e.ColumnIndex].HeaderText}\'");
-            data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-            data.AddWhere(dataGridView1.Columns[0].HeaderText , Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
-
-            commandChanges.Add(data);
-            LabelText_Save();
-        }
-
-        private void TextBox_ValueChange(object sender, EventArgs e)
-        {
-            if (isFirstStart == true) return;
-
-            string senderName = (sender as TextBox).Name;
-            SQLData dataSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection);
-
-            switch(senderName)
-            {
-                case "textBox1":
-                    {
-                        dataSave.AddName("A");
-                        break;
-                    }
-                case "textBox2":
-                    {
-                        dataSave.AddName("E");
-                        break;
-                    }
-                case "textBox3":
-                    {
-                        dataSave.AddName("A");
-                        break;
-                    }
-                default:
-                    {
-                        return;
-                    }
-            }
-
-            dataSave.AddValue((sender as TextBox).Text);
-            commandChanges.Add(dataSave);
-
-            LabelText_Save();
-        }
-
-        #endregion
-
-        //
-        // Циклы измерений
-        //
-        #region 
         private void buttonNewCycle_Click(object sender, EventArgs e)
         {
-            if(isHasSaved == true)
+            if (isHasSaved == true)
             {
                 DialogResult result = MessageBox.Show("У вас есть несохранённые данные, сохранить эти данные?", "", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
@@ -283,31 +186,11 @@ namespace SGUGIT_CourseWork.Forms
                 SQLData data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Delete);
                 data.AddWhere("Эпоха", dTable.Rows[cellFocus.X][0]);
                 data.Execute(SQLData.executionNumber.Delete);
-                //commandChanges.Add(data);
-                
+
                 DataTable_SetData();
                 dataGridView1.CurrentCell = dataGridView1.Rows[cellFocus.X].Cells[cellFocus.Y];
                 dataGridView1.Focus();
             }
-        }
-
-        #endregion
-
-        //
-        // Какие-то события
-        //
-        #region
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            cellFocus = new Point(e.RowIndex, e.ColumnIndex);
-        }
-
-
-        #endregion
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void tool_ImageSet_Click(object sender, EventArgs e)
@@ -321,8 +204,110 @@ namespace SGUGIT_CourseWork.Forms
             dataToSave.ExecuteSave(File.ReadAllBytes(imagePath));
         }
 
+        //
+        // События
+        //
+        private void TextBox_ValueChange(object sender, EventArgs e)
+        {
+            if (isFirstStart == true) return;
+
+            string senderName = (sender as TextBox).Name;
+            SQLData dataSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection);
+
+            switch (senderName)
+            {
+                case "textBox1":
+                    {
+                        dataSave.AddName("A");
+                        break;
+                    }
+                case "textBox2":
+                    {
+                        dataSave.AddName("E");
+                        break;
+                    }
+                case "textBox3":
+                    {
+                        dataSave.AddName("A");
+                        break;
+                    }
+                default:
+                    {
+                        return;
+                    }
+            }
+
+            dataSave.AddValue((sender as TextBox).Text);
+            commandChanges.Add(dataSave);
+
+            LabelText_Save();
+        }
+
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            currentValue = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            cellFocus = new Point(e.RowIndex, e.ColumnIndex);
+        }
+
+        private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
+        {
+            string name = $"cell_{e.ColumnIndex}_{e.RowIndex}";
+            SQLData data = data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection);
+
+            double value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            if (value == currentValue) return;
+            if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
+
+            
+            data.AddName($"\'{dataGridView1.Columns[e.ColumnIndex].HeaderText}\'");
+            data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
+            data.Name = "";
+
+            commandChanges.Add(data);
+            LabelText_Save();
+        }
+
+        //
+        //
+        //
+        private void Save()
+        {
+            if (commandChanges.Count == 0)
+            {
+                return;
+            }
+
+            foreach (SQLData elem in commandChanges)
+            {
+                elem.Execute(SQLData.executionNumber.Update);
+            }
 
 
+
+            commandChanges.Clear();
+            LabelText_UnSave();
+            if (EventBus.onDataBaseChange != null)
+            {
+                EventBus.onDataBaseChange.Invoke();
+            }
+        }
+
+        private void LabelText_Save()
+        {
+            if (toolStripLabelSave.Text.EndsWith("*") == false)
+            {
+                toolStripLabelSave.Text = formName + "*" + commandChanges.Count.ToString();
+                isHasSaved = true;
+            }
+        }
+
+        private void LabelText_UnSave()
+        {
+            isHasSaved = false;
+            toolStripLabelSave.Text = formName;
+        }
+        
         private string FIleBrowser(string filter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog

@@ -19,6 +19,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         public string Name;
         public executionNumber ExecutionCommand; // Первостепенная важность
 
+
         private SQLiteConnection connection;
         private List<string> colNames;
         private List<object> colValues;

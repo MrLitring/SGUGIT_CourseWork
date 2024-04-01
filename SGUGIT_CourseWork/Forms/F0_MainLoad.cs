@@ -48,6 +48,11 @@ namespace SGUGIT_CourseWork.Forms
                 command.Connection = GeneralData.MainConnection;
 
                 GeneralData.DataBasePath = openFileDialog.FileName;
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(
+                $"Select * from {GeneralData.TableName_First} order by 1",
+                GeneralData.MainConnection);
+                adapter.Fill(GeneralData.DataTable);
+
                 SetActive(true);
                 return true;
             }
@@ -103,6 +108,11 @@ namespace SGUGIT_CourseWork.Forms
                 case "StripEditDataBase":
                     {
                         HelperCode.FormOpenCode.OpenForm(new P1_DataBase(), panel1);
+                        break;
+                    }
+                case "StripLevel1":
+                    {
+                        HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
                         break;
                     }
             }

@@ -36,6 +36,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuWorkBench = new System.Windows.Forms.ToolStripMenuItem();
             this.StripEditDataBase = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripLevel1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.iIУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iIIУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iXУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.рабочиеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StripNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,10 +51,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.iУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iIУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iIIУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iXУровеньToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -105,7 +105,7 @@
             this.menuStrip1.MinimumSize = new System.Drawing.Size(0, 32);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(816, 32);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 32);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -113,7 +113,7 @@
             // 
             this.MenuWorkBench.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StripEditDataBase,
-            this.iУровеньToolStripMenuItem,
+            this.StripLevel1,
             this.iIУровеньToolStripMenuItem,
             this.iIIУровеньToolStripMenuItem,
             this.iXУровеньToolStripMenuItem});
@@ -128,6 +128,34 @@
             this.StripEditDataBase.Text = "База данных";
             this.StripEditDataBase.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
+            // StripLevel1
+            // 
+            this.StripLevel1.Name = "StripLevel1";
+            this.StripLevel1.Size = new System.Drawing.Size(160, 22);
+            this.StripLevel1.Text = "I Уровень";
+            this.StripLevel1.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
+            // iIУровеньToolStripMenuItem
+            // 
+            this.iIУровеньToolStripMenuItem.Name = "iIУровеньToolStripMenuItem";
+            this.iIУровеньToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.iIУровеньToolStripMenuItem.Text = "II Уровень";
+            this.iIУровеньToolStripMenuItem.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
+            // iIIУровеньToolStripMenuItem
+            // 
+            this.iIIУровеньToolStripMenuItem.Name = "iIIУровеньToolStripMenuItem";
+            this.iIIУровеньToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.iIIУровеньToolStripMenuItem.Text = "III Уровень";
+            this.iIIУровеньToolStripMenuItem.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
+            // iXУровеньToolStripMenuItem
+            // 
+            this.iXУровеньToolStripMenuItem.Name = "iXУровеньToolStripMenuItem";
+            this.iXУровеньToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.iXУровеньToolStripMenuItem.Text = "IX Уровень";
+            this.iXУровеньToolStripMenuItem.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
             // рабочиеОкнаToolStripMenuItem
             // 
             this.рабочиеОкнаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -139,7 +167,7 @@
             // StripNewWindow
             // 
             this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(180, 22);
+            this.StripNewWindow.Size = new System.Drawing.Size(152, 22);
             this.StripNewWindow.Text = "Новое окно";
             this.StripNewWindow.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
@@ -188,17 +216,17 @@
             this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(816, 456);
+            this.panel1.Size = new System.Drawing.Size(784, 407);
             this.panel1.TabIndex = 1;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 488);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 11, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(816, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -208,35 +236,11 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // iУровеньToolStripMenuItem
-            // 
-            this.iУровеньToolStripMenuItem.Name = "iУровеньToolStripMenuItem";
-            this.iУровеньToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.iУровеньToolStripMenuItem.Text = "I Уровень";
-            // 
-            // iIУровеньToolStripMenuItem
-            // 
-            this.iIУровеньToolStripMenuItem.Name = "iIУровеньToolStripMenuItem";
-            this.iIУровеньToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.iIУровеньToolStripMenuItem.Text = "II Уровень";
-            // 
-            // iIIУровеньToolStripMenuItem
-            // 
-            this.iIIУровеньToolStripMenuItem.Name = "iIIУровеньToolStripMenuItem";
-            this.iIIУровеньToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.iIIУровеньToolStripMenuItem.Text = "III Уровень";
-            // 
-            // iXУровеньToolStripMenuItem
-            // 
-            this.iXУровеньToolStripMenuItem.Name = "iXУровеньToolStripMenuItem";
-            this.iXУровеньToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.iXУровеньToolStripMenuItem.Text = "IX Уровень";
-            // 
             // F0_MainLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 510);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -244,6 +248,7 @@
             this.ForeColor = System.Drawing.Color.Black;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "F0_MainLoad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F0_MainLoad";
@@ -276,7 +281,7 @@
         private System.Windows.Forms.ToolStripMenuItem рабочиеОкнаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StripNewWindow;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripMenuItem iУровеньToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StripLevel1;
         private System.Windows.Forms.ToolStripMenuItem iIУровеньToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iIIУровеньToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iXУровеньToolStripMenuItem;

@@ -11,6 +11,7 @@ namespace SGUGIT_CourseWork.HelperCode
     public  class PointColumn
     {
         private List<double> points;
+        public List<double> Points { get {  return points; } }
         public int RoundValue = 4;
         public int Time = 0;
         
@@ -18,6 +19,11 @@ namespace SGUGIT_CourseWork.HelperCode
             points = new List<double>();
             this.RoundValue = RoundValue;
             this.Time = Convert.ToInt32(Time) + 1;
+        }
+        public PointColumn()
+        {
+            points = new List<double>();
+            this.RoundValue = 4;
         }
 
         public void PointAdd(object point)
@@ -31,6 +37,16 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 Debug.Write(point + " ");
             }
+        }
+
+        public double NewH()
+        {
+            return Math.Round(points[points.Count - 1] + Svi(), RoundValue);
+        }
+
+        public int arrayCount()
+        {
+            return points.Count;
         }
 
         private double Max()
@@ -55,9 +71,6 @@ namespace SGUGIT_CourseWork.HelperCode
             return Math.Round(svi, RoundValue);
         }
 
-        public double NewH()
-        {
-            return Math.Round(points[points.Count - 1] + Svi(), RoundValue);
-        }
+        
     }
 }

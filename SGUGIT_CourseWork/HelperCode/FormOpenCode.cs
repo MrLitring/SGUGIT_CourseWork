@@ -20,6 +20,7 @@ namespace SGUGIT_CourseWork.HelperCode
             currentForm.BringToFront();
             currentForm.Dock = DockStyle.Fill;
 
+            controlShow.Controls.Clear();
             controlShow.Controls.Add(currentForm);
             currentForm.Show();
         }
