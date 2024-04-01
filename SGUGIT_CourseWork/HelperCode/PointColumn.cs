@@ -49,6 +49,30 @@ namespace SGUGIT_CourseWork.HelperCode
             return points.Count;
         }
 
+        public double Summ(double pow = 1)
+        {
+            double summ = 0;
+
+            foreach(double elem in points)
+            {
+                summ += Math.Pow(elem, pow);
+            }
+
+            return summ;
+        }
+
+        public double Multiply(double pow = 1)
+        {
+            double mult = 1;
+
+            foreach(double elem in points)
+            {
+                mult *= Math.Pow(elem, pow);
+            }
+
+            return mult;
+        }
+
         private double Max()
         {
             double max = Math.Round(points[1] - points[0], RoundValue);

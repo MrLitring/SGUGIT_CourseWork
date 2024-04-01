@@ -72,11 +72,11 @@ namespace SGUGIT_CourseWork.Forms
 
         private void M()
         {
-            for(int i = 0; i < points.Count ; i++)
+            for (int i = 0; i < points.Count; i++)
             {
                 double m = 0;
 
-                for (int j = 1;j < points[i].Points.Count;j++)
+                for (int j = 1; j < points[i].Points.Count; j++)
                 {
                     m += Math.Pow(points[i].Points[j], 2);
 
@@ -84,7 +84,17 @@ namespace SGUGIT_CourseWork.Forms
                 m = Math.Sqrt(m);
                 m = Math.Round(m, 4);
 
-                DataView.Rows[DataView.Rows.Count-1].Cells[i].Value = m.ToString(); 
+                DataView.Rows[DataView.Rows.Count - 2].Cells[i].Value = m.ToString();
+            }
+
+            double a = 0;
+            for (int i = 0;  i < points.Count; i++)
+            {
+                a += points[i].Summ(2);
+                a = Math.Sqrt(a);
+                a = Math.Round(a, 4);
+
+                DataView.Rows[DataView.Rows.Count - 1].Cells[i].Value = a.ToString();
             }
         }
     }
