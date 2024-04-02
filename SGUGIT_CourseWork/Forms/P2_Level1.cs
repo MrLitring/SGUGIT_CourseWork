@@ -14,7 +14,7 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class P2_Level1 : Form
     {
-        DataTable dTable = GeneralData.DataTable;
+        DataTable dTable = GeneralData.DataTable;  
 
 
         public P2_Level1()
@@ -66,9 +66,13 @@ namespace SGUGIT_CourseWork.Forms
 
             DataTableWork tableWork = new DataTableWork(dTable, points);
             tableWork.DataGridFill(DataView);
-            tableWork.AddValue(GeneralData.assureValue);
+            //tableWork.AddValue(GeneralData.assureValue);
             tableWork.DataGridFill(DataView);
             tableWork.RowAdd(DataView, tableWork.M());
+            tableWork.RowAdd(tableWork.A());
+
+
+            
 
         }
     }

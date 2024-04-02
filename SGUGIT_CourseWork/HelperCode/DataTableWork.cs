@@ -59,12 +59,17 @@ namespace SGUGIT_CourseWork.HelperCode
             }
         }
 
+        public void RowAdd(List<double> list)
+        {
+            this.RowAdd(dataGridView, list);
+        }
         public void RowAdd(DataGridView dataGridView, List<double> list)
         {
             int min = Math.Min(dataGridView.Columns.Count, list.Count);
+            dataGridView.Rows.Add();
             for(int i = 0; i < min; i++)
             {
-                dataGridView.Rows[dataGridView.Rows.Count - 1].Cells[i].Value = list[i].ToString();
+                dataGridView.Rows[dataGridView.Rows.Count - 2].Cells[i].Value = list[i].ToString();
             }
         }
 
@@ -77,35 +82,32 @@ namespace SGUGIT_CourseWork.HelperCode
                 list.Add(Math.Round(Math.Sqrt(pointColumns[i].Sum(2)), 4));
             }
 
-
             return list;
         }
 
         public List<double> A() 
         {
             List<double> list = new List<double>();
+            List<double> M = this.M();
+            list.Add(0);
 
-            for (int i = 0; i < pointColumns.Count; i++)
+            for (int i = 1; i < pointColumns.Count; i++)
             {
-                list.Add(Math.Round(Math.Acos(pointColumns[i].Sum(2)), 4));
+                list.Add((pointColumns[0] * pointColumns[i]).Sum());
+                list[i] /= (M[0]*M[i]);
+                list[i] = Math.Acos(list[i]);
+                list[i] = list[i] * (180 / Math.PI);
             }
-
 
             return list;
         }
 
         public void AddValue(double value)
         {
-            for(int col = 0; col < pointColumns.Count;col++)
+            for(int i = 0; i < pointColumns.Count; i++)
             {
-                PointColumn point = new PointColumn();
-                for (int row = 0; row < pointColumns[col].Points.Count;row++)
-                {
-                    point.PointAdd(pointColumns[col].Points[row] + value);
-                }
-                pointColumns[col] = point;
+                pointColumns[i] += value;
             }
-
         }
 
 

@@ -61,18 +61,6 @@ namespace SGUGIT_CourseWork.HelperCode
             return summ;
         }
 
-        public double Multiply(double pow = 1)
-        {
-            double mult = 1;
-
-            foreach(double elem in points)
-            {
-                mult *= Math.Pow(elem, pow);
-            }
-
-            return mult;
-        }
-
         private double Max()
         {
             double max = Math.Round(points[1] - points[0], RoundValue);
@@ -95,6 +83,23 @@ namespace SGUGIT_CourseWork.HelperCode
             return Math.Round(svi, RoundValue);
         }
 
-        
+        public static PointColumn operator *(PointColumn firstPoint, PointColumn secondPoint)
+        {
+            PointColumn point = new PointColumn();
+            for (int i = 0; i < firstPoint.Points.Count; i++)
+                point.PointAdd(firstPoint.Points[i] * secondPoint.Points[i]);
+
+            return point;
+        }
+
+        public static PointColumn operator +(PointColumn firstPoint, double value)
+        {
+            PointColumn point = new PointColumn();
+            for (int i = 0; i < firstPoint.Points.Count; i++)
+                point.PointAdd(firstPoint.Points[i] + value);
+
+            return point;
+        }
+
     }
 }
