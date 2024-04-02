@@ -12,17 +12,21 @@ namespace SGUGIT_CourseWork.HelperCode
 {
     public static class GeneralData
     {
+        //
+        // Название таблиц
+        //
         public const string TableName_First =  "FirstData";
         public const string TableName_Second = "SecondData";
 
+        //
+        // Первичные параметры
+        //
+        public static double smoothValue = 0; // Сглаженная велечина A
+        public static double assureValue = 0.0008; // Точность измерений E
+        public static int blockCount = 0; // Кол-во блоков
 
         public static SQLiteConnection MainConnection;
         public static string DataBasePath;
-
-
-        public static double smoothValue = 0; // Сглаженная велечина A
-        public static double assureValue = 0; // Точность измерений E
-        public static int blockCount = 0; // Кол-во блоков
 
         private static DataTable dataTable = null;
         public static DataTable DataTable = new DataTable();

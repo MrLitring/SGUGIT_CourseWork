@@ -14,6 +14,8 @@ namespace SGUGIT_CourseWork.Forms
             InitializeComponent();
             GeneralData.MainConnection = new SQLiteConnection();
             SetActive(false);
+
+            EventBus.onDataBaseChange += DataBaseUpdate;
         }
 
         private void SetActive(bool isActive = false)
@@ -48,10 +50,7 @@ namespace SGUGIT_CourseWork.Forms
                 command.Connection = GeneralData.MainConnection;
 
                 GeneralData.DataBasePath = openFileDialog.FileName;
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"Select * from {GeneralData.TableName_First} order by 1",
-                GeneralData.MainConnection);
-                adapter.Fill(GeneralData.DataTable);
+                DataBaseUpdate();
 
                 SetActive(true);
                 return true;
@@ -63,6 +62,18 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             }
+
+        private void DataBaseUpdate()
+        {
+            GeneralData.DataTable.Clear();
+            GeneralData.DataTable.Rows.Clear();
+            GeneralData.DataTable.Columns.Clear();
+
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(
+                $"Select * from {GeneralData.TableName_First} order by 1",
+                GeneralData.MainConnection);
+            adapter.Fill(GeneralData.DataTable);
+        }
 
         //
         // Action MenuStrip onClick
@@ -125,7 +136,7 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "StripNewWindow":
                     {
-                        F1_Window form = new F1_Window();
+                        F0_MainLoad form = new F0_MainLoad();
                         form.Show();
                         form.FormBorderStyle = FormBorderStyle.SizableToolWindow;
 

@@ -56,10 +56,11 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
 
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"Select * from {GeneralData.TableName_First} order by 1",
-                GeneralData.MainConnection);
-            adapter.Fill(dTable);
+            //SQLiteDataAdapter adapter = new SQLiteDataAdapter(
+            //    $"Select * from {GeneralData.TableName_First} order by 1",
+            //    GeneralData.MainConnection);
+            //adapter.Fill(dTable);
+            dTable = GeneralData.DataTable;
 
             for (int col = 0; col < dTable.Columns.Count; col++)
             {
@@ -245,7 +246,11 @@ namespace SGUGIT_CourseWork.Forms
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            currentValue = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            try
+            {
+                currentValue = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            }
+            catch { }
             cellFocus = new Point(e.RowIndex, e.ColumnIndex);
         }
 

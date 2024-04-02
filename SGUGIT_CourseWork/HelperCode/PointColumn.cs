@@ -49,7 +49,7 @@ namespace SGUGIT_CourseWork.HelperCode
             return points.Count;
         }
 
-        public double Summ(double pow = 1)
+        public double Sum(double pow = 1)
         {
             double summ = 0;
 
