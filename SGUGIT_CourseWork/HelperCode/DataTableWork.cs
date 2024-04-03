@@ -91,12 +91,11 @@ namespace SGUGIT_CourseWork.HelperCode
             List<double> M = this.M();
             list.Add(0);
 
-            for (int i = 1; i < pointColumns.Count; i++)
+            for (int i = 0; i < pointColumns.Count; i++)
             {
-                list.Add((pointColumns[0] * pointColumns[i]).Sum());
-                list[i] /= (M[0]*M[i]);
-                list[i] = Math.Acos(list[i]);
-                list[i] = list[i] * (180 / Math.PI);
+                list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
+                //list[i] = Math.Acos(list[i]);
+                //list[i] = list[i] * 180 / Math.PI;
             }
 
             return list;

@@ -252,6 +252,7 @@
             this.Name = "F0_MainLoad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F0_MainLoad";
+            this.Load += new System.EventHandler(this.F0_MainLoad_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

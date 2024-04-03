@@ -4,6 +4,7 @@ using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Linq;
+using System.IO;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -156,5 +157,25 @@ namespace SGUGIT_CourseWork.Forms
         }
 
         #endregion
+
+        private void F0_MainLoad_Load(object sender, EventArgs e)
+        {
+            string path = "tmp/lastSession.txt";
+
+            if (File.Exists(path) == false)
+            {
+                if(!Directory.Exists(Path.GetDirectoryName(path)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+
+                }
+            }
+
+            using(FileStream fs = File.Create(path))
+            {
+                Console.WriteLine("Файл сука");
+            }
+
+        }
     }
 }
