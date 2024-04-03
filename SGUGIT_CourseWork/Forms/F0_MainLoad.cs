@@ -10,6 +10,8 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F0_MainLoad : Form
     {
+        private const string path = "tmp/lastSession.txt";
+
         public F0_MainLoad()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace SGUGIT_CourseWork.Forms
         //
         //
         //
-        private bool OpenDBFile()
+        private bool FileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -44,14 +46,14 @@ namespace SGUGIT_CourseWork.Forms
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                GeneralData.MainConnection =
-                    new SQLiteConnection("Data Source=" + openFileDialog.FileName + ";Version = 3;");
-                GeneralData.MainConnection.Open();
-                SQLiteCommand command = new SQLiteCommand();
-                command.Connection = GeneralData.MainConnection;
 
-                GeneralData.DataBasePath = openFileDialog.FileName;
+                DataBaseOpen(openFileDialog.FileName);
                 DataBaseUpdate();
+
+                using(StreamWriter writer = new StreamWriter(path, true))
+                {
+                    writer.Write(openFileDialog.FileName);
+                }
 
                 SetActive(true);
                 return true;
@@ -62,7 +64,22 @@ namespace SGUGIT_CourseWork.Forms
                 return false;
             }
 
-            }
+        }
+
+        private void DataBaseOpen(string path)
+        {
+            GeneralData.MainConnection =
+                    new SQLiteConnection("Data Source=" + path + ";Version = 3;");
+            GeneralData.MainConnection.Open();
+            SQLiteCommand command = new SQLiteCommand();
+            command.Connection = GeneralData.MainConnection;
+
+            GeneralData.DataBasePath = path;
+
+            DataBaseUpdate();
+
+            SetActive(true);
+        }
 
         private void DataBaseUpdate()
         {
@@ -96,7 +113,7 @@ namespace SGUGIT_CourseWork.Forms
                     }
                 case "StripOpenDataBase":
                     {
-                        OpenDBFile();
+                        FileDialog();
                         break;
                     }
 
@@ -115,7 +132,7 @@ namespace SGUGIT_CourseWork.Forms
         private void MenuStrip_WorkBench_Click(object sender, EventArgs e)
         {
 
-            switch((sender as ToolStripMenuItem).Name)
+            switch ((sender as ToolStripMenuItem).Name)
             {
                 case "StripEditDataBase":
                     {
@@ -160,20 +177,26 @@ namespace SGUGIT_CourseWork.Forms
 
         private void F0_MainLoad_Load(object sender, EventArgs e)
         {
-            string path = "tmp/lastSession.txt";
+            
 
             if (File.Exists(path) == false)
             {
-                if(!Directory.Exists(Path.GetDirectoryName(path)))
+                if (!Directory.Exists(Path.GetDirectoryName(path)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    using (FileStream fs = File.Create(path))
+                    {
+                        Console.WriteLine("файл lastSession создан");
+                    }
 
                 }
             }
 
-            using(FileStream fs = File.Create(path))
+            using (StreamReader reader = new StreamReader(path))
             {
-                Console.WriteLine("Файл сука");
+                string line = reader.ReadLine();
+                if (line != null) DataBaseOpen(line);
+
             }
 
         }
