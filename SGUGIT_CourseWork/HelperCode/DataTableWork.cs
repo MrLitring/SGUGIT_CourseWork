@@ -11,14 +11,44 @@ namespace SGUGIT_CourseWork.HelperCode
 {
     public class DataTableWork
     {
-        public List<PointColumn> pointColumns;
-        private DataTable dtable = new DataTable();
-        private DataGridView dataGridView = new DataGridView();
+        /*
+         * Таблица сохраняется как последнее использованная
+         * 
+         * Работа с таблицей:
+         * заполнить значениями, рассчитать значения, заполнять точки
+         * 
+         * Расчёт следующих даннных:
+         * отклик - responce, альфа - alpha, прогнозируемое значение - predicted(всегда последний в списке) 
+         */
+
+        private DataTable dtable;
+        private DataGridView lastDataGridView;
+        private List<PointColumn> pointColumns;
+        private List<double> responce; // отклик
+        private List<double> alphas; // Альфа
+        private double[] predicates;
+
+
+        public List<PointColumn> PointColumns
+        {
+            get { return pointColumns; }
+            set { pointColumns = value; Calculation(); }
+        }
+        public double[] Predicates {get { return predicates; } }
+        public List<double> Responce { get { return responce; } } // отклик
+        public List<double> Alphas { get { return alphas; } } // Альфа
+
 
         public DataTableWork()
         {
             dtable = GeneralData.DataTable;
+
+            lastDataGridView = new DataGridView();
             pointColumns = new List<PointColumn>();
+            responce = new List<double>();
+            alphas = new List<double>();
+
+            predicates = new double[2];
         }
         public DataTableWork(DataTable dataTable) : this()
         {
@@ -29,22 +59,23 @@ namespace SGUGIT_CourseWork.HelperCode
             this.pointColumns = pointColumns;
         }
 
+
         public void DataGridFill(DataGridView gridView)
         {
-            this.dataGridView = gridView;
-            dataGridView.Rows.Clear();
-            dataGridView.Columns.Clear();
+            this.lastDataGridView = gridView;
+            lastDataGridView.Rows.Clear();
+            lastDataGridView.Columns.Clear();
 
             //
             // Даём новые колонки и строки
             //
             for(int i = 0; i < pointColumns.Count; i++)
             {
-                dataGridView.Columns.Add(i.ToString(), i.ToString());
+                lastDataGridView.Columns.Add(i.ToString(), i.ToString());
             }
             for(int i = 0; i < pointColumns[0].Points.Count;i++)
             {
-                dataGridView.Rows.Add();
+                lastDataGridView.Rows.Add();
             }
 
             //
@@ -54,14 +85,14 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 for (int row = 0; row < pointColumns[col].Points.Count; row++)
                 {
-                    dataGridView.Rows[row].Cells[col].Value = pointColumns[col].Points[row].ToString();
+                    lastDataGridView.Rows[row].Cells[col].Value = pointColumns[col].Points[row].ToString();
                 }
             }
         }
 
         public void RowAdd(List<double> list)
         {
-            this.RowAdd(dataGridView, list);
+            this.RowAdd(lastDataGridView,list);
         }
         public void RowAdd(DataGridView dataGridView, List<double> list)
         {
@@ -71,34 +102,25 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 dataGridView.Rows[dataGridView.Rows.Count - 2].Cells[i].Value = list[i].ToString();
             }
-        }
+        }        
 
-        public List<double> M()
+        public void ColumnAdd(DataGridView dataGridView, string nameColumn, List<double> list)
         {
-            List<double> list = new List<double>();
+            dataGridView.Columns.Add(nameColumn, nameColumn);
             
-            for(int i = 0; i < pointColumns.Count; i++)
+            if (list.Count >= dataGridView.Rows.Count)
             {
-                list.Add(Math.Round(Math.Sqrt(pointColumns[i].Sum(2)), 4));
+                for (int i = dataGridView.Rows.Count; i < list.Count; i++)
+                    dataGridView.Rows.Add();
             }
+            dataGridView.Rows.Add();
 
-            return list;
-        }
-
-        public List<double> A() 
-        {
-            List<double> list = new List<double>();
-            List<double> M = this.M();
-            list.Add(0);
-
-            for (int i = 0; i < pointColumns.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
-                //list[i] = Math.Acos(list[i]);
-                //list[i] = list[i] * 180 / Math.PI;
+                dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value = list[i].ToString();
             }
+            
 
-            return list;
         }
 
         public void AddValue(double value)
@@ -109,6 +131,67 @@ namespace SGUGIT_CourseWork.HelperCode
             }
         }
 
+        public void Calculation()
+        {
+            Responce_Calculation();
+            Alphas_Calculation();
+            predicates[0] = Predicate_Calculation(responce.ToArray());
+            predicates[1] = Predicate_Calculation(alphas.ToArray());
+        }
+
+        
+
+        private void Responce_Calculation()
+        {
+            // Формула = "Корень(СУММКВ(array[i]))"
+            responce = new List<double>();
+            for (int i = 0; i < pointColumns.Count; i++)
+            {
+                responce.Add(Math.Round(Math.Sqrt(pointColumns[i].Sum(2)), 4));
+            }
+        }
+
+        private void Alphas_Calculation()
+        {
+            // формула = "ГРАДУСЫ(ACOS(СУММПРОИЗВ(array[0],array[1])/(M[0]*M[i])))"
+            List<double> list = new List<double>();
+            List<double> M = responce;
+
+            for (int i = 0; i < pointColumns.Count; i++)
+            {
+                list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
+                //list[i] = Math.Acos(list[i]);
+                //list[i] = list[i] * 180 / Math.PI;
+            }
+
+            alphas = list;
+        }
+
+        private double Predicate_Calculation(double[] doubles)
+        {
+            double smooth = GeneralData.smoothValue;
+            double[] responceValues = new double[doubles.Length];
+
+            responceValues[0] = smooth * doubles[0] + (1 - smooth) * AvarageSumm(responce.ToArray());
+            for (int i = 1; i < responceValues.Length; i++)
+            {
+                responceValues[i] = smooth * doubles[i] + (1 - smooth) * responceValues[i-1];
+            }
+            double respon = smooth * AvarageSumm(responceValues) + (1 - smooth) * responceValues[responceValues.Length - 1];
+
+            return respon;
+
+        }
+
+        private double AvarageSumm(double[] doubles)
+        {
+            double sum = 0;
+            
+            foreach(double elem in doubles)
+                sum += elem;
+
+            return sum / doubles.Length;
+        }
 
     }
 }

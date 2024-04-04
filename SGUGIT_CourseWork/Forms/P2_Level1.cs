@@ -65,14 +65,22 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             DataTableWork tableWork = new DataTableWork(dTable, points);
-            tableWork.DataGridFill(DataView);
+            //tableWork.DataGridFill(DataView);
             //tableWork.AddValue(GeneralData.assureValue);
-            tableWork.DataGridFill(DataView);
-            tableWork.RowAdd(DataView, tableWork.M());
-            tableWork.RowAdd(tableWork.A());
+            //tableWork.DataGridFill(DataView);
+            //for (int i = 0; i <= tableWork.PointColumns.Count; i++)
+            //    DataView.Columns.Add(" ", " ");
+
+            tableWork.Calculation();
+            //tableWork.RowAdd(DataView, tableWork.Responce.ToList<double>());
+            //tableWork.RowAdd(tableWork.Alphas);
+            //tableWork.RowAdd(tableWork.Predicates);
+            tableWork.ColumnAdd(DataView,"M", tableWork.Responce);
+            tableWork.ColumnAdd(DataView, "A", tableWork.Alphas);
+            //tableWork.RowAdd(DataView,tableWork.Predicates.ToList<double>());
 
 
-            
+
 
         }
     }

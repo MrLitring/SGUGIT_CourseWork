@@ -21,7 +21,7 @@ namespace SGUGIT_CourseWork.HelperCode
         //
         // Первичные параметры
         //
-        public static double smoothValue = 0; // Сглаженная велечина A
+        public static double smoothValue = 0.9; // Сглаженная велечина A
         public static double assureValue = 0.0008; // Точность измерений E
         public static int blockCount = 0; // Кол-во блоков
 

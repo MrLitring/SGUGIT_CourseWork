@@ -10,7 +10,8 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F0_MainLoad : Form
     {
-        private const string path = "tmp/lastSession.txt";
+        private const string tempFilePath = "tmp/lastSession.txt";
+
 
         public F0_MainLoad()
         {
@@ -21,17 +22,7 @@ namespace SGUGIT_CourseWork.Forms
             EventBus.onDataBaseChange += DataBaseUpdate;
         }
 
-        private void SetActive(bool isActive = false)
-        {
-            MenuWorkBench.Enabled = isActive;
-            string sql = "";
-            if (GeneralData.DataBasePath != null)
-            {
-                sql = GeneralData.DataBasePath.Split('\\')
-                [GeneralData.DataBasePath.Split('\\').Count() - 1];
-                toolStripStatusLabel1.Text = sql;
-            }
-        }
+        
 
         //
         //
@@ -50,7 +41,7 @@ namespace SGUGIT_CourseWork.Forms
                 DataBaseOpen(openFileDialog.FileName);
                 DataBaseUpdate();
 
-                using(StreamWriter writer = new StreamWriter(path, true))
+                using(StreamWriter writer = new StreamWriter(tempFilePath, false))
                 {
                     writer.Write(openFileDialog.FileName);
                 }
@@ -84,14 +75,14 @@ namespace SGUGIT_CourseWork.Forms
         private void DataBaseUpdate()
         {
             GeneralData.DataTable.Clear();
-            GeneralData.DataTable.Rows.Clear();
+            GeneralData.DataTable.Rows.Clear( );
             GeneralData.DataTable.Columns.Clear();
 
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
                 $"Select * from {GeneralData.TableName_First} order by 1",
                 GeneralData.MainConnection);
             adapter.Fill(GeneralData.DataTable);
-        }
+        } 
 
         //
         // Action MenuStrip onClick
@@ -179,26 +170,39 @@ namespace SGUGIT_CourseWork.Forms
         {
             
 
-            if (File.Exists(path) == false)
+            if (File.Exists(tempFilePath) == false)
             {
-                if (!Directory.Exists(Path.GetDirectoryName(path)))
+                if (!Directory.Exists(Path.GetDirectoryName(tempFilePath)))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(path));
-                    using (FileStream fs = File.Create(path))
-                    {
-                        Console.WriteLine("файл lastSession создан");
-                    }
+                    Directory.CreateDirectory(Path.GetDirectoryName(tempFilePath));
 
                 }
+                using (FileStream fs = File.Create(tempFilePath))
+                {
+                    Console.WriteLine("файл lastSession создан");
+                }
+
             }
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(tempFilePath))
             {
                 string line = reader.ReadLine();
                 if (line != null) DataBaseOpen(line);
 
             }
 
+        }
+
+        private void SetActive(bool isActive = false)
+        {
+            MenuWorkBench.Enabled = isActive;
+            string sql = "";
+            if (GeneralData.DataBasePath != null)
+            {
+                sql = GeneralData.DataBasePath.Split('\\')
+                [GeneralData.DataBasePath.Split('\\').Count() - 1];
+                toolStripStatusLabel1.Text = sql;
+            }
         }
     }
 }
