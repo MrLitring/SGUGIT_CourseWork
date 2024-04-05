@@ -18,7 +18,7 @@ namespace SGUGIT_CourseWork.HelperCode
          * заполнить значениями, рассчитать значения, заполнять точки
          * 
          * Расчёт следующих даннных:
-         * отклик - responce, альфа - alpha, прогнозируемое значение - predicted(всегда последний в списке) 
+         * отклик - responce, альфа - 99999999999999fvbv , прогнозируемое значение - predicted(всегда последний в списке) 
          */
 
         private DataTable dtable;
@@ -147,7 +147,7 @@ namespace SGUGIT_CourseWork.HelperCode
             responce = new List<double>();
             for (int i = 0; i < pointColumns.Count; i++)
             {
-                responce.Add(Math.Round(Math.Sqrt(pointColumns[i].Sum(2)), 4));
+                responce.Add(Math.Sqrt(pointColumns[i].Sum(2)));
             }
         }
 
@@ -160,8 +160,12 @@ namespace SGUGIT_CourseWork.HelperCode
             for (int i = 0; i < pointColumns.Count; i++)
             {
                 list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
-                //list[i] = Math.Acos(list[i]);
-                //list[i] = list[i] * 180 / Math.PI;
+                if (list[i] >= 1) list[i] = 1;
+
+                //list[i] = (M[0] * M[i]);
+                //list[i] = Math.Round(list[0], 3);
+                list[i] = Math.Acos(list[i]);
+                list[i] = list[i] * 180 / Math.PI;
             }
 
             alphas = list;

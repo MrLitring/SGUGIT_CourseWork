@@ -65,23 +65,31 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             DataTableWork tableWork = new DataTableWork(dTable, points);
-            //tableWork.DataGridFill(DataView);
-            //tableWork.AddValue(GeneralData.assureValue);
-            //tableWork.DataGridFill(DataView);
-            //for (int i = 0; i <= tableWork.PointColumns.Count; i++)
-            //    DataView.Columns.Add(" ", " ");
+            DataTableWork tableWorkPlus = new DataTableWork(dTable, points);
+            DataTableWork tableWorkMinus = new DataTableWork(dTable, points);
+
+            tableWorkPlus.AddValue(GeneralData.assureValue);
+            tableWorkMinus.AddValue(-GeneralData.assureValue);
 
             tableWork.Calculation();
-            //tableWork.RowAdd(DataView, tableWork.Responce.ToList<double>());
-            //tableWork.RowAdd(tableWork.Alphas);
-            //tableWork.RowAdd(tableWork.Predicates);
-            tableWork.ColumnAdd(DataView,"M", tableWork.Responce);
+            tableWorkPlus.Calculation();
+            tableWorkMinus.Calculation();
+
+
+            tableWork.ColumnAdd(DataView, "M-", tableWorkMinus.Responce);
+            tableWork.ColumnAdd(DataView, "M", tableWork.Responce);
+            tableWork.ColumnAdd(DataView, "M+", tableWorkPlus.Responce);
+
+            tableWork.ColumnAdd(DataView, "A-", tableWorkMinus.Alphas);
             tableWork.ColumnAdd(DataView, "A", tableWork.Alphas);
-            //tableWork.RowAdd(DataView,tableWork.Predicates.ToList<double>());
+            tableWork.ColumnAdd(DataView, "A+", tableWorkPlus.Alphas);
 
 
-
-
+            for(int i = 0; i < 10; i++)
+            {
+                chart1.Series[0].Points.Clear();
+                chart1.Series[0].Points.Add(tableWork.Responce[i], tableWork.Alphas[i]);
+            }
         }
     }
 }

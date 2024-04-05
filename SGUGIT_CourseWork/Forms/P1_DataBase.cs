@@ -176,7 +176,14 @@ namespace SGUGIT_CourseWork.Forms
             dataToInsert.ExecuteInsert();
 
             DataTable_SetData();
-            dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count].Cells[cellFocus.Y];
+            try
+            {
+                dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count - 1].Cells[cellFocus.Y];
+            }
+            catch
+            {
+                dataGridView1.CurrentCell = dataGridView1.Rows[1].Cells[1];
+            }
             dataGridView1.Focus();
         }
 
