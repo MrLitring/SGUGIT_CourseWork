@@ -1,4 +1,5 @@
-﻿using SGUGIT_CourseWork.HelperCode;
+﻿using Microsoft.Office.Core;
+using SGUGIT_CourseWork.HelperCode;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,15 +24,10 @@ namespace SGUGIT_CourseWork.Forms
             EventBus.onDataBaseChange += Update;
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
-
         private void Update()
         {
-
-            DataView = new DataGridView();
+            dataView.Rows.Clear();
+            dataView.Columns.Clear();
             dTable.Clear();
             dTable.Rows.Clear();
             dTable.Columns.Clear();
@@ -45,15 +41,11 @@ namespace SGUGIT_CourseWork.Forms
         {
             EventBus.onDataBaseChange += Update;
             FillData();
-
-
         }
 
         List<PointColumn> points = new List<PointColumn>();
         private void FillData()
         {
-            
-
             for(int rows = 0; rows < dTable.Rows.Count; rows++)
             {
                 PointColumn point = new PointColumn();
@@ -64,31 +56,42 @@ namespace SGUGIT_CourseWork.Forms
                 points.Add(point);
             }
 
-            DataTableWork tableWork = new DataTableWork(dTable, points);
-            DataTableWork tableWorkPlus = new DataTableWork(dTable, points);
-            DataTableWork tableWorkMinus = new DataTableWork(dTable, points);
+            DataTableWork tableWork = new DataTableWork(dTable, points, dataView);
+            DataTableWork tableWorkPlus = new DataTableWork(dTable, points, dataView);
+            DataTableWork tableWorkMinus = new DataTableWork(dTable, points, dataView);
 
             tableWorkPlus.AddValue(GeneralData.assureValue);
             tableWorkMinus.AddValue(-GeneralData.assureValue);
+
+            tableWorkMinus.DataGridFill();
 
             tableWork.Calculation();
             tableWorkPlus.Calculation();
             tableWorkMinus.Calculation();
 
+            tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
+            tableWork.ColumnAdd("M", tableWork.Responce, 4);
+            tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
 
-            tableWork.ColumnAdd(DataView, "M-", tableWorkMinus.Responce);
-            tableWork.ColumnAdd(DataView, "M", tableWork.Responce);
-            tableWork.ColumnAdd(DataView, "M+", tableWorkPlus.Responce);
+            tableWork.ColumnAdd("A-", tableWorkMinus.Alphas);
+            tableWork.ColumnAdd("A", tableWork.Alphas);
+            tableWork.ColumnAdd("A+", tableWorkPlus.Alphas);
 
-            tableWork.ColumnAdd(DataView, "A-", tableWorkMinus.Alphas);
-            tableWork.ColumnAdd(DataView, "A", tableWork.Alphas);
-            tableWork.ColumnAdd(DataView, "A+", tableWorkPlus.Alphas);
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
+            chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[0].BorderWidth = 1;
+            chart1.Series[1].BorderWidth = 1;
+            chart1.Series[2].BorderWidth = 1;
 
-
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
-                chart1.Series[0].Points.Clear();
-                chart1.Series[0].Points.Add(tableWork.Responce[i], tableWork.Alphas[i]);
+                chart1.Series[0].Points.AddXY(tableWork.Responce[i], tableWork.Alphas[i]);
+                chart1.Series[1].Points.AddXY(tableWorkMinus.Responce[i], tableWorkMinus.Alphas[i]);
+                chart1.Series[2].Points.AddXY(tableWorkPlus.Responce[i], tableWorkPlus.Alphas[i]);
             }
         }
     }

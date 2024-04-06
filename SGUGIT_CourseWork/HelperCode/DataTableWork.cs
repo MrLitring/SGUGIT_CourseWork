@@ -18,21 +18,21 @@ namespace SGUGIT_CourseWork.HelperCode
          * заполнить значениями, рассчитать значения, заполнять точки
          * 
          * Расчёт следующих даннных:
-         * отклик - responce, альфа - 99999999999999fvbv , прогнозируемое значение - predicted(всегда последний в списке) 
+         * отклик - responce, альфа - alpha , прогнозируемое значение - predicted(всегда последний в списке) 
          */
 
         private DataTable dtable;
-        private DataGridView lastDataGridView;
         private List<PointColumn> pointColumns;
         private List<double> responce; // отклик
         private List<double> alphas; // Альфа
         private double[] predicates;
 
 
+        public DataGridView lastDataGridView;
         public List<PointColumn> PointColumns
         {
             get { return pointColumns; }
-            set { pointColumns = value; Calculation(); }
+            set { pointColumns = value; }
         }
         public double[] Predicates {get { return predicates; } }
         public List<double> Responce { get { return responce; } } // отклик
@@ -58,11 +58,13 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             this.pointColumns = pointColumns;
         }
-
-
-        public void DataGridFill(DataGridView gridView)
+        public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns, DataGridView dataGridView) : this(dataTable, pointColumns)
         {
-            this.lastDataGridView = gridView;
+            this.lastDataGridView = dataGridView;
+        }
+
+        public void DataGridFill()
+        {
             lastDataGridView.Rows.Clear();
             lastDataGridView.Columns.Clear();
 
@@ -91,44 +93,30 @@ namespace SGUGIT_CourseWork.HelperCode
         }
 
         public void RowAdd(List<double> list)
-        {
-            this.RowAdd(lastDataGridView,list);
-        }
-        public void RowAdd(DataGridView dataGridView, List<double> list)
-        {
-            int min = Math.Min(dataGridView.Columns.Count, list.Count);
-            dataGridView.Rows.Add();
+        { 
+            int min = Math.Min(lastDataGridView.Columns.Count, list.Count);
+            lastDataGridView.Rows.Add();
             for(int i = 0; i < min; i++)
             {
-                dataGridView.Rows[dataGridView.Rows.Count - 2].Cells[i].Value = list[i].ToString();
+                lastDataGridView.Rows[lastDataGridView.Rows.Count - 2].Cells[i].Value = list[i].ToString();
             }
         }        
 
-        public void ColumnAdd(DataGridView dataGridView, string nameColumn, List<double> list)
+        public void ColumnAdd(string nameColumn, List<double> list, int roundValue = 10)
         {
-            dataGridView.Columns.Add(nameColumn, nameColumn);
-            
-            if (list.Count >= dataGridView.Rows.Count)
-            {
-                for (int i = dataGridView.Rows.Count; i < list.Count; i++)
-                    dataGridView.Rows.Add();
-            }
-            dataGridView.Rows.Add();
+            lastDataGridView.Columns.Add(nameColumn, nameColumn);
+
+            for (int i = lastDataGridView.Rows.Count; i < list.Count + 1; i++)
+                lastDataGridView.Rows.Add();
 
             for (int i = 0; i < list.Count; i++)
-            {
-                dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value = list[i].ToString();
-            }
-            
-
+                lastDataGridView.Rows[i].Cells[lastDataGridView.Columns.Count - 1].Value = Math.Round(list[i], roundValue).ToString();
         }
 
         public void AddValue(double value)
         {
             for(int i = 0; i < pointColumns.Count; i++)
-            {
                 pointColumns[i] += value;
-            }
         }
 
         public void Calculation()
