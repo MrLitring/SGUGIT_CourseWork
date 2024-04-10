@@ -63,19 +63,30 @@ namespace SGUGIT_CourseWork.Forms
             tableWorkPlus.AddValue(GeneralData.assureValue);
             tableWorkMinus.AddValue(-GeneralData.assureValue);
 
-            tableWorkMinus.DataGridFill();
+            //tableWorkPlus.DataGridFill();
 
             tableWork.Calculation();
             tableWorkPlus.Calculation();
             tableWorkMinus.Calculation();
 
-            tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
-            tableWork.ColumnAdd("M", tableWork.Responce, 4);
-            tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
+            int roundaValue = 4;
+            tableWork.ColumnAdd("M+", tableWorkPlus.Responce, roundaValue);
+            tableWork.ColumnAdd("M-", tableWorkMinus.Responce, roundaValue);
+            tableWork.ColumnAdd("M", tableWork.Responce, roundaValue);
 
+            tableWork.ColumnAdd("A+", tableWorkPlus.Alphas);
             tableWork.ColumnAdd("A-", tableWorkMinus.Alphas);
             tableWork.ColumnAdd("A", tableWork.Alphas);
-            tableWork.ColumnAdd("A+", tableWorkPlus.Alphas);
+
+            List<double> predicats = new List<double>();
+            predicats.Add(tableWorkPlus.Predicates[0]);
+            predicats.Add(tableWork.Predicates[0]);
+            predicats.Add(tableWorkMinus.Predicates[0]);
+            predicats.Add(tableWorkPlus.Predicates[1]);
+            predicats.Add(tableWork.Predicates[1]);
+            predicats.Add(tableWorkMinus.Predicates[1]);
+
+            tableWork.RowAdd(predicats, roundaValue);
 
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));

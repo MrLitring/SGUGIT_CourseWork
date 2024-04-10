@@ -32,7 +32,6 @@ namespace SGUGIT_CourseWork.HelperCode
         public List<PointColumn> PointColumns
         {
             get { return pointColumns; }
-            set { pointColumns = value; }
         }
         public double[] Predicates {get { return predicates; } }
         public List<double> Responce { get { return responce; } } // отклик
@@ -56,7 +55,12 @@ namespace SGUGIT_CourseWork.HelperCode
         }
         public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns) : this(dataTable)
         {
-            this.pointColumns = pointColumns;
+            this.pointColumns = new List<PointColumn>();
+            foreach(PointColumn elem in pointColumns)
+            {
+                PointColumn point = new PointColumn(elem);
+                this.pointColumns.Add(point);
+            }
         }
         public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns, DataGridView dataGridView) : this(dataTable, pointColumns)
         {
@@ -92,13 +96,13 @@ namespace SGUGIT_CourseWork.HelperCode
             }
         }
 
-        public void RowAdd(List<double> list)
+        public void RowAdd(List<double> list, int roundValue = 10)
         { 
             int min = Math.Min(lastDataGridView.Columns.Count, list.Count);
             lastDataGridView.Rows.Add();
             for(int i = 0; i < min; i++)
             {
-                lastDataGridView.Rows[lastDataGridView.Rows.Count - 2].Cells[i].Value = list[i].ToString();
+                lastDataGridView.Rows[lastDataGridView.Rows.Count - 2].Cells[i].Value = Math.Round(list[i], roundValue).ToString();
             }
         }        
 
@@ -150,8 +154,6 @@ namespace SGUGIT_CourseWork.HelperCode
                 list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
                 if (list[i] >= 1) list[i] = 1;
 
-                //list[i] = (M[0] * M[i]);
-                //list[i] = Math.Round(list[0], 3);
                 list[i] = Math.Acos(list[i]);
                 list[i] = list[i] * 180 / Math.PI;
             }
@@ -164,7 +166,7 @@ namespace SGUGIT_CourseWork.HelperCode
             double smooth = GeneralData.smoothValue;
             double[] responceValues = new double[doubles.Length];
 
-            responceValues[0] = smooth * doubles[0] + (1 - smooth) * AvarageSumm(responce.ToArray());
+            responceValues[0] = smooth * doubles[0] + (1 - smooth) * AvarageSumm(doubles.ToArray());
             for (int i = 1; i < responceValues.Length; i++)
             {
                 responceValues[i] = smooth * doubles[i] + (1 - smooth) * responceValues[i-1];

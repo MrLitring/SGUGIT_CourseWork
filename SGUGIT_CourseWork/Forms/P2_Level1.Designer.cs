@@ -31,11 +31,11 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataView = new System.Windows.Forms.DataGridView();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dataView = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -48,25 +48,27 @@
             this.panel1.Size = new System.Drawing.Size(503, 432);
             this.panel1.TabIndex = 0;
             // 
-            // dataView
-            // 
-            this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataView.Location = new System.Drawing.Point(12, 12);
-            this.dataView.Name = "dataView";
-            this.dataView.Size = new System.Drawing.Size(479, 150);
-            this.dataView.TabIndex = 0;
-            // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 168);
+            this.chart1.Location = new System.Drawing.Point(0, 150);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(479, 252);
+            this.chart1.Size = new System.Drawing.Size(503, 282);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
+            // 
+            // dataView
+            // 
+            this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dataView.Location = new System.Drawing.Point(0, 0);
+            this.dataView.Name = "dataView";
+            this.dataView.Size = new System.Drawing.Size(503, 150);
+            this.dataView.TabIndex = 0;
             // 
             // P2_Level1
             // 
@@ -80,8 +82,8 @@
             this.Text = "P2_Level1";
             this.Load += new System.EventHandler(this.P2_Level1_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
             this.ResumeLayout(false);
 
         }

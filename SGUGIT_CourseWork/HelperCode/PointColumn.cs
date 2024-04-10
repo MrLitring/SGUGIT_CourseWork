@@ -14,17 +14,29 @@ namespace SGUGIT_CourseWork.HelperCode
         public List<double> Points { get {  return points; } }
         public int RoundValue = 4;
         public int Time = 0;
-        
-        public PointColumn(int RoundValue, object Time) {
-            points = new List<double>();
-            this.RoundValue = RoundValue;
-            this.Time = Convert.ToInt32(Time) + 1;
-        }
+
+
         public PointColumn()
         {
             points = new List<double>();
             this.RoundValue = 4;
         }
+        public PointColumn(PointColumn other) : this()
+        {
+            RoundValue = other.RoundValue;
+            Time = other.Time;
+
+            for (int i = 0; i < other.Points.Count; i++)
+            {
+                points.Add(other.Points[i]);
+            }
+        }
+        public PointColumn(int RoundValue, object Time) : this()
+        {
+            this.RoundValue = RoundValue;
+            this.Time = Convert.ToInt32(Time) + 1;
+        }
+        
 
         public void PointAdd(object point)
         {
@@ -95,8 +107,8 @@ namespace SGUGIT_CourseWork.HelperCode
         public static PointColumn operator +(PointColumn firstPoint, double value)
         {
             PointColumn point = new PointColumn();
-            for (int i = 0; i < firstPoint.Points.Count; i++)
-                point.PointAdd(firstPoint.Points[i] + value);
+            for (int i = 0; i < firstPoint.points.Count; i++)
+                point.PointAdd(firstPoint.points[i] + value);
 
             return point;
         }
