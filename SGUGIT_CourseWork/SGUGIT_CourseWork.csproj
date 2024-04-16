@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="HelperCode\DataTableWork.cs" />
     <Compile Include="HelperCode\EventBus.cs" />
+    <Compile Include="HelperCode\FormHelperCode.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
     <Compile Include="HelperCode\GeneralData.cs" />
     <Compile Include="HelperCode\PointColumn.cs" />

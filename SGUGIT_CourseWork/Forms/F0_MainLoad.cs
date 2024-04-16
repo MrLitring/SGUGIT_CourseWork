@@ -11,7 +11,7 @@ namespace SGUGIT_CourseWork.Forms
     public partial class F0_MainLoad : Form
     {
         private const string tempFilePath = "tmp/lastSession.txt";
-
+        private FormHelperCode formHelper;
 
         public F0_MainLoad()
         {
@@ -19,6 +19,8 @@ namespace SGUGIT_CourseWork.Forms
             GeneralData.MainConnection = new SQLiteConnection();
             SetActive(false);
 
+            formHelper = new FormHelperCode();
+            formHelper.ControlOut_Set(panel1);
             EventBus.onDataBaseChange += DataBaseUpdate;
         }
 
@@ -127,7 +129,7 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "StripEditDataBase":
                     {
-                        HelperCode.FormOpenCode.OpenForm(new P1_DataBase(), panel1);
+                        formHelper.PageLoad(new P1_DataBase());
                         break;
                     }
                 case "StripLevel1":
