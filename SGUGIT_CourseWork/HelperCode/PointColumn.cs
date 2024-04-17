@@ -8,16 +8,30 @@ using System.Threading.Tasks;
 
 namespace SGUGIT_CourseWork.HelperCode
 {
-    public  class PointColumn
+    public class PointColumn
     {
         private List<double> points;
-        public List<double> Points { get {  return points; } }
+
+        public List<double> Points { get { return points; } }
         public int RoundValue = 4;
         public int Time = 0;
+        private string columnName;
+        public string ColumnName { get
+            {
+                if(columnName ==null )
+                {
+                    if (points.Count != 0) return points[0].ToString();
+                }
+
+                return "ColumnName";
+            } 
+        set { columnName = value; }
+        }
 
 
         public PointColumn()
         {
+            columnName = null;
             points = new List<double>();
             this.RoundValue = 4;
         }

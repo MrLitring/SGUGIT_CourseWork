@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data.SQLite;
 using SGUGIT_CourseWork.HelperCode.SqlCode;
+using System.Collections.Generic;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -113,138 +114,195 @@ namespace SGUGIT_CourseWork.Forms
 
     internal class DataBaseCreate
     {
-        private const string firstTableName = "FirstData";
-        private const string secondTableName = "SecondData";
+        //private const string firstTableName = "FirstData";
+        //private const string secondTableName = "SecondData";
 
-        private string pathOldDataBase;
-        private string pathNewDataBase;
+        //private string pathOldDataBase;
+        //private string pathNewDataBase;
 
-        SQLiteConnection oldConnect;
-        SQLiteConnection newConnect;
+        //SQLiteConnection oldConnect;
+        //SQLiteConnection newConnect;
 
 
-        public DataBaseCreate(string pathOldDataBase, string pathNewDataBase)
-        {
-            this.pathOldDataBase = pathOldDataBase;
-            this.pathNewDataBase = pathNewDataBase;
-        }
+        //public DataBaseCreate(string pathOldDataBase, string pathNewDataBase)
+        //{
+        //    this.pathOldDataBase = pathOldDataBase;
+        //    this.pathNewDataBase = pathNewDataBase;
+        //}
 
-        public void CreateNewTables()
-        {
-            oldConnect = new SQLiteConnection($"Data Source = {pathOldDataBase}; Version = 3;");
-            newConnect = new SQLiteConnection($"Data Source = {pathNewDataBase}; Version = 3;");
+        //public void CreateNewTables()
+        //{
+        //    oldConnect = new SQLiteConnection($"Data Source = {pathOldDataBase}; Version = 3;");
+        //    newConnect = new SQLiteConnection($"Data Source = {pathNewDataBase}; Version = 3;");
 
-            oldConnect.Open();
-            newConnect.Open();
+        //    oldConnect.Open();
+        //    newConnect.Open();
 
-            FirstTable();
-            SecondTable_CreateAndInsertData();
+        //    FirstTable();
+        //    SecondTable_CreateAndInsertData();
 
-            MessageBox.Show("База данных создана - Успешно");
+        //    MessageBox.Show("База данных создана - Успешно");
 
-            newConnect.Close();
-            oldConnect.Close();
-        }
+        //    newConnect.Close();
+        //    oldConnect.Close();
+        //}
 
-        private void FirstTable()
-        {
-            int countColumn = FirstData_CountColumn();
-            string[] columns = new string[countColumn];
-            string[] types = new string[countColumn];
-            for (int i = 0; i < countColumn; i++)
-            {
-                columns[i] = $"\" {i}\"";
-                types[i] = "Real";
-            }
+        //private void FirstTable()
+        //{
+        //    int countColumn = FirstData_CountColumn();
+        //    string[] columns = new string[countColumn];
+        //    string[] types = new string[countColumn];
+        //    for (int i = 0; i < countColumn; i++)
+        //    {
+        //        columns[i] = $"\" {i}\"";
+        //        types[i] = "Real";
+        //    }
 
-            columns[0] = "Эпоха";
-            types[0] = "Integer";
+        //    columns[0] = "Эпоха";
+        //    types[0] = "Integer";
 
-            FirstData_CreateTable(columns, types);
-            FirstData_FillTable(columns, countColumn);
-        }
+        //    FirstData_CreateTable(columns, types);
+        //    FirstData_FillTable(columns, countColumn);
+        //}
 
-        private void SecondTable_CreateAndInsertData()
-        {
-            DataToCreateTable createTable = new DataToCreateTable(
-                secondTableName,
-                new string[] { "A", "E", "BlockCount", "Image" },
-                new string[] { "Real", "Real", "integer", "BLOB" }
-                );
+        //private void SecondTable_CreateAndInsertData()
+        //{
+        //    DataToCreateTable createTable = new DataToCreateTable(
+        //        secondTableName,
+        //        new string[] { "A", "E", "BlockCount", "Image" },
+        //        new string[] { "Real", "Real", "integer", "BLOB" }
+        //        );
+        //    //SQLData data = new SQLData(GeneralData.TableName_Second, );
 
-            DataToInsert insert = new DataToInsert(
-                secondTableName,
-                new string[] { "A", "E", "BlockCount", "Image" },
-                new object[] { 0.1, 0.01, 1 }
-                );
 
-            createTable.SetConnection(newConnect);
-            createTable.ExecuteCreate();
+        //    DataToInsert insert = new DataToInsert(
+        //        secondTableName,
+        //        new string[] { "A", "E", "BlockCount", "Image" },
+        //        new object[] { 0.1, 0.01, 1 }
+        //        );
 
-            insert.SetConnection(newConnect);
-            insert.ExecuteInsert();
-        }
+        //    createTable.SetConnection(newConnect);
+        //    createTable.ExecuteCreate();
 
-        private int FirstData_CountColumn()
-        {
-            string query = "PRAGMA table_info(Данные)";
-            int count = 0;
+        //    insert.SetConnection(newConnect);
+        //    insert.ExecuteInsert();
+        //}
 
-            using (SQLiteCommand command = new SQLiteCommand(query, oldConnect))
-            {
-                SQLiteDataReader reader = command.ExecuteReader();
+        //private int FirstData_CountColumn()
+        //{
+        //    string query = "PRAGMA table_info(Данные)";
+        //    int count = 0;
 
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        count++;
-                    }
-                }
-            }
+        //    using (SQLiteCommand command = new SQLiteCommand(query, oldConnect))
+        //    {
+        //        SQLiteDataReader reader = command.ExecuteReader();
 
-            return count;
-        }
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                count++;
+        //            }
+        //        }
+        //    }
 
-        private void FirstData_CreateTable(string[] columns, string[] types)
-        {
-            DataToCreateTable tableCreater = new DataToCreateTable(
-                firstTableName,
-                columns,
-                types
-                );
+        //    return count;
+        //}
 
-            tableCreater.SetConnection(newConnect);
-            tableCreater.ExecuteCreate();
-        }
+        //private void FirstData_CreateTable(string[] columns, string[] types)
+        //{
+        //    DataToCreateTable tableCreater = new DataToCreateTable(
+        //        firstTableName,
+        //        columns,
+        //        types
+        //        );
 
-        private void FirstData_FillTable(string[] columns, int сountColumn)
-        {
-            DataToInsert insert = new DataToInsert(firstTableName, columns, new object[] { });
-            insert.SetConnection(newConnect);
-            using (SQLiteCommand command = new SQLiteCommand("Select * from (Данные);", oldConnect))
-            {
-                SQLiteDataReader reader = command.ExecuteReader();
+        //    tableCreater.SetConnection(newConnect);
+        //    tableCreater.ExecuteCreate();
+        //}
 
-                if (reader.HasRows)
-                {
-                    object[] doubles = new object[сountColumn];
-                    while (reader.Read())
-                    {
-                        for (int i = 0; i < сountColumn; i++)
-                        {
-                            doubles[i] = reader.GetDouble(i);
-                        }
-                        insert.UpdateValues(doubles);
-                        insert.ExecuteInsert();
-                    }
+        //private void FirstData_FillTable(string[] columns, int сountColumn)
+        //{
+        //    DataToInsert insert = new DataToInsert(firstTableName, columns, new object[] { });
+        //    insert.SetConnection(newConnect);
+        //    using (SQLiteCommand command = new SQLiteCommand("Select * from (Данные);", oldConnect))
+        //    {
+        //        SQLiteDataReader reader = command.ExecuteReader();
 
-                }
+        //        if (reader.HasRows)
+        //        {
+        //            object[] doubles = new object[сountColumn];
+        //            while (reader.Read())
+        //            {
+        //                for (int i = 0; i < сountColumn; i++)
+        //                {
+        //                    doubles[i] = reader.GetDouble(i);
+        //                }
+        //                insert.UpdateValues(doubles);
+        //                insert.ExecuteInsert();
+        //            }
 
-            }
-        }
+        //        }
+
+        //    }
+        //}
 
     }
 
+
+    internal class TableCreate
+    {
+        private string name;
+        private SQLiteConnection connection;
+        private List<PointColumn> colums;
+
+       public TableCreate(SQLiteConnection connect,  string name)
+        {
+            this.connection = connect;
+            this.name = name;
+            colums = new List<PointColumn>();
+        }
+
+        public void ExecuteNewTable()
+        {
+
+        }
+        
+        public void DataOldTable(SQLiteConnection oldConnect, string tableName = "Данные")
+        {
+
+
+            oldConnect.Open();
+            SQLiteCommand command = new SQLiteCommand($"Select * from {tableName};");
+            SQLiteDataReader reader = command.ExecuteReader();
+            
+            if(reader.HasRows)
+            {
+
+            }
+
+
+
+
+            oldConnect.Close();
+        }
+
+        public void DataAddColumn()
+        {
+
+        }
+
+
+        private int ColumnCount(SQLiteConnection connect, string tableName)
+        {
+            int count = 0;
+            string query = $"GRAGMA table_info([{tableName}])";
+            connect.Open();
+
+
+
+            return count;
+        }
+    }
 }
 

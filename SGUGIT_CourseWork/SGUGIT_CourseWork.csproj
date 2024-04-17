@@ -112,8 +112,6 @@
     <Compile Include="HelperCode\GeneralData.cs" />
     <Compile Include="HelperCode\PointColumn.cs" />
     <Compile Include="HelperCode\SqlCode\DataToCreateTable.cs" />
-    <Compile Include="HelperCode\SqlCode\DataToInsert.cs" />
-    <Compile Include="HelperCode\SqlCode\DataToSave.cs" />
     <Compile Include="HelperCode\SqlCode\SQLData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
