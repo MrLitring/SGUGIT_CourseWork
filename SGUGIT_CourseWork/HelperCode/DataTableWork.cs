@@ -40,7 +40,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public DataTableWork()
         {
-            dtable = GeneralData.DataTable;
+            dtable = GeneralData.dataTable;
 
             lastDataGridView = new DataGridView();
             pointColumns = new List<PointColumn>();

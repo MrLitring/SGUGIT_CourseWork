@@ -15,7 +15,7 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class P2_Level1 : Form
     {
-        DataTable dTable = GeneralData.DataTable;  
+        DataTable dTable = GeneralData.dataTable;  
 
 
         public P2_Level1()
@@ -31,7 +31,7 @@ namespace SGUGIT_CourseWork.Forms
             dTable.Clear();
             dTable.Rows.Clear();
             dTable.Columns.Clear();
-            dTable = GeneralData.DataTable;
+            dTable = GeneralData.dataTable;
             MessageBox.Show("Uwu");
 
             FillData();
@@ -88,6 +88,7 @@ namespace SGUGIT_CourseWork.Forms
 
             tableWork.RowAdd(predicats, roundaValue);
 
+            chart1.Series.Clear();
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));

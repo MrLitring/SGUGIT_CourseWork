@@ -76,14 +76,14 @@ namespace SGUGIT_CourseWork.Forms
 
         private void DataBaseUpdate()
         {
-            GeneralData.DataTable.Clear();
-            GeneralData.DataTable.Rows.Clear( );
-            GeneralData.DataTable.Columns.Clear();
+            GeneralData.dataTable.Clear();
+            GeneralData.dataTable.Rows.Clear( );
+            GeneralData.dataTable.Columns.Clear();
 
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
                 $"Select * from {GeneralData.TableName_First} order by 1",
                 GeneralData.MainConnection);
-            adapter.Fill(GeneralData.DataTable);
+            adapter.Fill(GeneralData.dataTable);
         } 
 
         //

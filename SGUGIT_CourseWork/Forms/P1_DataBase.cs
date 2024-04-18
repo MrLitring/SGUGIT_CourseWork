@@ -15,11 +15,9 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class P1_DataBase : Form
     {
-        private bool isHasSaved = false;  // Есть ли сохранение?
         private bool isFirstStart = true; // Первый ли старт ?
         private List<SQLData> commandChanges = new List<SQLData>();
         // [A] [E] [B] [image]
-        private int[] indexSave = new int[4];
         private DataTable dTable;
         private Point cellFocus;
         private const string formName = "База данных";
@@ -30,42 +28,38 @@ namespace SGUGIT_CourseWork.Forms
         public P1_DataBase()
         {
             InitializeComponent();
-            dTable = new DataTable();
+        }
 
-            DataTable_SetData();
-            DataText_SetData();
-            DataImage_SetData();
+        private void P1_DataBase_Load(object sender, EventArgs e)
+        {
+            GeneralData.DataUpdate();
+            DataLoad();
+
             textBox1.TextChanged += TextBox_ValueChange;
             textBox2.TextChanged += TextBox_ValueChange;
             textBox3.TextChanged += TextBox_ValueChange;
 
-            dataGridView1.FirstDisplayedScrollingRowIndex = 0;
-            dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
+            if (dataGridView1.Rows.Count > 0 && dataGridView1.Columns.Count > 0)
+            {
+                dataGridView1.FirstDisplayedScrollingRowIndex = 0;
+                dataGridView1.FirstDisplayedScrollingColumnIndex = 0;
+            }
 
             isFirstStart = false;
-
         }
 
         //
         // Установление данных
         //
-        private void DataTable_SetData()
+
+        private void DataLoad()
         {
-            dTable.Columns.Clear();
-            dTable.Rows.Clear();
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
+            dTable = GeneralData.dataTable;
 
-            //SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-            //    $"Select * from {GeneralData.TableName_First} order by 1",
-            //    GeneralData.MainConnection);
-            //adapter.Fill(dTable);
-            dTable = GeneralData.DataTable;
-
-            for (int col = 0; col < dTable.Columns.Count; col++)
+            for (int col = 0; col < dTable.Rows.Count; col++)
             {
-                string ColName = dTable.Columns[col].ColumnName;
-                dataGridView1.Columns.Add(ColName, ColName);
+                string colName = dTable.Columns[col].ColumnName; 
+                dataGridView1.Columns.Add(colName, colName);
 
                 dataGridView1.Columns[col].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
@@ -74,56 +68,12 @@ namespace SGUGIT_CourseWork.Forms
             {
                 dataGridView1.Rows.Add(dTable.Rows[row].ItemArray);
             }
-        }
 
-        private void DataText_SetData()
-        {
-            SQLiteCommand command = new SQLiteCommand($"Select * From {GeneralData.TableName_Second}", GeneralData.MainConnection);
+            textBox1.Text = GeneralData.smoothValue.ToString();
+            textBox2.Text = GeneralData.assureValue.ToString();
+            textBox3.Text = GeneralData.blockCount.ToString();
 
-            using (SQLiteDataReader reader = command.ExecuteReader())
-            {
-                textBox1.Clear();
-                textBox2.Clear();
-                textBox3.Clear();
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    textBox1.Text = reader.GetDouble(0).ToString();
-                    textBox2.Text = reader.GetDouble(1).ToString();
-                    textBox3.Text = reader.GetInt32(2).ToString();
-                }
-            }
-        }
-
-        private void DataImage_SetData()
-        {
-            pictureBox1.Image = null;
-            string query = $"SELECT Image FROM {GeneralData.TableName_Second};";
-            
-
-            SQLiteCommand command = new SQLiteCommand (query , GeneralData.MainConnection);
-            using(SQLiteDataReader reader = command.ExecuteReader())
-            {
-                if(reader.HasRows)
-                {
-                    reader.Read();
-                    if (!reader.IsDBNull(0))
-                    {
-                        byte[] bytes = (byte[])reader["Image"];
-
-                        MemoryStream ms = new MemoryStream(bytes);
-                        
-                        using (ms = new MemoryStream(bytes))
-                        {
-                             pictureBox1.Image = Image.FromStream(ms);
-                        }
-                    }
-                }
-            }
-
-
-
+            pictureBox1.Image = GeneralData.imageSheme;
         }
 
         //
@@ -136,15 +86,13 @@ namespace SGUGIT_CourseWork.Forms
 
         private void buttonNewCycle_Click(object sender, EventArgs e)
         {
-            if (isHasSaved == true)
+            if (commandChanges.Count != 0)
             {
                 DialogResult result = MessageBox.Show("У вас есть несохранённые данные, сохранить эти данные?", "", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    Save();
-                }
-                else
+                if ((result == DialogResult.Yes) == false)
                     return;
+
+                Save();
             }
 
             if (dTable.Rows.Count <= 0) return;
@@ -154,7 +102,8 @@ namespace SGUGIT_CourseWork.Forms
 
             for (int i = 0; i < dTable.Columns.Count; i++)
             {
-                PointColumn pointColumn = new PointColumn(5, dTable.Rows[dTable.Rows.Count - 1][0]);
+                PointColumn pointColumn = new PointColumn(dTable.Rows[dTable.Rows.Count - 1][0]);
+                pointColumn.ColumnName = dTable.Columns[i].ColumnName;
                 for (int j = 0; j < dTable.Rows.Count; j++)
                 {
                     pointColumn.PointAdd(dTable.Rows[j][i]);
@@ -162,8 +111,7 @@ namespace SGUGIT_CourseWork.Forms
                 points.Add(pointColumn);
             }
 
-            DataToInsert dataToInsert = new DataToInsert(GeneralData.TableName_First);
-
+            SQLData dataToInsert = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Insert);
 
             object[] newPoints = new object[points.Count];
             newPoints[0] = points[0].Time;
@@ -171,19 +119,18 @@ namespace SGUGIT_CourseWork.Forms
             {
                 newPoints[i] = points[i].NewH();
             }
-
-            dataToInsert.UpdateValues(newPoints);
-            dataToInsert.ExecuteInsert();
-
-            DataTable_SetData();
-            try
+            string[] names = new string[points.Count];
+            for (int i = 0; i < points.Count; i++)
             {
-                dataGridView1.CurrentCell = dataGridView1.Rows[dTable.Rows.Count - 1].Cells[cellFocus.Y];
+                names[i] = points[i].ColumnName;
             }
-            catch
-            {
-                dataGridView1.CurrentCell = dataGridView1.Rows[1].Cells[1];
-            }
+
+
+            dataToInsert.AddValue(newPoints);
+            dataToInsert.AddName(names);
+            dataToInsert.Execute();
+
+            DataGridFocus(0, 0);
             dataGridView1.Focus();
         }
 
@@ -195,7 +142,6 @@ namespace SGUGIT_CourseWork.Forms
                 data.AddWhere("Эпоха", dTable.Rows[cellFocus.X][0]);
                 data.Execute(SQLData.executionNumber.Delete);
 
-                DataTable_SetData();
                 dataGridView1.CurrentCell = dataGridView1.Rows[cellFocus.X].Cells[cellFocus.Y];
                 dataGridView1.Focus();
             }
@@ -206,15 +152,24 @@ namespace SGUGIT_CourseWork.Forms
             string imagePath = FIleBrowser("png (*.png)|*.png");
             pictureBox1.Image = new Bitmap(imagePath);
 
-            DataToSave dataToSave = new DataToSave
-                (GeneralData.TableName_Second, "Image");
-            dataToSave.Name = "Image";
-            dataToSave.ExecuteSave(File.ReadAllBytes(imagePath));
+            SQLData dataToSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection, SQLData.executionNumber.Update);
+            dataToSave.ExecuteImageSave("Image", File.ReadAllBytes(imagePath));
+        }
+
+        private void toolUpdate_Click(object sender, EventArgs e)
+        {
+            isFirstStart = true;
+            GeneralData.DataUpdate();
+            DataClear();
+            DataLoad();
+            isFirstStart = false;
         }
 
         //
         // События
         //
+
+
         private void TextBox_ValueChange(object sender, EventArgs e)
         {
             if (isFirstStart == true) return;
@@ -264,14 +219,14 @@ namespace SGUGIT_CourseWork.Forms
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
             string name = $"cell_{e.ColumnIndex}_{e.RowIndex}";
-            SQLData data = data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection);
+            SQLData data = data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Update);
 
             double value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             if (value == currentValue) return;
             if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
 
-            
-            data.AddName($"\'{dataGridView1.Columns[e.ColumnIndex].HeaderText}\'");
+
+            data.AddName($"{dataGridView1.Columns[e.ColumnIndex].HeaderText}");
             data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
             data.Name = "";
@@ -283,26 +238,35 @@ namespace SGUGIT_CourseWork.Forms
         //
         //
         //
+        private void DataGridFocus(int column, int row)
+        {
+            //dataGridView1.CurrentCell = dataGridView1.Rows[row].Cells[column];
+
+        }
+
+        private void DataClear()
+        {
+            dTable.Columns.Clear();
+            dTable.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+        }
+
         private void Save()
         {
             if (commandChanges.Count == 0)
-            {
                 return;
-            }
 
             foreach (SQLData elem in commandChanges)
-            {
-                elem.Execute(SQLData.executionNumber.Update);
-            }
-
-
+                elem.Execute();
 
             commandChanges.Clear();
             LabelText_UnSave();
-            if (EventBus.onDataBaseChange != null)
-            {
-                EventBus.onDataBaseChange.Invoke();
-            }
+
+            GeneralData.DataUpdate();
         }
 
         private void LabelText_Save()
@@ -310,16 +274,14 @@ namespace SGUGIT_CourseWork.Forms
             if (toolStripLabelSave.Text.EndsWith("*") == false)
             {
                 toolStripLabelSave.Text = formName + "*" + commandChanges.Count.ToString();
-                isHasSaved = true;
             }
         }
 
         private void LabelText_UnSave()
         {
-            isHasSaved = false;
             toolStripLabelSave.Text = formName;
         }
-        
+
         private string FIleBrowser(string filter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -336,6 +298,10 @@ namespace SGUGIT_CourseWork.Forms
                 return null;
 
         }
+
+        
+
+
     }
 
 }

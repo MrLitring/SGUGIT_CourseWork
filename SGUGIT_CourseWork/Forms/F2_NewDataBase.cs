@@ -24,14 +24,14 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "buttonCancel":
                     {
-                        this.Close(); 
+                        this.Close();
                         break;
                     }
 
                 case "buttonCreate":
                     {
-                        if(
-                            ((textBox1.Text.Replace(" ","") == "") ||
+                        if (
+                            ((textBox1.Text.Replace(" ", "") == "") ||
                             (textBox2.Text.Replace(" ", "") == "") ||
                             (textBox3.Text.Replace(" ", "") == "")) == true)
                         {
@@ -100,13 +100,13 @@ namespace SGUGIT_CourseWork.Forms
                 return;
             }
 
-            SQLiteConnection.CreateFile(fullPath);
-            DataBaseCreate baseCreate = new DataBaseCreate(
-                textBox3.Text,
-                fullPath
-                );
+            //SQLiteConnection.CreateFile(fullPath);
+            //DataBaseCreate baseCreate = new DataBaseCreate(
+            //    textBox3.Text,
+            //    fullPath
+            //    );
 
-            baseCreate.CreateNewTables();
+            //baseCreate.CreateNewTables();
             this.Close();
         }
 
@@ -256,7 +256,7 @@ namespace SGUGIT_CourseWork.Forms
         private SQLiteConnection connection;
         private List<PointColumn> colums;
 
-       public TableCreate(SQLiteConnection connect,  string name)
+        public TableCreate(SQLiteConnection connect, string name)
         {
             this.connection = connect;
             this.name = name;
@@ -267,16 +267,14 @@ namespace SGUGIT_CourseWork.Forms
         {
 
         }
-        
+
         public void DataOldTable(SQLiteConnection oldConnect, string tableName = "Данные")
         {
-
-
             oldConnect.Open();
             SQLiteCommand command = new SQLiteCommand($"Select * from {tableName};");
             SQLiteDataReader reader = command.ExecuteReader();
-            
-            if(reader.HasRows)
+
+            if (reader.HasRows)
             {
 
             }
@@ -298,10 +296,22 @@ namespace SGUGIT_CourseWork.Forms
             int count = 0;
             string query = $"GRAGMA table_info([{tableName}])";
             connect.Open();
+            using (SQLiteCommand command = new SQLiteCommand(query, connect))
+            {
+                SQLiteDataReader reader = command.ExecuteReader();
 
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        count++;
+                    }
+                }
 
+                connect.Close();
+                return count;
 
-            return count;
+            }
         }
     }
 }

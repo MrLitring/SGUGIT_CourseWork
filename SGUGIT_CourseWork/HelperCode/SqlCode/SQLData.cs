@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Windows;
+using System.Xml;
 
 namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
@@ -21,18 +22,21 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
 
         private SQLiteConnection connection;
-        private List<string> colNames;
-        private List<object> colValues;
+        private List<string> parameterNames;
+        private List<object> parameterValues;
         private string tableName;
         private string where;
         private object time;
+        private int minCount;
+        private const string nameParam = "value_";
 
-        private SQLData() 
+        private SQLData()
         {
-            colNames = new List<string>();
-            colValues = new List<object>();
+            parameterNames = new List<string>();
+            parameterValues = new List<object>();
             where = string.Empty;
             time = 0;
+            minCount = 0;
         }
         public SQLData(string tableName, SQLiteConnection connection) : this()
         {
@@ -51,13 +55,13 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         //
         public void AddValue(object value)
         {
-            colValues.Add(value);
+            parameterValues.Add(value);
         }
 
         public void AddValue(object[] value)
         {
             foreach (object elem in value)
-                colValues.Add(elem);
+                parameterValues.Add(elem);
         }
 
         //
@@ -65,13 +69,13 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         //
         public void AddName(string value)
         {
-            colNames.Add(value);
+            parameterNames.Add(value);
         }
 
         public void AddName(string[] value)
         {
             foreach (string elem in value)
-                colValues.Add(elem);
+                parameterNames.Add(elem);
         }
 
         //
@@ -86,38 +90,38 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         //
         // Execution order 66 
         //
+        public void Execute()
+        {
+            Execute(this.ExecutionCommand);
+        }
         public void Execute(executionNumber numCommand)
         {
-            if(numCommand != ExecutionCommand && ExecutionCommand != executionNumber.None) numCommand = ExecutionCommand;
+            if (numCommand != ExecutionCommand && ExecutionCommand != executionNumber.None) numCommand = ExecutionCommand;
 
-            string query = "";
-
-            switch (numCommand)
-            {
-                case executionNumber.None:
-                    return;
-
-                case executionNumber.Update: 
-                    {
-                        query = Update();
-                        break;
-                    }
-
-                case executionNumber.Insert:
-                    {
-                        query = Insert();
-                        break;
-                    }
-
-                case executionNumber.Delete:
-                    {
-                        query = Delete();
-                        break;
-                    }
-
-            }
+            minCount = Math.Min(parameterNames.Count, parameterValues.Count);
+            string query = SelectQuery(numCommand);
 
             SQLiteCommand command = new SQLiteCommand(query, connection);
+
+            for (int i = 0; i < minCount; i++)
+            {
+                command.Parameters.AddWithValue(nameParam + i.ToString(), parameterValues[i]);
+            }
+            if (string.IsNullOrEmpty(where) == false)
+                command.Parameters.AddWithValue(where, time);
+
+            Console.WriteLine(query);
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
+        public void ExecuteImageSave(string name, byte[] bytes)
+        {
+            string content = $"UPDATE {this.tableName} SET \"{name}\" = @Image;"; ;
+            SQLiteCommand command = new SQLiteCommand(content, connection);
+
+            command.Parameters.AddWithValue("@Image", bytes);
+
             command.ExecuteNonQuery();
             command.Dispose();
         }
@@ -125,52 +129,65 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         //
         // Yes, Palpatin
         //
+        private string SelectQuery(executionNumber numberName)
+        {
+            switch (numberName)
+            {
+                case executionNumber.None:
+                    return "";
+
+                case executionNumber.Insert:
+                    return Insert();
+
+                case executionNumber.Delete:
+                    return Delete();
+
+                case executionNumber.Update:
+                    return Update();
+            }
+
+            return "";
+        }
+
         private string Insert()
         {
-            string[] query = new string[3];
+            string query = $"INSERT INTO {tableName} ";
+            string columns = "";
+            string values = "";
 
-            int min = Math.Min(colNames.Count, colValues.Count);
-            if (min == 0) return "";
-            
-            query[0] = $"INSERT INTO [{tableName}] ";
-            query[1] += " (";
-            query[2] += " (";
-            for (int i = 0; i < min; i++)
+            for (int i = 0; i < minCount; i++)
             {
-                query[1] += colNames[i];
-                query[2] += colValues[i];
+                columns += $"[{parameterNames[i]}]";
+                values += "@" + nameParam + i.ToString();
 
-                if(i < min - 1)
+                if (i < minCount - 1)
                 {
-                    query[1] += ",";
-                    query[2] += ",";
+                    columns += ",";
+                    values += ",";
                 }
             }
-            query[1] += ") ";
-            query[2] += ") ";
-
-            return query[0] + query[1] + query[2] + ";";
+            return $"{query} ({columns}) VALUES ({values});";
         }
 
         private string Update()
         {
             string query = $"UPDATE [{tableName}] SET ";
-
-            int min = Math.Min(colNames.Count, colValues.Count);
-            if (min == 0) return "";
+            int min = minCount;
 
             for (int i = 0; i < min; i++)
             {
-                query += $"{colNames[i]} = {colValues[i]}";
+                query += $"[{parameterNames[i]}] = " + $"@{nameParam + i.ToString()}";
 
-                if (i != min - 1)
-                    query += ", ";
+                if (i < min - 1)
+                    query += ",";
             }
 
-            if (where != string.Empty)
-                query += $" WHERE {where} = {time}";
+            if (string.IsNullOrEmpty(where) == false)
+                query += $" WHERE {where} = @{where}";
 
-            return query + ";";
+            query += ";";
+
+            return query;
         }
 
         private string Delete()
