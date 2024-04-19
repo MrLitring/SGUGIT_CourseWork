@@ -69,15 +69,15 @@ namespace SGUGIT_CourseWork.Forms
             tableWorkPlus.Calculation();
             tableWorkMinus.Calculation();
 
-            int roundaValue = 4;
-            tableWork.ColumnAdd("M+", tableWorkPlus.Responce, roundaValue);
-            tableWork.ColumnAdd("M-", tableWorkMinus.Responce, roundaValue);
-            tableWork.ColumnAdd("M", tableWork.Responce, roundaValue);
+            int roundaValue = 7;
+            tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
+            tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
+            tableWork.ColumnAdd("M", tableWork.Responce, 4);
 
-            tableWork.ColumnAdd("A+", tableWorkPlus.Alphas);
-            tableWork.ColumnAdd("A-", tableWorkMinus.Alphas);
-            tableWork.ColumnAdd("A", tableWork.Alphas);
-
+            tableWork.ColumnAdd("A+", tableWorkPlus.Alphas, roundaValue);
+            tableWork.ColumnAdd("A-", tableWorkMinus.Alphas, roundaValue);
+            tableWork.ColumnAdd("A", tableWork.Alphas, roundaValue);
+            
             List<double> predicats = new List<double>();
             predicats.Add(tableWorkPlus.Predicates[0]);
             predicats.Add(tableWork.Predicates[0]);
@@ -86,7 +86,34 @@ namespace SGUGIT_CourseWork.Forms
             predicats.Add(tableWork.Predicates[1]);
             predicats.Add(tableWorkMinus.Predicates[1]);
 
-            tableWork.RowAdd(predicats, roundaValue);
+            tableWork.RowAdd(predicats, 7);
+
+            List<double> E = new List<double>();
+            for(int  i = 0; i < tableWork.Responce.Count; i++)
+            {
+                E.Add(Math.Abs(tableWorkPlus.Responce[i] - tableWorkMinus.Responce[i]));
+            }
+            E.Add(Math.Abs(tableWorkPlus.Predicates[0] - tableWorkMinus.Predicates[0]));
+            tableWork.ColumnAdd("E", E, 4);
+
+            List<double> L = new List<double>();
+            for (int i = 0; i < tableWork.Responce.Count; i++)
+            {
+                L.Add(Math.Abs(tableWorkMinus.Responce[i] - tableWork.Responce[i]));
+            }
+            L.Add(Math.Abs(tableWorkMinus.Predicates[0] - tableWork.Predicates[0]));
+            tableWork.ColumnAdd("L", L, 4);
+
+            dataView.Columns.Add("L<=E", "L<=E");
+            for (int i = 0; i < tableWork.Responce.Count; i++)
+            {
+                string s = "не изменяемый";
+                if (L[i] > GeneralData.assureValue)
+                    s = "изменяемый";
+
+                    dataView.Rows[i].Cells[dataView.Columns.Count - 1].Value = s;
+            }
+
 
             chart1.Series.Clear();
             chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
