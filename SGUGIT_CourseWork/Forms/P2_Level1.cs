@@ -48,7 +48,7 @@ namespace SGUGIT_CourseWork.Forms
         {
             DataTableWork work = new DataTableWork(GeneralData.dataTable);
             work.ColumnFill();
-            //asd
+            //Проверка 1
 
             //for(int rows = 0; rows < dTable.Rows.Count; rows++)
             //{
