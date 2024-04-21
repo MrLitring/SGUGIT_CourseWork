@@ -86,6 +86,15 @@ namespace SGUGIT_CourseWork.HelperCode
             return point;
         }
 
+        public static PointColumn operator -(PointColumn firstPoint, double value)
+        {
+            PointColumn point = new PointColumn();
+            for (int i = 0; i < firstPoint.points.Count; i++)
+                point.PointAdd(firstPoint.points[i] - value);
+
+            return point;
+        }
+
 
 
         private double Max()

@@ -22,7 +22,9 @@ namespace SGUGIT_CourseWork.HelperCode
          */
 
         private DataTable dtable;
-        private List<PointColumn> pointColumns;
+        private List<PointColumn> pointColumnsNull;
+        private List<PointColumn> pointColumnsMinus;
+        private List<PointColumn> pointColumnsPlus;
         private List<double> responce; // отклик
         private List<double> alphas; // Альфа
         private double[] predicates;
@@ -31,7 +33,7 @@ namespace SGUGIT_CourseWork.HelperCode
         public DataGridView lastDataGridView;
         public List<PointColumn> PointColumns
         {
-            get { return pointColumns; }
+            get { return pointColumnsNull; }
         }
         public double[] Predicates {get { return predicates; } }
         public List<double> Responce { get { return responce; } } // отклик
@@ -43,7 +45,7 @@ namespace SGUGIT_CourseWork.HelperCode
             dtable = GeneralData.dataTable;
 
             lastDataGridView = new DataGridView();
-            pointColumns = new List<PointColumn>();
+            pointColumnsNull = new List<PointColumn>();
             responce = new List<double>();
             alphas = new List<double>();
 
@@ -55,17 +57,44 @@ namespace SGUGIT_CourseWork.HelperCode
         }
         public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns) : this(dataTable)
         {
-            this.pointColumns = new List<PointColumn>();
+            this.pointColumnsNull = new List<PointColumn>();
             foreach(PointColumn elem in pointColumns)
             {
                 PointColumn point = new PointColumn(elem);
-                this.pointColumns.Add(point);
+                this.pointColumnsNull.Add(point);
             }
         }
         public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns, DataGridView dataGridView) : this(dataTable, pointColumns)
         {
             this.lastDataGridView = dataGridView;
         }
+
+
+        public void ColumnFill(bool isRowRead = true)
+        {
+            if (dtable == null) dtable = GeneralData.dataTable;
+
+            for(int col = 0; col < dtable.Columns.Count; col++)
+            {
+                PointColumn point = new PointColumn();
+                for(int row = 0; row < dtable.Rows.Count; row++)
+                {
+                    point.PointAdd(dtable.Rows[row][col]);
+                }
+                pointColumnsNull.Add(point);
+            }
+
+            for(int row = 0; row < dtable.Rows.Count; row++)
+            {
+                PointColumn point = new PointColumn();
+                for(int col = 0; col < dtable.Columns.Count; col++)
+                {
+                    point.PointAdd(dtable.Rows[row][col]);
+                }
+                pointColumnsNull.Add(point);
+            }
+        }
+
 
         public void DataGridFill()
         {
@@ -75,11 +104,11 @@ namespace SGUGIT_CourseWork.HelperCode
             //
             // Даём новые колонки и строки
             //
-            for(int i = 0; i < pointColumns.Count; i++)
+            for(int i = 0; i < pointColumnsNull.Count; i++)
             {
                 lastDataGridView.Columns.Add(i.ToString(), i.ToString());
             }
-            for(int i = 0; i < pointColumns[0].Points.Count;i++)
+            for(int i = 0; i < pointColumnsNull[0].Points.Count;i++)
             {
                 lastDataGridView.Rows.Add();
             }
@@ -87,11 +116,11 @@ namespace SGUGIT_CourseWork.HelperCode
             //
             // Заполняем
             //
-            for(int col = 0; col < pointColumns.Count; col++)
+            for(int col = 0; col < pointColumnsNull.Count; col++)
             {
-                for (int row = 0; row < pointColumns[col].Points.Count; row++)
+                for (int row = 0; row < pointColumnsNull[col].Points.Count; row++)
                 {
-                    lastDataGridView.Rows[row].Cells[col].Value = pointColumns[col].Points[row].ToString();
+                    lastDataGridView.Rows[row].Cells[col].Value = pointColumnsNull[col].Points[row].ToString();
                 }
             }
         }
@@ -119,12 +148,17 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public void AddValue(double value)
         {
-            for(int i = 0; i < pointColumns.Count; i++)
-                pointColumns[i] += value;
+            for(int i = 0; i < pointColumnsNull.Count; i++)
+                pointColumnsNull[i] += value;
         }
 
         public void Calculation()
         {
+            for(int i = 0; i < pointColumnsNull.Count; i++)
+            {
+                pointColumnsMinus.Add(pointColumnsNull[i] - GeneralData.assureValue);
+                pointColumnsPlus.Add(pointColumnsPlus[i] + GeneralData.assureValue);
+            }
             Responce_Calculation();
             Alphas_Calculation();
             predicates[0] = Predicate_Calculation(responce.ToArray());
@@ -137,9 +171,9 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             // Формула = "Корень(СУММКВ(array[i]))"
             responce = new List<double>();
-            for (int i = 0; i < pointColumns.Count; i++)
+            for (int i = 0; i < pointColumnsNull.Count; i++)
             {
-                responce.Add(Math.Sqrt(pointColumns[i].Sum(2)));
+                responce.Add(Math.Sqrt(pointColumnsNull[i].Sum(2)));
             }
         }
 
@@ -149,9 +183,9 @@ namespace SGUGIT_CourseWork.HelperCode
             List<double> list = new List<double>();
             List<double> M = responce;
 
-            for (int i = 0; i < pointColumns.Count; i++)
+            for (int i = 0; i < pointColumnsNull.Count; i++)
             {
-                list.Add((pointColumns[0] * pointColumns[i]).Sum() / (M[0] * M[i]));
+                list.Add((pointColumnsNull[0] * pointColumnsNull[i]).Sum() / (M[0] * M[i]));
                 if (list[i] >= 1) list[i] = 1;
 
                 list[i] = Math.Acos(list[i]);

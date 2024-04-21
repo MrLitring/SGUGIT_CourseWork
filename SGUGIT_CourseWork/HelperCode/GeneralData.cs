@@ -79,7 +79,7 @@ namespace SGUGIT_CourseWork.HelperCode
                 {
                     byte[] bytes = (byte[])reader["Image"];
 
-                    MemoryStream ms = new MemoryStream(bytes);
+                    MemoryStream ms = new MemoryStream(bytes); 
 
                     using (ms = new MemoryStream(bytes))
                     {
