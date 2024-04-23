@@ -47,7 +47,11 @@ namespace SGUGIT_CourseWork.Forms
         private void FillData()
         {
             DataTableWork work = new DataTableWork(GeneralData.dataTable);
-            work.ColumnFill();
+            work.ColumnFill(false);
+            work.lastDataGridView = dataView;
+            work.DataGridFill();
+
+
             //Проверка 1
 
             //for(int rows = 0; rows < dTable.Rows.Count; rows++)
