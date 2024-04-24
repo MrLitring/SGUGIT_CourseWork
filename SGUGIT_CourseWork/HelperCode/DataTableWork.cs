@@ -22,8 +22,8 @@ namespace SGUGIT_CourseWork.HelperCode
          */
 
         private DataTable dtable;
-        public List<PointColumn> pointColumnsNull;
-        public List<PointColumn> pointColumnsMinus;
+        public List<PointColumn> pointColumnsNull = new List<PointColumn>();
+        public List<PointColumn> pointColumnsMinus = new List<PointColumn>();
         public List<PointColumn> pointColumnsPlus;
         private List<double> responce; // отклик
         private List<double> alphas; // Альфа
@@ -32,10 +32,20 @@ namespace SGUGIT_CourseWork.HelperCode
 
         private struct ColumnTable
         {
-            public List<PointColumn> PointColumn;
+            public List<PointColumn> PointColumns;
             public List<double> alphas;
             public List<double> responces;
             public double[] predicates;
+
+            public ColumnTable()
+            {
+
+            }
+
+            public void AddPoints(PointColumn pointColumn)
+            {
+                this.PointColumns.Add(pointColumn);
+            }
         }
 
         ColumnTable columnMinus;
@@ -96,6 +106,9 @@ namespace SGUGIT_CourseWork.HelperCode
                     {
                         point.PointAdd(dtable.Rows[row][col]);
                     }
+                    columnNull.AddPoints(point);
+                    columnMinus.AddPoints(point - GeneralData.assureValue);
+                    columnPlus.AddPoints(point + GeneralData.assureValue);
                     pointColumnsNull.Add(point);
                 }
             }
@@ -108,6 +121,7 @@ namespace SGUGIT_CourseWork.HelperCode
                     {
                         point.PointAdd(dtable.Rows[row][col]);
                     }
+                    columnNull.AddPoints(point);
                     pointColumnsNull.Add(point);
                 }
             }
