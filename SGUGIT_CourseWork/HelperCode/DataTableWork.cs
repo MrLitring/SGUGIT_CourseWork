@@ -37,11 +37,6 @@ namespace SGUGIT_CourseWork.HelperCode
             public List<double> responces;
             public double[] predicates;
 
-            public ColumnTable()
-            {
-
-            }
-
             public void AddPoints(PointColumn pointColumn)
             {
                 this.PointColumns.Add(pointColumn);
