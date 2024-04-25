@@ -22,24 +22,22 @@ namespace SGUGIT_CourseWork.HelperCode
          */
 
         private DataTable dtable;
-        public List<PointColumn> pointColumnsNull = new List<PointColumn>();
-        public List<PointColumn> pointColumnsMinus = new List<PointColumn>();
-        public List<PointColumn> pointColumnsPlus;
-        private List<double> responce; // отклик
-        private List<double> alphas; // Альфа
-        private double[] predicates;
 
 
         private struct ColumnTable
         {
-            public List<PointColumn> PointColumns;
+            public List<PointColumn> pointColumns;
             public List<double> alphas;
             public List<double> responces;
             public double[] predicates;
 
-            public void AddPoints(PointColumn pointColumn)
+
+            public void init()
             {
-                this.PointColumns.Add(pointColumn);
+                pointColumns = new List<PointColumn>();
+                alphas = new List<double>();
+                responces = new List<double>();
+                predicates = new double[2];
             }
         }
 
@@ -48,13 +46,6 @@ namespace SGUGIT_CourseWork.HelperCode
         ColumnTable columnPlus;
 
         public DataGridView lastDataGridView;
-        public List<PointColumn> PointColumns
-        {
-            get { return pointColumnsNull; }
-        }
-        public double[] Predicates { get { return predicates; } }
-        public List<double> Responce { get { return responce; } } // отклик
-        public List<double> Alphas { get { return alphas; } } // Альфа
 
 
 
@@ -63,28 +54,17 @@ namespace SGUGIT_CourseWork.HelperCode
             dtable = GeneralData.dataTable;
 
             lastDataGridView = new DataGridView();
-            pointColumnsNull = new List<PointColumn>();
-            responce = new List<double>();
-            alphas = new List<double>();
+            columnNull = new ColumnTable();
+            columnPlus = new ColumnTable();
+            columnMinus = new ColumnTable();
 
-            predicates = new double[6];
+            columnNull.init();
+            columnPlus.init();
+            columnMinus.init();
         }
         public DataTableWork(DataTable dataTable) : this()
         {
             this.dtable = dataTable;
-        }
-        public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns) : this(dataTable)
-        {
-            this.pointColumnsNull = new List<PointColumn>();
-            foreach (PointColumn elem in pointColumns)
-            {
-                PointColumn point = new PointColumn(elem);
-                this.pointColumnsNull.Add(point);
-            }
-        }
-        public DataTableWork(DataTable dataTable, List<PointColumn> pointColumns, DataGridView dataGridView) : this(dataTable, pointColumns)
-        {
-            this.lastDataGridView = dataGridView;
         }
 
 
@@ -92,121 +72,100 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             if (dtable == null) dtable = GeneralData.dataTable;
 
-            if (isRowRead)
+            int colCount = dtable.Columns.Count;
+            int rowCount = dtable.Rows.Count;
+
+            if (isRowRead == false)
             {
-                for (int col = 0; col < dtable.Columns.Count; col++)
+                colCount = dtable.Rows.Count;
+                rowCount = dtable.Columns.Count;
+            }
+            for (int col = 0; col < colCount; col++)
+            {
+                PointColumn point = new PointColumn();
+                for (int row = 0; row < rowCount; row++)
                 {
-                    PointColumn point = new PointColumn();
-                    for (int row = 0; row < dtable.Rows.Count; row++)
-                    {
+                    if (isRowRead)
                         point.PointAdd(dtable.Rows[row][col]);
-                    }
-                    columnNull.AddPoints(point);
-                    columnMinus.AddPoints(point - GeneralData.assureValue);
-                    columnPlus.AddPoints(point + GeneralData.assureValue);
-                    pointColumnsNull.Add(point);
-                }
-            }
-            else
-            {
-                for (int row = 0; row < dtable.Rows.Count; row++)
-                {
-                    PointColumn point = new PointColumn();
-                    for (int col = 0; col < dtable.Columns.Count; col++)
+                    else
                     {
-                        point.PointAdd(dtable.Rows[row][col]);
+                        point.PointAdd(dtable.Rows[col][row]);
                     }
-                    columnNull.AddPoints(point);
-                    pointColumnsNull.Add(point);
                 }
+                if (isRowRead == false)
+                    point.Points.RemoveAt(0);
+
+                columnNull.pointColumns.Add(point);
             }
+
+            
         }
 
-
-        public void DataGridFill()
+        public void Calculation(bool isFullCalculation = true)
         {
-            lastDataGridView.Rows.Clear();
-            lastDataGridView.Columns.Clear();
+            columnNull.responces = Responce_Calculation(columnNull.pointColumns);
+            columnNull.alphas = Alphas_Calculation(columnNull.responces, columnNull.pointColumns);
 
-            //
-            // Даём новые колонки и строки
-            //
-            for (int i = 0; i < pointColumnsNull.Count; i++)
+            if (isFullCalculation == true) 
             {
-                lastDataGridView.Columns.Add(i.ToString(), i.ToString());
-            }
-            for (int i = 0; i < pointColumnsNull[0].Points.Count; i++)
-            {
-                lastDataGridView.Rows.Add();
-            }
-
-            //
-            // Заполняем
-            //
-            for (int col = 0; col < pointColumnsNull.Count; col++)
-            {
-                for (int row = 0; row < pointColumnsNull[col].Points.Count; row++)
+                for(int i = 0; i < columnNull.pointColumns.Count; i++)
                 {
-                    lastDataGridView.Rows[row].Cells[col].Value = pointColumnsNull[col].Points[row].ToString();
+                    columnMinus.pointColumns.Add(columnNull.pointColumns[i] - GeneralData.assureValue);
+                    columnPlus.pointColumns.Add(columnNull.pointColumns[i] + GeneralData.assureValue);
                 }
+
+
+                columnMinus.responces = Responce_Calculation(columnMinus.pointColumns);
+                columnMinus.alphas = Alphas_Calculation(columnMinus.responces, columnMinus.pointColumns);
             }
+
         }
 
-        public void RowAdd(List<double> list, int roundValue = 10)
+        public void OutFill(DataGridView dataGridView)
         {
-            int min = Math.Min(lastDataGridView.Columns.Count, list.Count);
-            lastDataGridView.Rows.Add();
-            for (int i = 0; i < min; i++)
+            ColumnAdd(dataGridView, "M-", columnMinus.responces);
+            ColumnAdd(dataGridView, "M", columnNull.responces);
+            ColumnAdd(dataGridView, "M+", columnPlus.responces);
+            ColumnAdd(dataGridView, "A-", columnMinus.alphas);
+            ColumnAdd(dataGridView, "A", columnNull.alphas);
+            ColumnAdd(dataGridView, "A+", columnPlus.alphas);
+        }
+
+        private void ColumnAdd(DataGridView dataGridView,string name, List<double> list)
+        {
+            dataGridView.Columns.Add(name, name);
+            RowAdd(dataGridView, list);
+        }
+
+        private void RowAdd(DataGridView dataGridView, List<double> list)
+        {
+            for (int i = dataGridView.Rows.Count; i < list.Count; i++)
             {
-                lastDataGridView.Rows[lastDataGridView.Rows.Count - 2].Cells[i].Value = Math.Round(list[i], roundValue).ToString();
+                dataGridView.Rows.Add();
             }
-        }
 
-        public void ColumnAdd(string nameColumn, List<double> list, int roundValue = 10)
-        {
-            lastDataGridView.Columns.Add(nameColumn, nameColumn);
-
-            for (int i = lastDataGridView.Rows.Count; i < list.Count + 1; i++)
-                lastDataGridView.Rows.Add();
-
-            for (int i = 0; i < list.Count; i++)
-                lastDataGridView.Rows[i].Cells[lastDataGridView.Columns.Count - 1].Value = Math.Round(list[i], roundValue).ToString();
-        }
-
-        public void AddValue(double value)
-        {
-            for (int i = 0; i < pointColumnsNull.Count; i++)
-                pointColumnsNull[i] += value;
-        }
-
-        public void Calculation()
-        {
-            for (int i = 0; i < pointColumnsNull.Count; i++)
+            for(int i = 0; i < list.Count; i++)
             {
-                pointColumnsMinus.Add(pointColumnsNull[i] - GeneralData.assureValue);
-                pointColumnsPlus.Add(pointColumnsPlus[i] + GeneralData.assureValue);
+                dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value = list[i];
             }
-            Responce_Calculation();
-            Alphas_Calculation();
-            predicates[0] = Predicate_Calculation(responce.ToArray());
-            predicates[1] = Predicate_Calculation(alphas.ToArray());
         }
 
 
 
-        private void Responce_Calculation()
+        private List<double> Responce_Calculation(List<PointColumn> pointColumn)
         {
-            // Формула = "Корень(СУММКВ(array[i]))"
-            responce = new List<double>();
-            for (int i = 0; i < pointColumnsNull.Count; i++)
+            //// Формула = "Корень(СУММКВ(array[i]))"
+            List<double> responce = new List<double>();
+            for (int i = 0; i < pointColumn.Count; i++)
             {
-                responce.Add(Math.Sqrt(pointColumnsNull[i].Sum(2)));
+                responce.Add(Math.Sqrt(pointColumn[i].Sum(2)));
             }
+            return responce;
         }
 
-        private void Alphas_Calculation()
+        private List<double> Alphas_Calculation(List<double> responce, List<PointColumn> pointColumnsNull)
         {
-            // формула = "ГРАДУСЫ(ACOS(СУММПРОИЗВ(array[0],array[1])/(M[0]*M[i])))"
+            //// формула = "ГРАДУСЫ(ACOS(СУММПРОИЗВ(array[0],array[1])/(M[0]*M[i])))"
             List<double> list = new List<double>();
             List<double> M = responce;
 
@@ -219,7 +178,7 @@ namespace SGUGIT_CourseWork.HelperCode
                 list[i] = list[i] * 180 / Math.PI;
             }
 
-            alphas = list;
+            return list;
         }
 
         private double Predicate_Calculation(double[] doubles)

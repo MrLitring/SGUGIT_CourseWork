@@ -48,9 +48,9 @@ namespace SGUGIT_CourseWork.Forms
         {
             DataTableWork work = new DataTableWork(GeneralData.dataTable);
             work.ColumnFill(false);
+            work.Calculation();
             work.lastDataGridView = dataView;
-            work.DataGridFill();
-
+            work.OutFill(dataView);
 
             //Проверка 1
 
@@ -61,40 +61,40 @@ namespace SGUGIT_CourseWork.Forms
             //    {
             //        point.PointAdd(Convert.ToDouble(dTable.Rows[rows][cols]));
             //    }
-        //    points.Add(point);
-        //}
+            //    points.Add(point);
+            //}
 
-        //DataTableWork tableWork = new DataTableWork(dTable, points, dataView);
-        //DataTableWork tableWorkPlus = new DataTableWork(dTable, points, dataView);
-        //DataTableWork tableWorkMinus = new DataTableWork(dTable, points, dataView);
+            //DataTableWork tableWork = new DataTableWork(dTable, points, dataView);
+            //DataTableWork tableWorkPlus = new DataTableWork(dTable, points, dataView);
+            //DataTableWork tableWorkMinus = new DataTableWork(dTable, points, dataView);
 
-        //tableWorkPlus.AddValue(GeneralData.assureValue);
-        //    tableWorkMinus.AddValue(-GeneralData.assureValue);
+            //tableWorkPlus.AddValue(GeneralData.assureValue);
+            //    tableWorkMinus.AddValue(-GeneralData.assureValue);
 
-        //    //tableWorkPlus.DataGridFill();
+            //    //tableWorkPlus.DataGridFill();
 
-        //    tableWork.Calculation();
-        //    tableWorkPlus.Calculation();
-        //    tableWorkMinus.Calculation();
+            //    tableWork.Calculation();
+            //    tableWorkPlus.Calculation();
+            //    tableWorkMinus.Calculation();
 
-        //    int roundaValue = 7;
-        //tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
-        //    tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
-        //    tableWork.ColumnAdd("M", tableWork.Responce, 4);
+            //    int roundaValue = 7;
+            //tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
+            //    tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
+            //    tableWork.ColumnAdd("M", tableWork.Responce, 4);
 
-        //    tableWork.ColumnAdd("A+", tableWorkPlus.Alphas, roundaValue);
-        //    tableWork.ColumnAdd("A-", tableWorkMinus.Alphas, roundaValue);
-        //    tableWork.ColumnAdd("A", tableWork.Alphas, roundaValue);
-            
-        //    List<double> predicats = new List<double>();
-        //predicats.Add(tableWorkPlus.Predicates[0]);
-        //    predicats.Add(tableWork.Predicates[0]);
-        //    predicats.Add(tableWorkMinus.Predicates[0]);
-        //    predicats.Add(tableWorkPlus.Predicates[1]);
-        //    predicats.Add(tableWork.Predicates[1]);
-        //    predicats.Add(tableWorkMinus.Predicates[1]);
+            //    tableWork.ColumnAdd("A+", tableWorkPlus.Alphas, roundaValue);
+            //    tableWork.ColumnAdd("A-", tableWorkMinus.Alphas, roundaValue);
+            //    tableWork.ColumnAdd("A", tableWork.Alphas, roundaValue);
 
-        //    tableWork.RowAdd(predicats, 7);
+            //    List<double> predicats = new List<double>();
+            //predicats.Add(tableWorkPlus.Predicates[0]);
+            //    predicats.Add(tableWork.Predicates[0]);
+            //    predicats.Add(tableWorkMinus.Predicates[0]);
+            //    predicats.Add(tableWorkPlus.Predicates[1]);
+            //    predicats.Add(tableWork.Predicates[1]);
+            //    predicats.Add(tableWorkMinus.Predicates[1]);
+
+            //    tableWork.RowAdd(predicats, 7);
 
             //List<double> E = new List<double>();
             //for(int  i = 0; i < tableWork.Responce.Count; i++)
