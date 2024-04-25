@@ -50,7 +50,7 @@ namespace SGUGIT_CourseWork.Forms
             work.ColumnFill(false);
             work.Calculation();
             work.lastDataGridView = dataView;
-            work.OutFill(dataView);
+            work.OutFill(dataView, 5);
 
             //Проверка 1
 

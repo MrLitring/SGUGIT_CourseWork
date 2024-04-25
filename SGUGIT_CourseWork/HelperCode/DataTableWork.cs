@@ -105,6 +105,8 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             columnNull.responces = Responce_Calculation(columnNull.pointColumns);
             columnNull.alphas = Alphas_Calculation(columnNull.responces, columnNull.pointColumns);
+            columnNull.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
+            columnNull.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
 
             if (isFullCalculation == true) 
             {
@@ -114,30 +116,38 @@ namespace SGUGIT_CourseWork.HelperCode
                     columnPlus.pointColumns.Add(columnNull.pointColumns[i] + GeneralData.assureValue);
                 }
 
-
                 columnMinus.responces = Responce_Calculation(columnMinus.pointColumns);
                 columnMinus.alphas = Alphas_Calculation(columnMinus.responces, columnMinus.pointColumns);
+
+                columnPlus.responces = Responce_Calculation(columnMinus.pointColumns);
+                columnPlus.alphas = Alphas_Calculation(columnMinus.responces, columnMinus.pointColumns);
+
+                columnMinus.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
+                columnMinus.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
+
+                columnPlus.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
+                columnPlus.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
             }
 
         }
 
-        public void OutFill(DataGridView dataGridView)
+        public void OutFill(DataGridView dataGridView, int roundValue = 7)
         {
-            ColumnAdd(dataGridView, "M-", columnMinus.responces);
-            ColumnAdd(dataGridView, "M", columnNull.responces);
-            ColumnAdd(dataGridView, "M+", columnPlus.responces);
-            ColumnAdd(dataGridView, "A-", columnMinus.alphas);
-            ColumnAdd(dataGridView, "A", columnNull.alphas);
-            ColumnAdd(dataGridView, "A+", columnPlus.alphas);
+            ColumnAdd(dataGridView, "M-", columnMinus.responces, roundValue);
+            ColumnAdd(dataGridView, "M", columnNull.responces, roundValue);
+            ColumnAdd(dataGridView, "M+", columnPlus.responces, roundValue);
+            ColumnAdd(dataGridView, "A-", columnMinus.alphas, roundValue);
+            ColumnAdd(dataGridView, "A", columnNull.alphas, roundValue);
+            ColumnAdd(dataGridView, "A+", columnPlus.alphas, roundValue);
         }
 
-        private void ColumnAdd(DataGridView dataGridView,string name, List<double> list)
+        private void ColumnAdd(DataGridView dataGridView,string name, List<double> list, int roundValue = 7)
         {
             dataGridView.Columns.Add(name, name);
-            RowAdd(dataGridView, list);
+            RowAdd(dataGridView, list, roundValue);
         }
 
-        private void RowAdd(DataGridView dataGridView, List<double> list)
+        private void RowAdd(DataGridView dataGridView, List<double> list, int roundValue = 7)
         {
             for (int i = dataGridView.Rows.Count; i < list.Count; i++)
             {
@@ -146,7 +156,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
             for(int i = 0; i < list.Count; i++)
             {
-                dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value = list[i];
+                dataGridView.Rows[i].Cells[dataGridView.Columns.Count -1].Value = Math.Round(list[i], roundValue);
             }
         }
 
