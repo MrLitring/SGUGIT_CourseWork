@@ -12,23 +12,30 @@ namespace SGUGIT_CourseWork.HelperCode
     public class DataTableWork
     {
         /*
-         * Таблица сохраняется как последнее использованная
-         * 
+         *          * 
          * Работа с таблицей:
          * заполнить значениями, рассчитать значения, заполнять точки
          * 
          * Расчёт следующих даннных:
-         * отклик - responce, альфа - alpha , прогнозируемое значение - predicted(всегда последний в списке) 
+         * отклик - responce, 
+         * альфа - alpha , 
+         * прогнозируемое значение - predicted(всегда последний в списке) 
          */
 
         private DataTable dtable;
+        private List<double> E;
+        private List<double> L;
+        private List<double> LE;
+        private List<string> LEs;
 
 
-        private struct ColumnTable
+
+
+        public struct ColumnTable
         {
             public List<PointColumn> pointColumns;
-            public List<double> alphas;
             public List<double> responces;
+            public List<double> alphas;
             public double[] predicates;
 
 
@@ -41,11 +48,12 @@ namespace SGUGIT_CourseWork.HelperCode
             }
         }
 
-        ColumnTable columnMinus;
-        ColumnTable columnNull;
-        ColumnTable columnPlus;
+        public ColumnTable columnMinus;
+        public ColumnTable columnNull;
+        public ColumnTable columnPlus;
 
         public DataGridView lastDataGridView;
+
 
 
 
@@ -103,10 +111,11 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public void Calculation(bool isFullCalculation = true)
         {
-            columnNull.responces = Responce_Calculation(columnNull.pointColumns);
-            columnNull.alphas = Alphas_Calculation(columnNull.responces, columnNull.pointColumns);
-            columnNull.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
-            columnNull.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
+            //columnNull.responces = Responce_Calculation(columnNull.pointColumns);
+            //columnNull.alphas = Alphas_Calculation(columnNull.responces, columnNull.pointColumns);
+            //columnNull.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
+            //columnNull.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
+            columnNull = ColumnTable_MainCalculate(columnNull);
 
             if (isFullCalculation == true) 
             {
@@ -116,17 +125,37 @@ namespace SGUGIT_CourseWork.HelperCode
                     columnPlus.pointColumns.Add(columnNull.pointColumns[i] + GeneralData.assureValue);
                 }
 
-                columnMinus.responces = Responce_Calculation(columnMinus.pointColumns);
-                columnMinus.alphas = Alphas_Calculation(columnMinus.responces, columnMinus.pointColumns);
+                columnPlus = ColumnTable_MainCalculate(columnPlus);
+                columnMinus = ColumnTable_MainCalculate(columnMinus);
 
-                columnPlus.responces = Responce_Calculation(columnMinus.pointColumns);
-                columnPlus.alphas = Alphas_Calculation(columnMinus.responces, columnMinus.pointColumns);
+                int n = columnNull.responces.Count();
+                E = new List<double>();
+                L = new List<double>();
+                for(int i = 0; i < n; i++)
+                {
+                    E.Add(Math.Abs(columnPlus.responces[i] - columnMinus.responces[i]));
+                    L.Add(Math.Abs(columnNull.responces[i] - columnNull.responces[0]));
+                }
+                //E.Add(Math.Abs(columnPlus.predicates[0] - columnMinus.predicates[0]));
+                //L.Add(Math.Abs(columnNull.predicates[0] - columnNull.responces[0]));
 
-                columnMinus.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
-                columnMinus.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
+                LE = new List<double>();
+                LEs = new List<string>();
 
-                columnPlus.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
-                columnPlus.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
+                for(int i = 0; i < n; i++)
+                {
+                    if (L[i] <= E[i])
+                    {
+                        LE.Add(1);
+                        LEs.Add("Не изменяется");
+                    }
+                    else
+                    {
+                        LE.Add(0);
+                        LEs.Add("изменяется");
+                    }
+                }
+
             }
 
         }
@@ -139,6 +168,11 @@ namespace SGUGIT_CourseWork.HelperCode
             ColumnAdd(dataGridView, "A-", columnMinus.alphas, roundValue);
             ColumnAdd(dataGridView, "A", columnNull.alphas, roundValue);
             ColumnAdd(dataGridView, "A+", columnPlus.alphas, roundValue);
+            roundValue = 6;
+            ColumnAdd(dataGridView, "E", E, roundValue);
+            ColumnAdd(dataGridView, "L", L, roundValue);
+            ColumnAdd(dataGridView, "L<=E", LE, roundValue);
+            ////ColumnAdd(dataGridView, "L<=E", LEs, roundValue);
         }
 
         private void ColumnAdd(DataGridView dataGridView,string name, List<double> list, int roundValue = 7)
@@ -161,6 +195,20 @@ namespace SGUGIT_CourseWork.HelperCode
         }
 
 
+
+        private ColumnTable ColumnTable_MainCalculate(ColumnTable columnTable)
+        {
+            columnTable.responces = Responce_Calculation(columnTable.pointColumns);
+            columnTable.alphas = Alphas_Calculation(columnTable.responces, columnTable.pointColumns);
+
+            columnTable.predicates[0] = Predicate_Calculation(columnTable.responces.ToArray());
+            columnTable.predicates[1] = Predicate_Calculation(columnTable.alphas.ToArray());
+
+            columnTable.responces.Add(columnTable.predicates[0]);
+            columnTable.alphas.Add(columnTable.predicates[1]);
+
+            return columnTable;
+        }
 
         private List<double> Responce_Calculation(List<PointColumn> pointColumn)
         {
