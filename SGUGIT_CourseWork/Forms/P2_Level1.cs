@@ -52,94 +52,42 @@ namespace SGUGIT_CourseWork.Forms
             work.lastDataGridView = dataView;
             work.OutFill(dataView, 5);
 
-            //Проверка 1
 
-            //for(int rows = 0; rows < dTable.Rows.Count; rows++)
-            //{
-            //    PointColumn point = new PointColumn();
-            //    for (int cols = 1; cols < dTable.Columns.Count; cols++)
-            //    {
-            //        point.PointAdd(Convert.ToDouble(dTable.Rows[rows][cols]));
-            //    }
-            //    points.Add(point);
-            //}
-
-            //DataTableWork tableWork = new DataTableWork(dTable, points, dataView);
-            //DataTableWork tableWorkPlus = new DataTableWork(dTable, points, dataView);
-            //DataTableWork tableWorkMinus = new DataTableWork(dTable, points, dataView);
-
-            //tableWorkPlus.AddValue(GeneralData.assureValue);
-            //    tableWorkMinus.AddValue(-GeneralData.assureValue);
-
-            //    //tableWorkPlus.DataGridFill();
-
-            //    tableWork.Calculation();
-            //    tableWorkPlus.Calculation();
-            //    tableWorkMinus.Calculation();
-
-            //    int roundaValue = 7;
-            //tableWork.ColumnAdd("M+", tableWorkPlus.Responce, 4);
-            //    tableWork.ColumnAdd("M-", tableWorkMinus.Responce, 4);
-            //    tableWork.ColumnAdd("M", tableWork.Responce, 4);
-
-            //    tableWork.ColumnAdd("A+", tableWorkPlus.Alphas, roundaValue);
-            //    tableWork.ColumnAdd("A-", tableWorkMinus.Alphas, roundaValue);
-            //    tableWork.ColumnAdd("A", tableWork.Alphas, roundaValue);
-
-            //    List<double> predicats = new List<double>();
-            //predicats.Add(tableWorkPlus.Predicates[0]);
-            //    predicats.Add(tableWork.Predicates[0]);
-            //    predicats.Add(tableWorkMinus.Predicates[0]);
-            //    predicats.Add(tableWorkPlus.Predicates[1]);
-            //    predicats.Add(tableWork.Predicates[1]);
-            //    predicats.Add(tableWorkMinus.Predicates[1]);
-
-            //    tableWork.RowAdd(predicats, 7);
-
-            //List<double> E = new List<double>();
-            //for(int  i = 0; i < tableWork.Responce.Count; i++)
-            //{
-            //    E.Add(Math.Abs(tableWorkPlus.Responce[i] - tableWorkMinus.Responce[i]));
-            //}
-            //E.Add(Math.Abs(tableWorkPlus.Predicates[0] - tableWorkMinus.Predicates[0]));
-            //tableWork.ColumnAdd("E", E, 4);
-
-            //List<double> L = new List<double>();
-            //for (int i = 0; i < tableWork.Responce.Count; i++)
-            //{
-            //    L.Add(Math.Abs(tableWorkMinus.Responce[i] - tableWork.Responce[i]));
-            //}
-            //L.Add(Math.Abs(tableWorkMinus.Predicates[0] - tableWork.Predicates[0]));
-            //tableWork.ColumnAdd("L", L, 4);
-
-            //dataView.Columns.Add("L<=E", "L<=E");
-            //for (int i = 0; i < tableWork.Responce.Count; i++)
-            //{
-            //    string s = "не изменяемый";
-            //    if (L[i] > GeneralData.assureValue)
-            //        s = "изменяемый";
-
-            //        dataView.Rows[i].Cells[dataView.Columns.Count - 1].Value = s;
-            //}
+            chart1.Series.Clear();
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
+            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
+            chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            chart1.Series[0].BorderWidth = 1;
+            chart1.Series[1].BorderWidth = 1;
+            chart1.Series[2].BorderWidth = 1;
 
 
-            //chart1.Series.Clear();
-            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
-            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
-            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
-            //chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            //chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            //chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            //chart1.Series[0].BorderWidth = 1;
-            //chart1.Series[1].BorderWidth = 1;
-            //chart1.Series[2].BorderWidth = 1;
+            chart2.Series.Clear();
+            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
+            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
+            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
+            chart2.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            chart2.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            chart2.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            chart2.Series[0].BorderWidth = 1;
+            chart2.Series[1].BorderWidth = 1;
+            chart2.Series[2].BorderWidth = 1;
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    chart1.Series[0].Points.AddXY(tableWork.Responce[i], tableWork.Alphas[i]);
-            //    chart1.Series[1].Points.AddXY(tableWorkMinus.Responce[i], tableWorkMinus.Alphas[i]);
-            //    chart1.Series[2].Points.AddXY(tableWorkPlus.Responce[i], tableWorkPlus.Alphas[i]);
-            //}
+            for (int i = 0; i < work.columnNull.responces.Count; i++)
+            {
+                chart1.Series[0].Points.AddXY(work.columnMinus.responces[i], work.columnMinus.alphas[i]);
+                chart1.Series[1].Points.AddXY(work.columnNull.responces[i], work.columnNull.alphas[i]);
+                chart1.Series[2].Points.AddXY(work.columnPlus.responces[i], work.columnPlus.alphas[i]);
+
+                chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
+                chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
+                chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
+            }
+
+
         }
     }
 }

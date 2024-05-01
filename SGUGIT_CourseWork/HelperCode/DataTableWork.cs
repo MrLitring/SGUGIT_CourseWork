@@ -12,7 +12,7 @@ namespace SGUGIT_CourseWork.HelperCode
     public class DataTableWork
     {
         /*
-         *          * 
+         *          
          * Работа с таблицей:
          * заполнить значениями, рассчитать значения, заполнять точки
          * 
@@ -23,7 +23,7 @@ namespace SGUGIT_CourseWork.HelperCode
          */
 
         private DataTable dtable;
-        private List<double> E;
+        private List<double> E; 
         private List<double> L;
         private List<double> LE;
         private List<string> LEs;
