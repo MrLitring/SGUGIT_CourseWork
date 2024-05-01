@@ -105,6 +105,12 @@
     <Compile Include="Forms\P2_Level1.Designer.cs">
       <DependentUpon>P2_Level1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\P3_Level2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\P3_Level2.Designer.cs">
+      <DependentUpon>P3_Level2.cs</DependentUpon>
+    </Compile>
     <Compile Include="HelperCode\DataTableWork.cs" />
     <Compile Include="HelperCode\EventBus.cs" />
     <Compile Include="HelperCode\FormHelperCode.cs" />
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\P2_Level1.resx">
       <DependentUpon>P2_Level1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\P3_Level2.resx">
+      <DependentUpon>P3_Level2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
