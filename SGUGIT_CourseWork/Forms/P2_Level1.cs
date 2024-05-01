@@ -82,13 +82,9 @@ namespace SGUGIT_CourseWork.Forms
                 chart1.Series[1].Points.AddXY(work.columnNull.responces[i], work.columnNull.alphas[i]);
                 chart1.Series[2].Points.AddXY(work.columnPlus.responces[i], work.columnPlus.alphas[i]);
 
-
-                if (i >= 1)
-                {
-                    chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
-                    chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
-                    chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
-                }
+                chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
+                chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
+                chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
             }
 
 
