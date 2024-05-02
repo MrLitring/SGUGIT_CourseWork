@@ -56,7 +56,7 @@ namespace SGUGIT_CourseWork.Forms
         {
             dTable = GeneralData.dataTable;
 
-            for (int col = 0; col < dTable.Rows.Count; col++)
+            for (int col = 0; col < dTable.Columns.Count; col++)
             {
                 string colName = dTable.Columns[col].ColumnName; 
                 dataGridView1.Columns.Add(colName, colName);
@@ -126,8 +126,7 @@ namespace SGUGIT_CourseWork.Forms
             }
 
 
-            dataToInsert.AddValue(newPoints);
-            dataToInsert.AddName(names);
+            dataToInsert.AddValue(names, newPoints);
             dataToInsert.Execute();
 
             DataGridFocus(0, 0);
@@ -181,17 +180,17 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "textBox1":
                     {
-                        dataSave.AddName("A");
+                        senderName = "A";
                         break;
                     }
                 case "textBox2":
                     {
-                        dataSave.AddName("E");
+                        senderName = "E";
                         break;
                     }
                 case "textBox3":
                     {
-                        dataSave.AddName("A");
+                        senderName = "BlockCount";
                         break;
                     }
                 default:
@@ -200,7 +199,7 @@ namespace SGUGIT_CourseWork.Forms
                     }
             }
 
-            dataSave.AddValue((sender as TextBox).Text);
+            dataSave.AddValue(senderName, (sender as TextBox).Text);
             commandChanges.Add(dataSave);
 
             LabelText_Save();
@@ -226,8 +225,9 @@ namespace SGUGIT_CourseWork.Forms
             if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
 
 
-            data.AddName($"{dataGridView1.Columns[e.ColumnIndex].HeaderText}");
-            data.AddValue(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            data.AddValue(
+                $"{dataGridView1.Columns[e.ColumnIndex].HeaderText}", 
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
             data.Name = "";
 

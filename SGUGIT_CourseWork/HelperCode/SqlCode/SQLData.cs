@@ -50,32 +50,20 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             this.ExecutionCommand = command;
         }
 
-        //
-        // Добавление Значений
-        //
-        public void AddValue(object value)
-        {
-            parameterValues.Add(value);
-        }
 
-        public void AddValue(object[] value)
-        {
-            foreach (object elem in value)
-                parameterValues.Add(elem);
-        }
 
         //
-        // Добавление Колонок
+        // Добавление значений
         //
-        public void AddName(string value)
+        public void AddValue(string str_value, object obj_value)
         {
-            parameterNames.Add(value);
+            parameterValues.Add(obj_value);
+            parameterNames.Add(str_value);
         }
-
-        public void AddName(string[] value)
+        public void AddValue(string[] str_values, object[] obj_values)
         {
-            foreach (string elem in value)
-                parameterNames.Add(elem);
+            parameterValues.AddRange(obj_values);
+            parameterNames.AddRange(str_values);
         }
 
         //
