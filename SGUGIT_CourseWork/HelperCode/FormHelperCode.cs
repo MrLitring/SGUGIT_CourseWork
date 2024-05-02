@@ -43,6 +43,14 @@ namespace SGUGIT_CourseWork.HelperCode
             currentForm.Show();
         }
 
+        public void CloseAllForms()
+        {
+            if(currentForm != null) 
+                currentForm.Close();
+            if(currentControlOut.Controls.Count > 0)
+                currentControlOut.Controls.Clear();
+        }
+
         public string FIleBrowser(string filter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog

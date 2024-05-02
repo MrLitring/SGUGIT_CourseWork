@@ -1,131 +1,75 @@
 ﻿using SGUGIT_CourseWork.HelperCode;
-using SGUGIT_CourseWork.Forms;
 using System;
-using System.Windows.Forms;
 using System.Data.SQLite;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.Forms
 {
     public partial class F0_MainLoad : Form
     {
-        private const string tempFilePath = "tmp/lastSession.txt";
         private FormHelperCode formHelper;
+
+
 
         public F0_MainLoad()
         {
             InitializeComponent();
             GeneralData.MainConnection = new SQLiteConnection();
-            SetActive(false);
 
             formHelper = new FormHelperCode();
             formHelper.ControlOut_Set(panel1);
-            EventBus.onDataBaseChange += DataBaseUpdate;
         }
 
-        
 
-        //
-        //
-        //
-        private bool FileDialog()
+
+        private void F0_MainLoad_Load(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                Filter = "База данных (*.db)|*.db|Все файлы (*.*)|*.*"
-            };
-
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-
-                DataBaseOpen(openFileDialog.FileName);
-                DataBaseUpdate();
-
-                using(StreamWriter writer = new StreamWriter(tempFilePath, false))
-                {
-                    writer.Write(openFileDialog.FileName);
-                }
-
-                SetActive(true);
-                return true;
-            }
-            else
-            {
-                SetActive(false);
-                return false;
-            }
 
         }
 
         private void DataBaseOpen(string path)
         {
-            GeneralData.MainConnection =
-                    new SQLiteConnection(GeneralData.GenerateConnection_string(path));
+            if (path == null) return;
+
+            formHelper.CloseAllForms();
+            GeneralData.MainConnection.Close();
+            GeneralData.MainConnection = new SQLiteConnection(GeneralData.GenerateConnection_string(path));
             GeneralData.MainConnection.Open();
-            SQLiteCommand command = new SQLiteCommand();
-            command.Connection = GeneralData.MainConnection;
-
-            GeneralData.DataBasePath = path;
-
-            DataBaseUpdate();
-
-            SetActive(true);
+            GeneralData.DataFullUpdate();
         }
-
-        private void DataBaseUpdate()
-        {
-            GeneralData.dataTable.Clear();
-            GeneralData.dataTable.Rows.Clear( );
-            GeneralData.dataTable.Columns.Clear();
-
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(
-                $"Select * from {GeneralData.TableName_First} order by 1",
-                GeneralData.MainConnection);
-            //adapter.Fill(GeneralData.dataTable);
-        } 
 
         //
         // Action MenuStrip onClick
         //
-        #region
-
         private void MenuStrip_File_Click(object sender, EventArgs e)
         {
-            if ((sender as ToolStripItem).Name == "StripClose") Application.Exit();
-            string named = (sender as ToolStripItem).Name;
-
-            switch (named)
+            switch ((sender as ToolStripItem).Name)
             {
+                case "StripClose":
+                    {
+                        Application.Exit();
+                        break;
+                    }
+
                 case "StripNewDataBase":
                     {
-
                         formHelper.PageLoad(new F2_NewDataBase());
-                        //F2_NewDataBase f2_NewDataBase = new F2_NewDataBase();
-                        //f2_NewDataBase.ShowDialog();
                         break;
                     }
                 case "StripOpenDataBase":
                     {
-                        FileDialog();
-                        break;
-                    }
-
-                default:
-                    {
-                        MessageBox.Show($"{sender.GetType().Name}(\"{named}\") - Не было назначено",
-                            "Осторожно",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-
+                        DataBaseOpen(formHelper.FIleBrowser("DB files(*.db)|*.db"));
                         break;
                     }
             }
+
         }
 
         private void MenuStrip_WorkBench_Click(object sender, EventArgs e)
         {
+            if (GeneralData.MainConnection.State != System.Data.ConnectionState.Open) return;
 
             switch ((sender as ToolStripMenuItem).Name)
             {
@@ -137,6 +81,26 @@ namespace SGUGIT_CourseWork.Forms
                 case "StripLevel1":
                     {
                         HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
+                        break;
+                    }
+                case "StripLevel2":
+                    {
+                        HelperCode.FormOpenCode.OpenForm(new P3_Level2(), panel1);
+                        break;
+                    }
+                case "StripLevel3":
+                    {
+                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
+                        break;
+                    }
+                case "StripLevel4":
+                    {
+                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
+                        break;
+                    }
+                case "StripTest":
+                    {
+                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
                         break;
                     }
             }
@@ -155,58 +119,10 @@ namespace SGUGIT_CourseWork.Forms
 
                         break;
                     }
-                case "StripTwoWindow":
-                    {
-
-                        break;
-                    }
-                case "StripCloseAllWindow":
-                    {
-
-                        break;
-                    }
             }
         }
 
-        #endregion
+        
 
-        private void F0_MainLoad_Load(object sender, EventArgs e)
-        {
-            
-
-            if (File.Exists(tempFilePath) == false)
-            {
-                if (!Directory.Exists(Path.GetDirectoryName(tempFilePath)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(tempFilePath));
-
-                }
-                using (FileStream fs = File.Create(tempFilePath))
-                {
-                    Console.WriteLine("файл lastSession создан");
-                }
-
-            }
-
-            using (StreamReader reader = new StreamReader(tempFilePath))
-            {
-                string line = reader.ReadLine();
-                if (line != null) DataBaseOpen(line);
-
-            }
-
-        }
-
-        private void SetActive(bool isActive = false)
-        {
-            MenuWorkBench.Enabled = isActive;
-            string sql = "";
-            if (GeneralData.DataBasePath != null)
-            {
-                sql = GeneralData.DataBasePath.Split('\\')
-                [GeneralData.DataBasePath.Split('\\').Count() - 1];
-                toolStripStatusLabel1.Text = sql;
-            }
-        }
     }
 }
