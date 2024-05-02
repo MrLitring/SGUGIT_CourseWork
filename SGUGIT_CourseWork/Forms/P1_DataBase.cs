@@ -32,7 +32,7 @@ namespace SGUGIT_CourseWork.Forms
 
         private void P1_DataBase_Load(object sender, EventArgs e)
         {
-            GeneralData.DataUpdate();
+            GeneralData.DataFullUpdate();
             DataLoad();
 
             textBox1.TextChanged += TextBox_ValueChange;
@@ -158,7 +158,7 @@ namespace SGUGIT_CourseWork.Forms
         private void toolUpdate_Click(object sender, EventArgs e)
         {
             isFirstStart = true;
-            GeneralData.DataUpdate();
+            GeneralData.DataFullUpdate();
             DataClear();
             DataLoad();
             isFirstStart = false;
@@ -266,7 +266,7 @@ namespace SGUGIT_CourseWork.Forms
             commandChanges.Clear();
             LabelText_UnSave();
 
-            GeneralData.DataUpdate();
+            GeneralData.DataFullUpdate();
         }
 
         private void LabelText_Save()
