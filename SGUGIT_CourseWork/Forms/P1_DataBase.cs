@@ -149,7 +149,7 @@ namespace SGUGIT_CourseWork.Forms
 
         private void tool_ImageSet_Click(object sender, EventArgs e)
         {
-            string imagePath = FIleBrowser("png (*.png)|*.png");
+            string imagePath = FIleBrowser("png (*.png)|*.png|jpg (*.jpg)|*jpg");
             pictureBox1.Image = new Bitmap(imagePath);
 
             SQLData dataToSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection, SQLData.executionNumber.Update);

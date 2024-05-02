@@ -62,7 +62,7 @@ namespace SGUGIT_CourseWork.Forms
         private void DataBaseOpen(string path)
         {
             GeneralData.MainConnection =
-                    new SQLiteConnection("Data Source=" + path + ";Version = 3;");
+                    new SQLiteConnection(GeneralData.GenerateConnection_string(path));
             GeneralData.MainConnection.Open();
             SQLiteCommand command = new SQLiteCommand();
             command.Connection = GeneralData.MainConnection;
@@ -83,7 +83,7 @@ namespace SGUGIT_CourseWork.Forms
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(
                 $"Select * from {GeneralData.TableName_First} order by 1",
                 GeneralData.MainConnection);
-            adapter.Fill(GeneralData.dataTable);
+            //adapter.Fill(GeneralData.dataTable);
         } 
 
         //
@@ -100,8 +100,10 @@ namespace SGUGIT_CourseWork.Forms
             {
                 case "StripNewDataBase":
                     {
-                        F2_NewDataBase f2_NewDataBase = new F2_NewDataBase();
-                        f2_NewDataBase.ShowDialog();
+
+                        formHelper.PageLoad(new F2_NewDataBase());
+                        //F2_NewDataBase f2_NewDataBase = new F2_NewDataBase();
+                        //f2_NewDataBase.ShowDialog();
                         break;
                     }
                 case "StripOpenDataBase":
