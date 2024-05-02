@@ -117,8 +117,8 @@
     <Compile Include="HelperCode\FormOpenCode.cs" />
     <Compile Include="HelperCode\GeneralData.cs" />
     <Compile Include="HelperCode\PointColumn.cs" />
-    <Compile Include="HelperCode\SqlCode\DataToCreateTable.cs" />
     <Compile Include="HelperCode\SqlCode\SQLData.cs" />
+    <Compile Include="HelperCode\SqlCode\SQLDataTable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">

@@ -26,14 +26,21 @@ namespace SGUGIT_CourseWork.HelperCode
         // Первичные параметры
         //
         public static double smoothValue = 0.9; // Сглаженная велечина A
-        public static double assureValue = 0.0008; // Точность измерений E
-        public static int blockCount = 0; // Кол-во блоков
+        public static double assureValue = 0.0001; // Точность измерений E
+        public static int blockCount = 1; // Кол-во блоков
 
         public static SQLiteConnection MainConnection;
         public static string DataBasePath;
 
         public static DataTable dataTable = new DataTable();
         public static Image imageSheme = null;
+
+
+
+        public static string GenerateConnection_string(string path)
+        {
+            return "Data Source=" + path + ";Version = 3;";
+        }
 
         public static void DataUpdate()
         {

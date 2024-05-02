@@ -10,87 +10,69 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class F2_NewDataBase : Form
     {
+        FormHelperCode formHelperCode;
+
+
 
         public F2_NewDataBase()
         {
             InitializeComponent();
 
-            textBox2.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            formHelperCode = new FormHelperCode();
         }
 
-        private void Button_Click(object sender, EventArgs e)
+
+
+        private void button1_Click(object sender, EventArgs e)
         {
-            switch ((sender as System.Windows.Forms.Button).Name)
+            SQLiteConnection connection = new SQLiteConnection($"Data Source = {formHelperCode.FIleBrowser("SQLite файл (*.db)|*.db")}; Version = 3;");
+            connection.Open();
+
+            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_Second);
+            table.AddColumnName("rea", SQLDataTable.ValueType.real);
+            table.AddColumnName("int", SQLDataTable.ValueType.integer);
+            table.AddColumnName("text", SQLDataTable.ValueType.text);
+            table.AddColumnName("blob", SQLDataTable.ValueType.blob);
+            table.Execute();
+
+            connection.Close();
+
+        }
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), textBox1.Text + ".db");
+            CreateDataBase(path);
+        }
+
+        private void buttonBrowser_Click(object sender, EventArgs e)
+        {
+            string filter = "SQL lite(*.sqlite)|*.sqlite|SQL DB(*.db)|*.db";
+            textBox3.Text = formHelperCode.FIleBrowser(filter);
+
+            if (textBox3.Text != null)
             {
-                case "buttonCancel":
-                    {
-                        this.Close();
-                        break;
-                    }
+                int count = 0;
+                List<string> list = new List<string>();
+                Tables_Info(
+                    new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text)),
+                    out count,
+                    out list);
 
-                case "buttonCreate":
-                    {
-                        if (
-                            ((textBox1.Text.Replace(" ", "") == "") ||
-                            (textBox2.Text.Replace(" ", "") == "") ||
-                            (textBox3.Text.Replace(" ", "") == "")) == true)
-                        {
-                            MessageBox.Show("Не должно быть пустых строк", "Owubka", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
 
-                        string fullPath = Path.Combine(@textBox2.Text, $"{textBox1.Text}.db");
-                        CreateDataBase(fullPath);
-                        break;
-                    }
-
-                case "buttonBrowser1":
-                    {
-                        textBox2.Text = FileDialog();
-                        break;
-                    }
-
-                case "buttonBrowser2":
-                    {
-                        textBox3.Text = FIleBrowser("SQLite файл (*.sqlite)|*.sqlite");
-                        break;
-                    }
-
+                comboBox1.Items.Clear();
+                comboBox1.Items.Add("None");
+                for (int i = 0; i < count; i++)
+                    comboBox1.Items.Add(list[i]);
             }
-
         }
 
-        private string FileDialog()
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog
-            {
-                Description = "Выберите папку для сохранения файла"
-            };
-
-            DialogResult result = dialog.ShowDialog();
-
-            if (result == DialogResult.OK)
-                return @dialog.SelectedPath;
-            else
-                return @Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            this.Close();
         }
 
-        private string FIleBrowser(string filter)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                Filter = filter
-            };
 
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                return openFileDialog.FileName; ;
-            }
-            else
-                return null;
-
-        }
 
         private void CreateDataBase(string fullPath)
         {
@@ -100,219 +82,153 @@ namespace SGUGIT_CourseWork.Forms
                 return;
             }
 
-            //SQLiteConnection.CreateFile(fullPath);
-            //DataBaseCreate baseCreate = new DataBaseCreate(
-            //    textBox3.Text,
-            //    fullPath
-            //    );
+            SQLiteConnection.CreateFile(fullPath);
+            SQLiteConnection connection = new SQLiteConnection(GeneralData.GenerateConnection_string(fullPath));
+            connection.Open();
 
-            //baseCreate.CreateNewTables();
+
+            SQLDataTable table_first = Table_First(connection);
+            table_first.Execute();
+            SQLDataTable table_second = Table_Second(connection);
+            table_second.Execute();
+
+            SQLiteConnection old = new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text));
+            DataLoad(old, connection, table_first.MinCount);
+
+            SQLData data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
+            data.AddValue(GeneralData.smoothValue);
+            data.AddName("A");
+            data.Execute();
+            data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
+            data.AddValue(GeneralData.assureValue);
+            data.AddName("E");
+            data.Execute();
+            data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
+            data.AddValue(GeneralData.blockCount);
+            data.AddName("BlockCount");
+            data.Execute();
+
+
+            connection.Close();
             this.Close();
         }
 
-    }
-
-    internal class DataBaseCreate
-    {
-        //private const string firstTableName = "FirstData";
-        //private const string secondTableName = "SecondData";
-
-        //private string pathOldDataBase;
-        //private string pathNewDataBase;
-
-        //SQLiteConnection oldConnect;
-        //SQLiteConnection newConnect;
-
-
-        //public DataBaseCreate(string pathOldDataBase, string pathNewDataBase)
-        //{
-        //    this.pathOldDataBase = pathOldDataBase;
-        //    this.pathNewDataBase = pathNewDataBase;
-        //}
-
-        //public void CreateNewTables()
-        //{
-        //    oldConnect = new SQLiteConnection($"Data Source = {pathOldDataBase}; Version = 3;");
-        //    newConnect = new SQLiteConnection($"Data Source = {pathNewDataBase}; Version = 3;");
-
-        //    oldConnect.Open();
-        //    newConnect.Open();
-
-        //    FirstTable();
-        //    SecondTable_CreateAndInsertData();
-
-        //    MessageBox.Show("База данных создана - Успешно");
-
-        //    newConnect.Close();
-        //    oldConnect.Close();
-        //}
-
-        //private void FirstTable()
-        //{
-        //    int countColumn = FirstData_CountColumn();
-        //    string[] columns = new string[countColumn];
-        //    string[] types = new string[countColumn];
-        //    for (int i = 0; i < countColumn; i++)
-        //    {
-        //        columns[i] = $"\" {i}\"";
-        //        types[i] = "Real";
-        //    }
-
-        //    columns[0] = "Эпоха";
-        //    types[0] = "Integer";
-
-        //    FirstData_CreateTable(columns, types);
-        //    FirstData_FillTable(columns, countColumn);
-        //}
-
-        //private void SecondTable_CreateAndInsertData()
-        //{
-        //    DataToCreateTable createTable = new DataToCreateTable(
-        //        secondTableName,
-        //        new string[] { "A", "E", "BlockCount", "Image" },
-        //        new string[] { "Real", "Real", "integer", "BLOB" }
-        //        );
-        //    //SQLData data = new SQLData(GeneralData.TableName_Second, );
-
-
-        //    DataToInsert insert = new DataToInsert(
-        //        secondTableName,
-        //        new string[] { "A", "E", "BlockCount", "Image" },
-        //        new object[] { 0.1, 0.01, 1 }
-        //        );
-
-        //    createTable.SetConnection(newConnect);
-        //    createTable.ExecuteCreate();
-
-        //    insert.SetConnection(newConnect);
-        //    insert.ExecuteInsert();
-        //}
-
-        //private int FirstData_CountColumn()
-        //{
-        //    string query = "PRAGMA table_info(Данные)";
-        //    int count = 0;
-
-        //    using (SQLiteCommand command = new SQLiteCommand(query, oldConnect))
-        //    {
-        //        SQLiteDataReader reader = command.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                count++;
-        //            }
-        //        }
-        //    }
-
-        //    return count;
-        //}
-
-        //private void FirstData_CreateTable(string[] columns, string[] types)
-        //{
-        //    DataToCreateTable tableCreater = new DataToCreateTable(
-        //        firstTableName,
-        //        columns,
-        //        types
-        //        );
-
-        //    tableCreater.SetConnection(newConnect);
-        //    tableCreater.ExecuteCreate();
-        //}
-
-        //private void FirstData_FillTable(string[] columns, int сountColumn)
-        //{
-        //    DataToInsert insert = new DataToInsert(firstTableName, columns, new object[] { });
-        //    insert.SetConnection(newConnect);
-        //    using (SQLiteCommand command = new SQLiteCommand("Select * from (Данные);", oldConnect))
-        //    {
-        //        SQLiteDataReader reader = command.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            object[] doubles = new object[сountColumn];
-        //            while (reader.Read())
-        //            {
-        //                for (int i = 0; i < сountColumn; i++)
-        //                {
-        //                    doubles[i] = reader.GetDouble(i);
-        //                }
-        //                insert.UpdateValues(doubles);
-        //                insert.ExecuteInsert();
-        //            }
-
-        //        }
-
-        //    }
-        //}
-
-    }
-
-
-    internal class TableCreate
-    {
-        private string name;
-        private SQLiteConnection connection;
-        private List<PointColumn> colums;
-
-        public TableCreate(SQLiteConnection connect, string name)
+        private SQLDataTable Table_First(SQLiteConnection connection)
         {
-            this.connection = connect;
-            this.name = name;
-            colums = new List<PointColumn>();
+            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_First);
+            List<string> names;
+            List<string> values;
+            string name = "Данные";
+            if (comboBox1.SelectedIndex >= 1)
+                name = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+
+            SQLiteConnection oldCon = new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text));
+            Table_Columns(oldCon, name, out _, out names, out values);
+            table.AddColumnName(names, values);
+
+            return table;
         }
 
-        public void ExecuteNewTable()
+        private SQLDataTable Table_Second(SQLiteConnection connection)
         {
+            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_Second);
+            table.AddColumnName("A", SQLDataTable.ValueType.real);
+            table.AddColumnName("E", SQLDataTable.ValueType.real);
+            table.AddColumnName("BlockCount", SQLDataTable.ValueType.integer);
+            table.AddColumnName("Image", SQLDataTable.ValueType.blob);
+
+            
+
+            return table;
+        }
+
+        private void DataLoad(SQLiteConnection oldConnection, SQLiteConnection newConnection, int min)
+        {
+            oldConnection.Open();
+
+            string oldQuery = $"Select * from Данные";
+            if (comboBox1.SelectedIndex >= 1) oldQuery = $"Select * from {comboBox1.SelectedItem}";
+            SQLiteCommand command = new SQLiteCommand(oldQuery, oldConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            List<SQLData> datas = new List<SQLData>();
+
+            if(reader.HasRows)
+            {
+
+                while(reader.Read())
+                {
+                    SQLData data = new SQLData(
+                        GeneralData.TableName_First, 
+                        newConnection,
+                        SQLData.executionNumber.Insert);
+
+                    for(int i = 0; i < min; i++)
+                    {
+                        data.AddValue(Convert.ToDouble(reader.GetValue(i)));
+                        data.AddName(reader.GetName(i));
+                    }
+                    datas.Add(data);
+                }
+            }
+
+
+            foreach (SQLData data in datas)
+                data.Execute();
 
         }
 
-        public void DataOldTable(SQLiteConnection oldConnect, string tableName = "Данные")
+        private void Table_Columns(SQLiteConnection connection, string tableName, out int Count, out List<string> ValueName, out List<string> ValueType)
         {
-            oldConnect.Open();
-            SQLiteCommand command = new SQLiteCommand($"Select * from {tableName};");
+            string query = $"PRAGMA table_info({tableName})";
+            List<string> valueName = new List<string>();
+            List<string> valueType = new List<string>();
+            int count = 0;
+
+            if (!(connection.State == System.Data.ConnectionState.Open))
+            {
+                connection.Open();
+            }
+
+            SQLiteCommand command = new SQLiteCommand(query, connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+                count++;
+                valueName.Add(reader.GetValue(1).ToString());
+                valueType.Add(reader.GetValue(2).ToString());
+            }
+
+            Count = count;
+            ValueName = valueName;
+            ValueType = valueType;
+        }
+
+        private void Tables_Info(SQLiteConnection connection, out int Count, out List<string> ValueName)
+        {
+            string query = "SELECT name FROM sqlite_master WHERE type='table';";
+            List<string> valueName = new List<string>();
+            int count = 0;
+
+            connection.Open();
+            SQLiteCommand command = new SQLiteCommand(query, connection);
             SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
-
-            }
-
-
-
-
-            oldConnect.Close();
-        }
-
-        public void DataAddColumn()
-        {
-
-        }
-
-
-        private int ColumnCount(SQLiteConnection connect, string tableName)
-        {
-            int count = 0;
-            string query = $"GRAGMA table_info([{tableName}])";
-            connect.Open();
-            using (SQLiteCommand command = new SQLiteCommand(query, connect))
-            {
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        count++;
-                    }
+                    count++;
+                    valueName.Add(reader.GetValue(0).ToString());
                 }
-
-                connect.Close();
-                return count;
-
             }
+
+            Count = count;
+            ValueName = valueName;
         }
+
     }
+
 }
 
