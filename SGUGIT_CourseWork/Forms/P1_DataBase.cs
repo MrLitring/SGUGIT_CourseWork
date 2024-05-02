@@ -129,6 +129,12 @@ namespace SGUGIT_CourseWork.Forms
             dataToInsert.AddValue(names, newPoints);
             dataToInsert.Execute();
 
+            isFirstStart = true;
+            GeneralData.DataFullUpdate();
+            DataClear();
+            DataLoad();
+            isFirstStart = false;
+
             DataGridFocus(0, 0);
             dataGridView1.Focus();
         }
@@ -141,6 +147,12 @@ namespace SGUGIT_CourseWork.Forms
                 data.AddWhere("Эпоха", dTable.Rows[cellFocus.X][0]);
                 data.Execute(SQLData.executionNumber.Delete);
 
+                isFirstStart = true;
+                GeneralData.DataFullUpdate();
+                DataClear();
+                DataLoad();
+                isFirstStart = false;
+
                 dataGridView1.CurrentCell = dataGridView1.Rows[cellFocus.X].Cells[cellFocus.Y];
                 dataGridView1.Focus();
             }
@@ -149,15 +161,19 @@ namespace SGUGIT_CourseWork.Forms
         private void tool_ImageSet_Click(object sender, EventArgs e)
         {
             string imagePath = FIleBrowser("png (*.png)|*.png|jpg (*.jpg)|*jpg");
-            pictureBox1.Image = new Bitmap(imagePath);
+            if (imagePath != null)
+            {
+                pictureBox1.Image = new Bitmap(imagePath);
 
-            SQLData dataToSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection, SQLData.executionNumber.Update);
-            dataToSave.ExecuteImageSave("Image", File.ReadAllBytes(imagePath));
+                SQLData dataToSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection, SQLData.executionNumber.Update);
+                dataToSave.ExecuteImageSave("Image", File.ReadAllBytes(imagePath));
+            }
         }
 
         private void toolUpdate_Click(object sender, EventArgs e)
         {
             isFirstStart = true;
+            this.commandChanges.Clear();
             GeneralData.DataFullUpdate();
             DataClear();
             DataLoad();
@@ -174,7 +190,10 @@ namespace SGUGIT_CourseWork.Forms
             if (isFirstStart == true) return;
 
             string senderName = (sender as TextBox).Name;
-            SQLData dataSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection);
+            SQLData dataSave = new SQLData(
+                GeneralData.TableName_Second, 
+                GeneralData.MainConnection, 
+                SQLData.executionNumber.Update);
 
             switch (senderName)
             {
@@ -298,9 +317,6 @@ namespace SGUGIT_CourseWork.Forms
                 return null;
 
         }
-
-        
-
 
     }
 
