@@ -75,6 +75,7 @@ namespace SGUGIT_CourseWork.Forms
 
             SQLiteConnection.CreateFile(fullPath);
             SQLiteConnection connection = new SQLiteConnection(GeneralData.GenerateConnection_string(fullPath));
+            GeneralData.MainConnection = connection;
             connection.Open();
 
 
@@ -124,8 +125,6 @@ namespace SGUGIT_CourseWork.Forms
             table.AddColumnName("E", SQLDataTable.ValueType.real);
             table.AddColumnName("BlockCount", SQLDataTable.ValueType.integer);
             table.AddColumnName("Image", SQLDataTable.ValueType.blob);
-
-            
 
             return table;
         }

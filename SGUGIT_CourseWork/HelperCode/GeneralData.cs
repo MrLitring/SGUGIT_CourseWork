@@ -31,9 +31,11 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static SQLiteConnection MainConnection;
         public static string DataBasePath;
+        public static string TempFilePath = "tmp/lastSession.txt";
 
         public static DataTable dataTable = new DataTable();
         public static Image imageSheme = null;
+
 
 
 
@@ -42,7 +44,7 @@ namespace SGUGIT_CourseWork.HelperCode
             return "Data Source=" + path + ";Version = 3;";
         }
 
-        public static void DataUpdate()
+        public static void DataFullUpdate()
         {
             DataTableReload();
             ValueReload();
