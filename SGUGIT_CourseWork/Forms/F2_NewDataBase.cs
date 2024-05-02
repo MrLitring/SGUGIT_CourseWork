@@ -23,26 +23,17 @@ namespace SGUGIT_CourseWork.Forms
 
 
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SQLiteConnection connection = new SQLiteConnection($"Data Source = {formHelperCode.FIleBrowser("SQLite файл (*.db)|*.db")}; Version = 3;");
-            connection.Open();
-
-            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_Second);
-            table.AddColumnName("rea", SQLDataTable.ValueType.real);
-            table.AddColumnName("int", SQLDataTable.ValueType.integer);
-            table.AddColumnName("text", SQLDataTable.ValueType.text);
-            table.AddColumnName("blob", SQLDataTable.ValueType.blob);
-            table.Execute();
-
-            connection.Close();
-
-        }
-
         private void buttonCreate_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), textBox1.Text + ".db");
-            CreateDataBase(path);
+            if(textBox1.Text != string.Empty )
+            {
+                if(textBox3.Text != string.Empty)
+                {
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), textBox1.Text + ".db");
+                    CreateDataBase(path);
+                }
+            }
+
         }
 
         private void buttonBrowser_Click(object sender, EventArgs e)
@@ -95,17 +86,14 @@ namespace SGUGIT_CourseWork.Forms
             SQLiteConnection old = new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text));
             DataLoad(old, connection, table_first.MinCount);
 
-            SQLData data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
-            data.AddValue(GeneralData.smoothValue);
-            data.AddName("A");
+            SQLData data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Insert);
+            data.AddValue("A", GeneralData.smoothValue);
             data.Execute();
             data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
-            data.AddValue(GeneralData.assureValue);
-            data.AddName("E");
+            data.AddValue("E", GeneralData.assureValue);
             data.Execute();
             data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
-            data.AddValue(GeneralData.blockCount);
-            data.AddName("BlockCount");
+            data.AddValue("BlockCount", GeneralData.blockCount);
             data.Execute();
 
 
@@ -164,8 +152,7 @@ namespace SGUGIT_CourseWork.Forms
 
                     for(int i = 0; i < min; i++)
                     {
-                        data.AddValue(Convert.ToDouble(reader.GetValue(i)));
-                        data.AddName(reader.GetName(i));
+                        data.AddValue(reader.GetName(i), Convert.ToDouble(reader.GetValue(i)));
                     }
                     datas.Add(data);
                 }
