@@ -32,13 +32,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.buttonBrowser1 = new System.Windows.Forms.Button();
             this.buttonBrowser2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -46,7 +46,7 @@
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.textBox1.Location = new System.Drawing.Point(12, 80);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(250, 26);
+            this.textBox1.Size = new System.Drawing.Size(251, 26);
             this.textBox1.TabIndex = 0;
             // 
             // label1
@@ -63,82 +63,51 @@
             // buttonCreate
             // 
             this.buttonCreate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCreate.Location = new System.Drawing.Point(9, 303);
+            this.buttonCreate.Location = new System.Drawing.Point(12, 303);
             this.buttonCreate.Name = "buttonCreate";
-            this.buttonCreate.Size = new System.Drawing.Size(250, 37);
+            this.buttonCreate.Size = new System.Drawing.Size(251, 37);
             this.buttonCreate.TabIndex = 4;
             this.buttonCreate.Text = "Создать";
             this.buttonCreate.UseVisualStyleBackColor = true;
-            this.buttonCreate.Click += new System.EventHandler(this.Button_Click);
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCancel.Location = new System.Drawing.Point(9, 346);
+            this.buttonCancel.Location = new System.Drawing.Point(12, 346);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(250, 37);
+            this.buttonCancel.Size = new System.Drawing.Size(251, 37);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.Button_Click);
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.label3.Location = new System.Drawing.Point(9, 125);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(129, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Создать в";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // buttonBrowser1
-            // 
-            this.buttonBrowser1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBrowser1.Location = new System.Drawing.Point(165, 174);
-            this.buttonBrowser1.Name = "buttonBrowser1";
-            this.buttonBrowser1.Size = new System.Drawing.Size(98, 27);
-            this.buttonBrowser1.TabIndex = 8;
-            this.buttonBrowser1.Text = "Обзор";
-            this.buttonBrowser1.UseVisualStyleBackColor = true;
-            this.buttonBrowser1.Click += new System.EventHandler(this.Button_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonBrowser2
             // 
             this.buttonBrowser2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBrowser2.Location = new System.Drawing.Point(165, 246);
+            this.buttonBrowser2.Location = new System.Drawing.Point(165, 177);
             this.buttonBrowser2.Name = "buttonBrowser2";
             this.buttonBrowser2.Size = new System.Drawing.Size(98, 27);
             this.buttonBrowser2.TabIndex = 10;
             this.buttonBrowser2.Text = "Обзор";
             this.buttonBrowser2.UseVisualStyleBackColor = true;
-            this.buttonBrowser2.Click += new System.EventHandler(this.Button_Click);
+            this.buttonBrowser2.Click += new System.EventHandler(this.buttonBrowser_Click);
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.label2.Location = new System.Drawing.Point(9, 197);
+            this.label2.Location = new System.Drawing.Point(9, 128);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(129, 20);
             this.label2.TabIndex = 9;
             this.label2.Text = "База данных";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.textBox2.Location = new System.Drawing.Point(12, 148);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(251, 20);
-            this.textBox2.TabIndex = 11;
-            // 
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.textBox3.Location = new System.Drawing.Point(12, 220);
+            this.textBox3.Location = new System.Drawing.Point(12, 151);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(251, 20);
@@ -155,18 +124,52 @@
             this.label4.Text = "Создание/Слияние";
             this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(289, 247);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 27);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Обзор";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DisplayMember = "1";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "None"});
+            this.comboBox1.Location = new System.Drawing.Point(12, 243);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(251, 32);
+            this.comboBox1.TabIndex = 15;
+            this.comboBox1.ValueMember = "1";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label5.Location = new System.Drawing.Point(9, 220);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(254, 20);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Выберите где находятся марки";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // F2_NewDataBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 411);
+            this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.buttonBrowser2);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.buttonBrowser1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.label1);
@@ -186,14 +189,14 @@
         #endregion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button buttonBrowser1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.Button buttonBrowser2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -25,7 +25,6 @@ namespace SGUGIT_CourseWork.HelperCode
             this.currentControlOut = control;
         }
 
-
         public void PageLoad(Form form, DockStyle dockStyle = DockStyle.Fill)
         {
             if (this.currentControlOut == null) throw new Exception("Для отображения формы требуется Control, который сейчас  = null");
@@ -44,8 +43,22 @@ namespace SGUGIT_CourseWork.HelperCode
             currentForm.Show();
         }
 
+        public string FIleBrowser(string filter)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = filter
+            };
 
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                return openFileDialog.FileName; ;
+            }
+            else
+                return null;
 
+        }
 
     }
 }
