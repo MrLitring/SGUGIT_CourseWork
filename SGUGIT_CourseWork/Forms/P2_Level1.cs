@@ -112,9 +112,9 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             int j = chart2.Series.Count + 1;
-            //chart2.Series[0].Points.AddXY(j, work.columnMinus.predicates[0]);
-            //chart2.Series[1].Points.AddXY(j, work.columnNull.predicates[0]);
-            //chart2.Series[2].Points.AddXY(j, work.columnPlus.predicates[0]);
+            chart2.Series[0].Points.AddXY(j, work.columnMinus.predicates[0]);
+            chart2.Series[1].Points.AddXY(j, work.columnNull.predicates[0]);
+            chart2.Series[2].Points.AddXY(j, work.columnPlus.predicates[0]);
 
         }
     }
