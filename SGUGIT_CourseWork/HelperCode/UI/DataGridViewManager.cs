@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.HelperCode.UI
 {
+    /// <summary>
+    /// Класс, для управления таблицей. Дизайн и вывод данных
+    /// </summary>
     internal class DataGridViewManager
     {
         private DataGridView dataGridView;

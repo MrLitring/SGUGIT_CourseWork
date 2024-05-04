@@ -32,7 +32,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
-
         public struct ColumnTable
         {
             public List<PointColumn> pointColumns;
@@ -53,16 +52,12 @@ namespace SGUGIT_CourseWork.HelperCode
         public ColumnTable columnNull;
         public ColumnTable columnPlus;
 
-        public DataGridView lastDataGridView;
 
 
-
-
-        public DataTableCalculation()
+        public  DataTableCalculation()
         {
             dtable = GeneralData.dataTable;
 
-            lastDataGridView = new DataGridView();
             columnNull = new ColumnTable();
             columnPlus = new ColumnTable();
             columnMinus = new ColumnTable();
@@ -75,6 +70,7 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             this.dtable = dataTable;
         }
+
 
 
         public void ColumnFill(bool isRowRead = true)
@@ -155,40 +151,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
             }
 
-        }
-
-        public void OutFill(DataGridView dataGridView, int roundValue = 7)
-        {
-            ColumnAdd(dataGridView, "M-", columnMinus.responces, roundValue);
-            ColumnAdd(dataGridView, "M", columnNull.responces, roundValue);
-            ColumnAdd(dataGridView, "M+", columnPlus.responces, roundValue);
-            ColumnAdd(dataGridView, "A-", columnMinus.alphas, roundValue);
-            ColumnAdd(dataGridView, "A", columnNull.alphas, roundValue);
-            ColumnAdd(dataGridView, "A+", columnPlus.alphas, roundValue);
-            roundValue = 6;
-            ColumnAdd(dataGridView, "E", E, roundValue);
-            ColumnAdd(dataGridView, "L", L, roundValue);
-            ColumnAdd(dataGridView, "L<=E", LE, roundValue);
-            ////ColumnAdd(dataGridView, "L<=E", LEs, roundValue);
-        }
-
-        private void ColumnAdd(DataGridView dataGridView,string name, List<double> list, int roundValue = 7)
-        {
-            dataGridView.Columns.Add(name, name);
-            RowAdd(dataGridView, list, roundValue);
-        }
-
-        private void RowAdd(DataGridView dataGridView, List<double> list, int roundValue = 7)
-        {
-            for (int i = dataGridView.Rows.Count; i < list.Count; i++)
-            {
-                dataGridView.Rows.Add();
-            }
-
-            for(int i = 0; i < list.Count; i++)
-            {
-                dataGridView.Rows[i].Cells[dataGridView.Columns.Count -1].Value = Math.Round(list[i], roundValue);
-            }
         }
 
 

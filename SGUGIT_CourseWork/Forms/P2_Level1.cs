@@ -19,16 +19,19 @@ namespace SGUGIT_CourseWork.Forms
         DataTable dTable = GeneralData.dataTable;
 
 
+
         public P2_Level1()
         {
             InitializeComponent();
         }
 
+
+
         private void Update()
         {
             dataView.Rows.Clear();
             dataView.Columns.Clear();
-            dTable.Clear();
+            dTable.Clear(); 
             dTable.Rows.Clear();
             dTable.Columns.Clear();
             dTable = GeneralData.dataTable;
@@ -48,7 +51,6 @@ namespace SGUGIT_CourseWork.Forms
             DataTableCalculation work = new DataTableCalculation(GeneralData.dataTable);
             work.ColumnFill(false);
             work.Calculation();
-            work.lastDataGridView = dataView;
 
             DataGridViewManager dataGridView = new DataGridViewManager(dataView);
             dataGridView.ColumnAdd("M-", work.columnMinus.responces, 4);
@@ -60,13 +62,12 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("A+", work.columnPlus.responces, 4);
 
             dataGridView.ColumnAdd("E", work.E, 10);
-
             dataGridView.ColumnAdd("L", work.L, 10);
             dataGridView.ColumnAdd("L<=E", work.LE, 4);
             dataGridView.ColumnAdd("LEs", work.LEs, 10);
 
-            ChartManager char_1 = new ChartManager(chart1);
-            ChartManager char_2 = new ChartManager(chart2);
+            ChartManager char_1 = new ChartManager(chart1,"Предельные значения функции S(t)");
+            ChartManager char_2 = new ChartManager(chart2, "Прогнозные функции для М(t)");
             char_2.isStartToZero = false;
 
             char_1.Series_Add("M-");
