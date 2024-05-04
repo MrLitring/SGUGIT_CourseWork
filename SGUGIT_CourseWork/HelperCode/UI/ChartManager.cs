@@ -8,6 +8,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SGUGIT_CourseWork.HelperCode.UI
 {
+    /// <summary>
+    /// Класс, для управления графиком. Дизайн и вывод данных
+    /// </summary>
     internal class ChartManager
     {
         private Chart currentChart;
@@ -111,6 +114,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             currentChart.Titles.Clear();
 
             currentChart.Titles.Add(name);
+            currentChart.Titles[0].Font = new System.Drawing.Font(currentChart.Titles[0].Font.Name, 14);
             currentChart.ChartAreas[0].Axes[1].IsStartedFromZero = false;
         }
 
