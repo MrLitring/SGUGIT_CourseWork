@@ -27,7 +27,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private ChartManager()
         {
             seriesList = new List<Series>();
-            widthBorder = 1;
+            widthBorder = 3;
             roundX = 4;
             roundY = 7;
         }
@@ -95,6 +95,16 @@ namespace SGUGIT_CourseWork.HelperCode.UI
                 AddPointXY(series, i, Y[i]);
         }
 
+        public Series SerieSearch(string name)
+        {
+            foreach (Series serie in seriesList)
+            { if (serie.Name == name) return serie; }
+
+            return null;
+        }
+
+
+
         private void chartDesigner()
         {
             currentChart.Series.Clear();
@@ -104,12 +114,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             currentChart.ChartAreas[0].Axes[1].IsStartedFromZero = false;
         }
 
-        private Series SerieSearch(string name)
-        {
-            foreach (Series serie in seriesList)
-            { if (serie.Name == name) return serie; }
-
-            return null;
-        }
+        
     }
 }

@@ -49,7 +49,21 @@ namespace SGUGIT_CourseWork.Forms
             work.ColumnFill(false);
             work.Calculation();
             work.lastDataGridView = dataView;
-            work.OutFill(dataView, 5);
+
+            DataGridViewManager dataGridView = new DataGridViewManager(dataView);
+            dataGridView.ColumnAdd("M-", work.columnMinus.responces, 4);
+            dataGridView.ColumnAdd("M", work.columnMinus.responces, 4);
+            dataGridView.ColumnAdd("M+", work.columnPlus.responces, 4);
+
+            dataGridView.ColumnAdd("A-", work.columnMinus.responces, 4);
+            dataGridView.ColumnAdd("A", work.columnMinus.alphas, 4);
+            dataGridView.ColumnAdd("A+", work.columnPlus.responces, 4);
+
+            dataGridView.ColumnAdd("E", work.E, 10);
+
+            dataGridView.ColumnAdd("L", work.L, 10);
+            dataGridView.ColumnAdd("L<=E", work.LE, 4);
+            dataGridView.ColumnAdd("LEs", work.LEs, 10);
 
             ChartManager char_1 = new ChartManager(chart1);
             ChartManager char_2 = new ChartManager(chart2);
@@ -77,6 +91,7 @@ namespace SGUGIT_CourseWork.Forms
             char_2.AddPointY("M", work.columnNull.predicates[0]);
             char_2.AddPointY("M+", work.columnPlus.predicates[0]);
 
+            //char_2.SerieSearch("M").BorderWidth = 0;
         }
     }
 }
