@@ -24,11 +24,11 @@ namespace SGUGIT_CourseWork.HelperCode
     /// </summary>
     public class DataTableCalculation
     {
-        private DataTable dtable;
-        private List<double> E; 
-        private List<double> L;
-        private List<double> LE;
-        private List<string> LEs;
+        public DataTable dtable;
+        public List<double> E; 
+        public List<double> L;
+        public List<double> LE;
+        public List<string> LEs;
 
 
 
@@ -112,10 +112,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public void Calculation(bool isFullCalculation = true)
         {
-            //columnNull.responces = Responce_Calculation(columnNull.pointColumns);
-            //columnNull.alphas = Alphas_Calculation(columnNull.responces, columnNull.pointColumns);
-            //columnNull.predicates[0] = Predicate_Calculation(columnNull.responces.ToArray());
-            //columnNull.predicates[1] = Predicate_Calculation(columnNull.alphas.ToArray());
             columnNull = ColumnTable_MainCalculate(columnNull);
 
             if (isFullCalculation == true) 

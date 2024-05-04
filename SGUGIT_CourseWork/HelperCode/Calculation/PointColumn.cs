@@ -53,6 +53,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public double NewH()
         {
+            if(points.Count <= 2) return 0;
             return points[points.Count - 1] + Svi();
         }
 

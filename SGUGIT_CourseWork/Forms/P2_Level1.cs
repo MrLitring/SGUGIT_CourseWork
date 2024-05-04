@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Core;
 using SGUGIT_CourseWork.HelperCode;
+using SGUGIT_CourseWork.HelperCode.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace SGUGIT_CourseWork.Forms
 {
     public partial class P2_Level1 : Form
     {
-        DataTable dTable = GeneralData.dataTable;  
+        DataTable dTable = GeneralData.dataTable;
 
 
         public P2_Level1()
@@ -50,71 +51,31 @@ namespace SGUGIT_CourseWork.Forms
             work.lastDataGridView = dataView;
             work.OutFill(dataView, 5);
 
-            //DataPresentationManager dataManager = new DataPresentationManager();
-            //dataManager.Chart_NewDesigner(
-            //    chart1, 
-            //    System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline);
+            ChartManager char_1 = new ChartManager(chart1);
+            ChartManager char_2 = new ChartManager(chart2);
+            char_2.isStartToZero = false;
 
-            //dataManager.AddDataToChart(chart1, work.columnNull.responces, work.columnNull.alphas, 0);
-            //dataManager.AddDataToChart(chart1, work.columnPlus.responces, work.columnPlus.alphas, 1);
-            //dataManager.AddDataToChart(chart1, work.columnMinus.responces, work.columnMinus.alphas, 2);
-            //dataManager.AddDataToChart(chart1, work.columnNull.predicates[0], work.columnNull.predicates[1], 0);
-            //dataManager.AddDataToChart(chart1, work.columnPlus.predicates[0], work.columnPlus.predicates[1], 1);
-            //dataManager.AddDataToChart(chart1, work.columnMinus.predicates[0], work.columnMinus.predicates[1], 2);
+            char_1.Series_Add("M-");
+            char_1.Series_Add("M");
+            char_1.Series_Add("M+");
+            char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
+            char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
+            char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
 
+            char_1.AddPointXY("M-", work.columnMinus.predicates[0], work.columnMinus.predicates[1]);
+            char_1.AddPointXY("M", work.columnNull.predicates[0], work.columnNull.predicates[1]);
+            char_1.AddPointXY("M+", work.columnPlus.predicates[0], work.columnPlus.predicates[1]);
 
-            //dataManager.Chart_NewDesigner(
-            //    chart2,
-            //    System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line);
+            char_2.Series_Add("M-");
+            char_2.Series_Add("M");
+            char_2.Series_Add("M+");
+            char_2.AddPointY("M-", work.columnMinus.responces);
+            char_2.AddPointY("M", work.columnNull.responces);
+            char_2.AddPointY("M+", work.columnPlus.responces);
 
-            //dataManager.AddDataToChart(chart2, work.columnNull.alphas, 0, 1);
-            //dataManager.AddDataToChart(chart2, work.columnPlus.alphas, 1, 1);
-            //dataManager.AddDataToChart(chart2, work.columnMinus.alphas, 2, 1);
-            //dataManager.AddDataToChart(chart2, work.columnNull.predicates[1], 0);
-            //dataManager.AddDataToChart(chart2, work.columnPlus.predicates[1], 1);
-            //dataManager.AddDataToChart(chart2, work.columnMinus.predicates[1], 2);
-            chart1.Series.Clear();
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
-            chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[0].BorderWidth = 1;
-            chart1.Series[1].BorderWidth = 1;
-            chart1.Series[2].BorderWidth = 1;
-
-            chart2.Series.Clear();
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
-            chart2.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart2.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart2.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart2.Series[0].BorderWidth = 1;
-            chart2.Series[1].BorderWidth = 1;
-            chart2.Series[2].BorderWidth = 1;
-
-
-            for (int i = 0; i < work.columnNull.responces.Count; i++)
-            {
-                double respone = Math.Round(work.columnMinus.responces[i], 4);
-                chart1.Series[0].Points.AddXY(respone, work.columnMinus.alphas[i]);
-                chart2.Series[0].Points.AddXY(i, respone);
-
-                respone = Math.Round(work.columnNull.responces[i], 4);
-                chart1.Series[1].Points.AddXY(respone, work.columnNull.alphas[i]);
-                chart2.Series[1].Points.AddXY(i, respone);
-
-                respone = Math.Round(work.columnPlus.responces[i], 4);
-                chart1.Series[2].Points.AddXY(respone, work.columnPlus.alphas[i]);
-                chart2.Series[2].Points.AddXY(i, respone);  
-            }
-
-            int j = chart2.Series.Count + 1;
-            chart2.Series[0].Points.AddXY(j, work.columnMinus.predicates[0]);
-            chart2.Series[1].Points.AddXY(j, work.columnNull.predicates[0]);
-            chart2.Series[2].Points.AddXY(j, work.columnPlus.predicates[0]);
+            char_2.AddPointY("M-", work.columnMinus.predicates[0]);
+            char_2.AddPointY("M", work.columnNull.predicates[0]);
+            char_2.AddPointY("M+", work.columnPlus.predicates[0]);
 
         }
     }

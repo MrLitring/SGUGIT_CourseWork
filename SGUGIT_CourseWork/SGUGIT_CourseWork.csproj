@@ -112,7 +112,7 @@
       <DependentUpon>P3_Level2.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperCode\Calculation\DataTableCalculation.cs" />
-    <Compile Include="HelperCode\UI\CharManager.cs" />
+    <Compile Include="HelperCode\UI\ChartManager.cs" />
     <Compile Include="HelperCode\UI\DataGridViewManager.cs" />
     <Compile Include="HelperCode\UI\FormHelperCode.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
