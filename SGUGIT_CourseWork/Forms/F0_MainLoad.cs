@@ -39,7 +39,7 @@ namespace SGUGIT_CourseWork.Forms
             formHelper.CloseAllForms();
             GeneralData.MainConnection.Close();
             GeneralData.DataBasePath = path;
-            GeneralData.MainConnection = new SQLiteConnection(GeneralData.GenerateConnection_string(path));
+            GeneralData.MainConnection = new SQLiteConnection(GeneralData.Generate_SQLConnection(path));
             GeneralData.MainConnection.Open();
             GeneralData.DataFullUpdate();
             this.toolStripStatusLabel1.Text = GeneralData.DataBasePath;

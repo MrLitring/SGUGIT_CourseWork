@@ -16,7 +16,7 @@ namespace SGUGIT_CourseWork.Forms
     public partial class P1_DataBase : Form
     {
         private bool isFirstStart = true; // Первый ли старт ?
-        private List<SQLData> commandChanges = new List<SQLData>();
+        private List<SQLDataManager> commandChanges = new List<SQLDataManager>();
         // [A] [E] [B] [image]
         private DataTable dTable;
         private Point cellFocus;
@@ -111,7 +111,7 @@ namespace SGUGIT_CourseWork.Forms
                 points.Add(pointColumn);
             }
 
-            SQLData dataToInsert = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Insert);
+            SQLDataManager dataToInsert = new SQLDataManager(GeneralData.TableName_First, GeneralData.MainConnection, SQLDataManager.executionNumber.Insert);
 
             object[] newPoints = new object[points.Count];
             newPoints[0] = points[0].Time;
@@ -143,9 +143,9 @@ namespace SGUGIT_CourseWork.Forms
         {
             if (cellFocus.X >= 0 && cellFocus.X < dTable.Rows.Count)
             {
-                SQLData data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Delete);
+                SQLDataManager data = new SQLDataManager(GeneralData.TableName_First, GeneralData.MainConnection, SQLDataManager.executionNumber.Delete);
                 data.AddWhere("Эпоха", dTable.Rows[cellFocus.X][0]);
-                data.Execute(SQLData.executionNumber.Delete);
+                data.Execute(SQLDataManager.executionNumber.Delete);
 
                 isFirstStart = true;
                 GeneralData.DataFullUpdate();
@@ -165,7 +165,7 @@ namespace SGUGIT_CourseWork.Forms
             {
                 pictureBox1.Image = new Bitmap(imagePath);
 
-                SQLData dataToSave = new SQLData(GeneralData.TableName_Second, GeneralData.MainConnection, SQLData.executionNumber.Update);
+                SQLDataManager dataToSave = new SQLDataManager(GeneralData.TableName_Second, GeneralData.MainConnection, SQLDataManager.executionNumber.Update);
                 dataToSave.ExecuteImageSave("Image", File.ReadAllBytes(imagePath));
             }
         }
@@ -190,10 +190,10 @@ namespace SGUGIT_CourseWork.Forms
             if (isFirstStart == true) return;
 
             string senderName = (sender as TextBox).Name;
-            SQLData dataSave = new SQLData(
+            SQLDataManager dataSave = new SQLDataManager(
                 GeneralData.TableName_Second, 
                 GeneralData.MainConnection, 
-                SQLData.executionNumber.Update);
+                SQLDataManager.executionNumber.Update);
 
             switch (senderName)
             {
@@ -237,7 +237,7 @@ namespace SGUGIT_CourseWork.Forms
         private void Cell_ValueChange(object sender, DataGridViewCellEventArgs e)
         {
             string name = $"cell_{e.ColumnIndex}_{e.RowIndex}";
-            SQLData data = data = new SQLData(GeneralData.TableName_First, GeneralData.MainConnection, SQLData.executionNumber.Update);
+            SQLDataManager data = data = new SQLDataManager(GeneralData.TableName_First, GeneralData.MainConnection, SQLDataManager.executionNumber.Update);
 
             double value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             if (value == currentValue) return;
@@ -279,7 +279,7 @@ namespace SGUGIT_CourseWork.Forms
             if (commandChanges.Count == 0)
                 return;
 
-            foreach (SQLData elem in commandChanges)
+            foreach (SQLDataManager elem in commandChanges)
                 elem.Execute();
 
             commandChanges.Clear();

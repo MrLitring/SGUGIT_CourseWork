@@ -111,14 +111,15 @@
     <Compile Include="Forms\P3_Level2.Designer.cs">
       <DependentUpon>P3_Level2.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperCode\DataTableWork.cs" />
-    <Compile Include="HelperCode\EventBus.cs" />
-    <Compile Include="HelperCode\FormHelperCode.cs" />
+    <Compile Include="HelperCode\Calculation\DataTableCalculation.cs" />
+    <Compile Include="HelperCode\UI\CharManager.cs" />
+    <Compile Include="HelperCode\UI\DataGridViewManager.cs" />
+    <Compile Include="HelperCode\UI\FormHelperCode.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
     <Compile Include="HelperCode\GeneralData.cs" />
-    <Compile Include="HelperCode\PointColumn.cs" />
-    <Compile Include="HelperCode\SqlCode\SQLData.cs" />
-    <Compile Include="HelperCode\SqlCode\SQLDataTable.cs" />
+    <Compile Include="HelperCode\Calculation\PointColumn.cs" />
+    <Compile Include="HelperCode\SqlCode\SQLDataManager.cs" />
+    <Compile Include="HelperCode\SqlCode\SQLTableManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F0_MainLoad.resx">
@@ -234,6 +235,7 @@
   <ItemGroup>
     <None Include="Resources\refresh.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

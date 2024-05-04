@@ -7,7 +7,10 @@ using System.Data.SQLite;
 
 namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
-    internal class SQLDataTable
+    /// <summary>
+    /// Класс для создания таблицы в базе данных SQLite
+    /// </summary>
+    internal class SQLTableManager
     {
         private string tableName;
         private SQLiteConnection connection;
@@ -15,7 +18,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         private List<ValueType> columnTypes;
 
 
-
+        
         public enum ValueType
         {
             integer,
@@ -28,13 +31,13 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
 
 
-        private SQLDataTable() 
+        private SQLTableManager() 
         {
             this.tableName = string.Empty;
             this.columnNames = new List<string>();
             this.columnTypes = new List<ValueType>();
         }
-        public SQLDataTable(SQLiteConnection connect, string name) : this()
+        public SQLTableManager(SQLiteConnection connect, string name) : this()
         {
             this.tableName = name;
             this.connection = connect;
@@ -84,11 +87,10 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
 
 
 
-
         private string CreateQuery()
         {
             string query = $"CREATE TABLE {tableName} (";
-            int min = Math.Min(columnNames.Count(), columnTypes.Count());
+            int min = MinCount;
 
             for (int i = 0; i < min; i++)
             {

@@ -21,7 +21,6 @@ namespace SGUGIT_CourseWork.Forms
         public P2_Level1()
         {
             InitializeComponent();
-            EventBus.onDataBaseChange += Update;
         }
 
         private void Update()
@@ -39,14 +38,13 @@ namespace SGUGIT_CourseWork.Forms
 
         private void P2_Level1_Load(object sender, EventArgs e)
         {
-            EventBus.onDataBaseChange += Update;
             FillData();
         }
 
         List<PointColumn> points = new List<PointColumn>();
         private void FillData()
         {
-            DataTableWork work = new DataTableWork(GeneralData.dataTable);
+            DataTableCalculation work = new DataTableCalculation(GeneralData.dataTable);
             work.ColumnFill(false);
             work.Calculation();
             work.lastDataGridView = dataView;

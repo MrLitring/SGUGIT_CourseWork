@@ -12,9 +12,10 @@ namespace SGUGIT_CourseWork.HelperCode
     {
         private string columnName;
         private List<double> points;
+
+
+
         public int Time = 0;
-
-
         public List<double> Points { get { return points; } }
         public string ColumnName
         {
@@ -42,6 +43,7 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             this.Time = Convert.ToInt32(Time) + 1;
         }
+
 
 
         public void PointAdd(object point)
@@ -94,6 +96,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
             return point;
         }
+
 
 
 
