@@ -7,19 +7,23 @@ using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.HelperCode
 {
-    public class DataTableWork
+    /// <summary>
+    /// Класс для работы с уровнем декомпозицией первого уровня
+    /// 
+    /// <para>Имеет следуюшие значения:
+    /// (r) responce - отклик;
+    /// (a) alpha - альфа;
+    ///  predicate[r, a] - прогнозируемое значение.
+    /// </para>
+    /// 
+    /// <para>Проводит следующие основные операции
+    /// -   заполнить значениями;
+    /// -   рассчитать значения;
+    /// -   заполнять точки;
+    /// </para>
+    /// </summary>
+    public class DataTableCalculation
     {
-        /*
-         *          
-         * Работа с таблицей:
-         * заполнить значениями, рассчитать значения, заполнять точки
-         * 
-         * Расчёт следующих даннных:
-         * отклик - responce, 
-         * альфа - alpha , 
-         * прогнозируемое значение - predicted(всегда последний в списке) 
-         */
-
         private DataTable dtable;
         private List<double> E; 
         private List<double> L;
@@ -54,7 +58,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
-        public DataTableWork()
+        public DataTableCalculation()
         {
             dtable = GeneralData.dataTable;
 
@@ -67,7 +71,7 @@ namespace SGUGIT_CourseWork.HelperCode
             columnPlus.init();
             columnMinus.init();
         }
-        public DataTableWork(DataTable dataTable) : this()
+        public DataTableCalculation(DataTable dataTable) : this()
         {
             this.dtable = dataTable;
         }

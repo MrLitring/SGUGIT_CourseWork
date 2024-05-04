@@ -22,7 +22,6 @@ namespace SGUGIT_CourseWork.Forms
         public F3_ErrorForm()
         {
             InitializeComponent();
-            EventBus.onError += this.Errors;
         }
 
         private void Errors(int errornumber)

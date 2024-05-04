@@ -46,7 +46,7 @@ namespace SGUGIT_CourseWork.Forms
                 int count = 0;
                 List<string> list = new List<string>();
                 Tables_Info(
-                    new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text)),
+                    new SQLiteConnection(GeneralData.Generate_SQLConnection(textBox3.Text)),
                     out count,
                     out list);
 
@@ -74,26 +74,26 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             SQLiteConnection.CreateFile(fullPath);
-            SQLiteConnection connection = new SQLiteConnection(GeneralData.GenerateConnection_string(fullPath));
+            SQLiteConnection connection = new SQLiteConnection(GeneralData.Generate_SQLConnection(fullPath));
             GeneralData.MainConnection = connection;
             connection.Open();
 
 
-            SQLDataTable table_first = Table_First(connection);
+            SQLTableManager table_first = Table_First(connection);
             table_first.Execute();
-            SQLDataTable table_second = Table_Second(connection);
+            SQLTableManager table_second = Table_Second(connection);
             table_second.Execute();
 
-            SQLiteConnection old = new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text));
+            SQLiteConnection old = new SQLiteConnection(GeneralData.Generate_SQLConnection(textBox3.Text));
             DataLoad(old, connection, table_first.MinCount);
 
-            SQLData data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Insert);
+            SQLDataManager data = new SQLDataManager(GeneralData.TableName_Second, connection, SQLDataManager.executionNumber.Insert);
             data.AddValue("A", GeneralData.smoothValue);
             data.Execute();
-            data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
+            data = new SQLDataManager(GeneralData.TableName_Second, connection, SQLDataManager.executionNumber.Update);
             data.AddValue("E", GeneralData.assureValue);
             data.Execute();
-            data = new SQLData(GeneralData.TableName_Second, connection, SQLData.executionNumber.Update);
+            data = new SQLDataManager(GeneralData.TableName_Second, connection, SQLDataManager.executionNumber.Update);
             data.AddValue("BlockCount", GeneralData.blockCount);
             data.Execute();
 
@@ -102,29 +102,29 @@ namespace SGUGIT_CourseWork.Forms
             this.Close();
         }
 
-        private SQLDataTable Table_First(SQLiteConnection connection)
+        private SQLTableManager Table_First(SQLiteConnection connection)
         {
-            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_First);
+            SQLTableManager table = new SQLTableManager(connection, GeneralData.TableName_First);
             List<string> names;
             List<string> values;
             string name = "Данные";
             if (comboBox1.SelectedIndex >= 1)
                 name = comboBox1.Items[comboBox1.SelectedIndex].ToString();
 
-            SQLiteConnection oldCon = new SQLiteConnection(GeneralData.GenerateConnection_string(textBox3.Text));
+            SQLiteConnection oldCon = new SQLiteConnection(GeneralData.Generate_SQLConnection(textBox3.Text));
             Table_Columns(oldCon, name, out _, out names, out values);
             table.AddColumnName(names, values);
 
             return table;
         }
 
-        private SQLDataTable Table_Second(SQLiteConnection connection)
+        private SQLTableManager Table_Second(SQLiteConnection connection)
         {
-            SQLDataTable table = new SQLDataTable(connection, GeneralData.TableName_Second);
-            table.AddColumnName("A", SQLDataTable.ValueType.real);
-            table.AddColumnName("E", SQLDataTable.ValueType.real);
-            table.AddColumnName("BlockCount", SQLDataTable.ValueType.integer);
-            table.AddColumnName("Image", SQLDataTable.ValueType.blob);
+            SQLTableManager table = new SQLTableManager(connection, GeneralData.TableName_Second);
+            table.AddColumnName("A", SQLTableManager.ValueType.real);
+            table.AddColumnName("E", SQLTableManager.ValueType.real);
+            table.AddColumnName("BlockCount", SQLTableManager.ValueType.integer);
+            table.AddColumnName("Image", SQLTableManager.ValueType.blob);
 
             return table;
         }
@@ -137,17 +137,17 @@ namespace SGUGIT_CourseWork.Forms
             if (comboBox1.SelectedIndex >= 1) oldQuery = $"Select * from {comboBox1.SelectedItem}";
             SQLiteCommand command = new SQLiteCommand(oldQuery, oldConnection);
             SQLiteDataReader reader = command.ExecuteReader();
-            List<SQLData> datas = new List<SQLData>();
+            List<SQLDataManager> datas = new List<SQLDataManager>();
 
             if(reader.HasRows)
             {
 
                 while(reader.Read())
                 {
-                    SQLData data = new SQLData(
+                    SQLDataManager data = new SQLDataManager(
                         GeneralData.TableName_First, 
                         newConnection,
-                        SQLData.executionNumber.Insert);
+                        SQLDataManager.executionNumber.Insert);
 
                     for(int i = 0; i < min; i++)
                     {
@@ -158,7 +158,7 @@ namespace SGUGIT_CourseWork.Forms
             }
 
 
-            foreach (SQLData data in datas)
+            foreach (SQLDataManager data in datas)
                 data.Execute();
 
         }

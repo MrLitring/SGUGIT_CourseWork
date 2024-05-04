@@ -6,7 +6,14 @@ using System.Xml;
 
 namespace SGUGIT_CourseWork.HelperCode.SqlCode
 {
-    internal class SQLData
+    /// <summary>
+    /// Класс для управления данными в SQL
+    /// Update
+    /// Insert
+    /// Delete
+    /// 
+    /// </summary>
+    internal class SQLDataManager
     {
         public enum executionNumber
         {
@@ -30,7 +37,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         private int minCount;
         private const string nameParam = "value_";
 
-        private SQLData()
+        private SQLDataManager()
         {
             parameterNames = new List<string>();
             parameterValues = new List<object>();
@@ -38,14 +45,14 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
             time = 0;
             minCount = 0;
         }
-        public SQLData(string tableName, SQLiteConnection connection) : this()
+        public SQLDataManager(string tableName, SQLiteConnection connection) : this()
         {
             this.ExecutionCommand = executionNumber.None;
             this.tableName = tableName;
             this.connection = connection;
 
         }
-        public SQLData(string tableName, SQLiteConnection connection, executionNumber command) : this(tableName, connection)
+        public SQLDataManager(string tableName, SQLiteConnection connection, executionNumber command) : this(tableName, connection)
         {
             this.ExecutionCommand = command;
         }

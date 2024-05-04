@@ -60,7 +60,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(503, 432);
+            this.panel1.Size = new System.Drawing.Size(500, 400);
             this.panel1.TabIndex = 0;
             // 
             // splitContainer1
@@ -77,8 +77,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(503, 432);
-            this.splitContainer1.SplitterDistance = 167;
+            this.splitContainer1.Size = new System.Drawing.Size(500, 400);
+            this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -88,7 +88,7 @@
             this.dataView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataView.Location = new System.Drawing.Point(0, 0);
             this.dataView.Name = "dataView";
-            this.dataView.Size = new System.Drawing.Size(503, 167);
+            this.dataView.Size = new System.Drawing.Size(500, 154);
             this.dataView.TabIndex = 1;
             // 
             // splitContainer2
@@ -104,8 +104,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.chart2);
-            this.splitContainer2.Size = new System.Drawing.Size(503, 255);
-            this.splitContainer2.SplitterDistance = 259;
+            this.splitContainer2.Size = new System.Drawing.Size(500, 236);
+            this.splitContainer2.SplitterDistance = 257;
             this.splitContainer2.TabIndex = 0;
             // 
             // chart1
@@ -121,12 +121,13 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(259, 255);
+            this.chart1.Size = new System.Drawing.Size(257, 236);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
             // chart2
             // 
+            chartArea2.AxisY.IsStartedFromZero = false;
             chartArea2.Name = "ChartArea1";
             this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -138,7 +139,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(240, 255);
+            this.chart2.Size = new System.Drawing.Size(239, 236);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
             // 
@@ -147,7 +148,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(503, 432);
+            this.ClientSize = new System.Drawing.Size(500, 400);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "P2_Level1";

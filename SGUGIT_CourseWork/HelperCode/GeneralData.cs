@@ -14,6 +14,9 @@ using System.Xml.Schema;
 
 namespace SGUGIT_CourseWork.HelperCode
 {
+    /// <summary>
+    /// Клас предоставляет общие данные и общие функции
+    /// </summary>
     public static class GeneralData
     {
         //
@@ -21,6 +24,7 @@ namespace SGUGIT_CourseWork.HelperCode
         //
         public const string TableName_First =  "FirstData";
         public const string TableName_Second = "SecondData";
+        public const string TableName_Level2 = "Level2";
 
         //
         // Первичные параметры
@@ -39,9 +43,9 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
-        public static string GenerateConnection_string(string path)
+        public static string Generate_SQLConnection(string path)
         {
-            return "Data Source=" + path + ";Version = 3;";
+            return $"Data Source={path};Version=3;";
         }
 
         public static void DataFullUpdate()

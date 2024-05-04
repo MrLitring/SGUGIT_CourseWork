@@ -27,13 +27,17 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static void OpenForm(Form chilldForm, Control controlShow)
         {
-            if(controlShow.Controls.Count != 0)
+            if (controlShow.Controls.Count != 0)
+            {
+                (controlShow.Controls[0] as Form).Close();
                 controlShow.Controls.Clear();
+            }
 
             chilldForm.TopLevel = false;
             chilldForm.Size = controlShow.Size;
             chilldForm.BringToFront();
             chilldForm.Dock = DockStyle.Fill;
+            chilldForm.FormBorderStyle = FormBorderStyle.None;
 
             controlShow.Controls.Add(chilldForm);
             chilldForm.Show();
