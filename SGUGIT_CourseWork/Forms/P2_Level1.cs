@@ -78,19 +78,23 @@ namespace SGUGIT_CourseWork.Forms
 
             for (int i = 0; i < work.columnNull.responces.Count; i++)
             {
-                chart1.Series[0].Points.AddXY(work.columnMinus.responces[i], work.columnMinus.alphas[i]);
-                chart1.Series[1].Points.AddXY(work.columnNull.responces[i], work.columnNull.alphas[i]);
-                chart1.Series[2].Points.AddXY(work.columnPlus.responces[i], work.columnPlus.alphas[i]);
+                double respone = Math.Round(work.columnMinus.responces[i], 4);
+                chart1.Series[0].Points.AddXY(respone, work.columnMinus.alphas[i]);
+                chart2.Series[0].Points.AddXY(i, respone);
 
+                respone = Math.Round(work.columnNull.responces[i], 4);
+                chart1.Series[1].Points.AddXY(respone, work.columnNull.alphas[i]);
+                chart2.Series[1].Points.AddXY(i, respone);
 
-                if (i >= 1)
-                {
-                    chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
-                    chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
-                    chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
-                }
+                respone = Math.Round(work.columnPlus.responces[i], 4);
+                chart1.Series[2].Points.AddXY(respone, work.columnPlus.alphas[i]);
+                chart2.Series[2].Points.AddXY(i, respone);  
             }
 
+            int j = chart2.Series.Count + 1;
+            //chart2.Series[0].Points.AddXY(j, work.columnMinus.predicates[0]);
+            //chart2.Series[1].Points.AddXY(j, work.columnNull.predicates[0]);
+            //chart2.Series[2].Points.AddXY(j, work.columnPlus.predicates[0]);
 
         }
     }
