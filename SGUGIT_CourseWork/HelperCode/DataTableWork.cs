@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.HelperCode
@@ -37,7 +35,6 @@ namespace SGUGIT_CourseWork.HelperCode
             public List<double> responces;
             public List<double> alphas;
             public double[] predicates;
-
 
             public void init()
             {

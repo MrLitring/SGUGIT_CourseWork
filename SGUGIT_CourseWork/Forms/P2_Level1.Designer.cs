@@ -80,7 +80,7 @@
             this.splitContainer1.Size = new System.Drawing.Size(503, 432);
             this.splitContainer1.SplitterDistance = 167;
             this.splitContainer1.SplitterWidth = 10;
-            this.splitContainer1.TabIndex = 1;
+            this.splitContainer1.TabIndex = 2;
             // 
             // dataView
             // 

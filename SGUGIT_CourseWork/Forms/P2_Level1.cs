@@ -52,40 +52,62 @@ namespace SGUGIT_CourseWork.Forms
             work.lastDataGridView = dataView;
             work.OutFill(dataView, 5);
 
+            DataPresentationManager dataManager = new DataPresentationManager();
+            dataManager.Chart_NewDesigner(
+                chart1, 
+                System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline);
 
-            chart1.Series.Clear();
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
-            chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
-            chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
-            chart1.Series[0].BorderWidth = 1;
-            chart1.Series[1].BorderWidth = 1;
-            chart1.Series[2].BorderWidth = 1;
+            dataManager.AddDataToChart(chart1, work.columnNull.responces, work.columnNull.alphas, 0);
+            dataManager.AddDataToChart(chart1, work.columnPlus.responces, work.columnPlus.alphas, 1);
+            dataManager.AddDataToChart(chart1, work.columnMinus.responces, work.columnMinus.alphas, 2);
+            dataManager.AddDataToChart(chart1, work.columnNull.predicates[0], work.columnNull.predicates[1], 0);
+            dataManager.AddDataToChart(chart1, work.columnPlus.predicates[0], work.columnPlus.predicates[1], 1);
+            dataManager.AddDataToChart(chart1, work.columnMinus.predicates[0], work.columnMinus.predicates[1], 2);
 
 
-            chart2.Series.Clear();
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
-            chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
-            chart2.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
-            chart2.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
-            chart2.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
-            chart2.Series[0].BorderWidth = 1;
-            chart2.Series[1].BorderWidth = 1;
-            chart2.Series[2].BorderWidth = 1;
+            dataManager.Chart_NewDesigner(
+                chart2,
+                System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line);
 
-            for (int i = 0; i < work.columnNull.responces.Count; i++)
-            {
-                chart1.Series[0].Points.AddXY(work.columnMinus.responces[i], work.columnMinus.alphas[i]);
-                chart1.Series[1].Points.AddXY(work.columnNull.responces[i], work.columnNull.alphas[i]);
-                chart1.Series[2].Points.AddXY(work.columnPlus.responces[i], work.columnPlus.alphas[i]);
+            dataManager.AddDataToChart(chart2, work.columnNull.alphas, 0, 1);
+            dataManager.AddDataToChart(chart2, work.columnPlus.alphas, 1, 1);
+            dataManager.AddDataToChart(chart2, work.columnMinus.alphas, 2, 1);
+            dataManager.AddDataToChart(chart2, work.columnNull.predicates[1], 0);
+            dataManager.AddDataToChart(chart2, work.columnPlus.predicates[1], 1);
+            dataManager.AddDataToChart(chart2, work.columnMinus.predicates[1], 2);
+            //chart1.Series.Clear();
+            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
+            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
+            //chart1.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
+            //chart1.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            //chart1.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            //chart1.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)4;
+            //chart1.Series[0].BorderWidth = 1;
+            //chart1.Series[1].BorderWidth = 1;
+            //chart1.Series[2].BorderWidth = 1;
 
-                chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
-                chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
-                chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
-            }
+
+            //chart2.Series.Clear();
+            //chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_0"));
+            //chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_1"));
+            //chart2.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Ser_2"));
+            //chart2.Series[0].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            //chart2.Series[1].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            //chart2.Series[2].ChartType = (System.Windows.Forms.DataVisualization.Charting.SeriesChartType)3;
+            //chart2.Series[0].BorderWidth = 1;
+            //chart2.Series[1].BorderWidth = 1;
+            //chart2.Series[2].BorderWidth = 1;
+
+            //for (int i = 0; i < work.columnNull.responces.Count; i++)
+            //{
+            //    chart1.Series[0].Points.AddXY(work.columnMinus.responces[i], work.columnMinus.alphas[i]);
+            //    chart1.Series[1].Points.AddXY(work.columnNull.responces[i], work.columnNull.alphas[i]);
+            //    chart1.Series[2].Points.AddXY(work.columnPlus.responces[i], work.columnPlus.alphas[i]);
+
+            //    chart2.Series[0].Points.AddXY(i, work.columnMinus.alphas[i]);
+            //    chart2.Series[1].Points.AddXY(i, work.columnNull.alphas[i]);
+            //    chart2.Series[2].Points.AddXY(i, work.columnPlus.alphas[i]);
+            //}
 
 
         }

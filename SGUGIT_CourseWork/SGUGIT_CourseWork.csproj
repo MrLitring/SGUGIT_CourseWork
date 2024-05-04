@@ -111,6 +111,7 @@
     <Compile Include="Forms\P3_Level2.Designer.cs">
       <DependentUpon>P3_Level2.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperCode\DataPresentationManager.cs" />
     <Compile Include="HelperCode\DataTableWork.cs" />
     <Compile Include="HelperCode\EventBus.cs" />
     <Compile Include="HelperCode\FormHelperCode.cs" />
