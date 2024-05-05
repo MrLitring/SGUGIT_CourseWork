@@ -13,7 +13,7 @@ namespace SGUGIT_CourseWork.HelperCode
     /// <para>Имеет следуюшие значения:
     /// (r) responce - отклик;
     /// (a) alpha - альфа;
-    ///  predicate[r, a] - прогнозируемое значение.
+    /// Где последнее значение, всегда прогноз
     /// </para>
     /// 
     /// <para>Проводит следующие основные операции
@@ -37,14 +37,12 @@ namespace SGUGIT_CourseWork.HelperCode
             public List<PointColumn> pointColumns;
             public List<double> responces;
             public List<double> alphas;
-            public double[] predicates;
 
             public void init()
             {
                 pointColumns = new List<PointColumn>();
                 alphas = new List<double>();
                 responces = new List<double>();
-                predicates = new double[2];
             }
         }
 
@@ -160,11 +158,8 @@ namespace SGUGIT_CourseWork.HelperCode
             columnTable.responces = Responce_Calculation(columnTable.pointColumns);
             columnTable.alphas = Alphas_Calculation(columnTable.responces, columnTable.pointColumns);
 
-            columnTable.predicates[0] = Predicate_Calculation(columnTable.responces.ToArray());
-            columnTable.predicates[1] = Predicate_Calculation(columnTable.alphas.ToArray());
-
-            columnTable.responces.Add(columnTable.predicates[0]);
-            columnTable.alphas.Add(columnTable.predicates[1]);
+            columnTable.responces.Add(Predicate_Calculation(columnTable.responces.ToArray()));
+            columnTable.alphas.Add(Predicate_Calculation(columnTable.alphas.ToArray()));
 
             return columnTable;
         }

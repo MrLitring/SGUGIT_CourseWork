@@ -17,9 +17,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private bool isColored;
 
 
-        //
-
-
 
         private DataGridViewManager()
         {
