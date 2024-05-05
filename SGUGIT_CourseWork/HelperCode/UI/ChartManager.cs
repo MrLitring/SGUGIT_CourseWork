@@ -19,6 +19,8 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private string name;
         private List<Series> seriesList;
 
+        private CheckedListBox checkListBox;
+
 
 
         public int roundX;
@@ -45,8 +47,22 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
             chartDesigner();
         }
+        public ChartManager(
+            Chart chart,
+            CheckedListBox listBox,
+            string name = "График",
+            SeriesChartType type = SeriesChartType.Spline) : this()
+        {
+            this.currentChart = chart;
+            this.checkListBox = listBox;
+            this.name = name;
+            this.type = type;
 
+            chartDesigner();
+            checkListBoxDesigner();
+        }
 
+        
 
         public void Series_Add(string name)
         {
@@ -56,7 +72,14 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             series.BorderWidth = widthBorder;
 
             currentChart.Series.Add(series);
+
             seriesList.Add(series);
+            if (checkListBox != null)
+            {
+                checkListBox.Items.Add(series.Name);
+                checkListBox.SetItemChecked(checkListBox.Items.Count - 1, true);
+            }
+            
         }
 
 
@@ -118,6 +141,24 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             currentChart.ChartAreas[0].Axes[1].IsStartedFromZero = false;
         }
 
-        
+        private void checkListBoxDesigner()
+        {
+            checkListBox.MultiColumn = true;
+
+            checkListBox.ItemCheck += CheckListBox_ItemCheck;
+        }
+
+        private void CheckListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            string itemName = checkListBox.Items[e.Index].ToString();
+            bool isChecked = checkListBox.GetItemCheckState(e.Index) == CheckState.Checked;
+
+
+            if (isChecked)
+                currentChart.Series[itemName].Enabled = false;
+            else
+                currentChart.Series[itemName].Enabled = true;
+
+        }
     }
 }
