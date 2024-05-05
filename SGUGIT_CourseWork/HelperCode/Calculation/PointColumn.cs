@@ -25,6 +25,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
+
         public PointColumn()
         {
             columnName = null;
@@ -69,6 +70,13 @@ namespace SGUGIT_CourseWork.HelperCode
             return summ;
         }
 
+        public void ConvertToAbs()
+        {
+            for (int i = 0; i < points.Count;i++)
+                points[i] = Math.Abs(points[i]);
+        }
+
+
 
 
         public static PointColumn operator *(PointColumn firstPoint, PointColumn secondPoint)
@@ -98,6 +106,14 @@ namespace SGUGIT_CourseWork.HelperCode
             return point;
         }
 
+        public static PointColumn operator -(PointColumn firstPoint, PointColumn value)
+        {
+            PointColumn point = new PointColumn();
+            for (int i = 0; i < firstPoint.points.Count; i++)
+                point.PointAdd(firstPoint.points[i] - value.points[i]);
+
+            return point;
+        }
 
 
 
