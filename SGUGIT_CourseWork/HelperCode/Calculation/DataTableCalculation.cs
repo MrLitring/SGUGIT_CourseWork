@@ -24,7 +24,8 @@ namespace SGUGIT_CourseWork.HelperCode
     /// </summary>
     public class DataTableCalculation
     {
-        public DataTable dtable;
+        public string Name;
+        public DataTable currentDTable;
         public List<double> E; 
         public List<double> L;
         public List<double> LE;
@@ -54,7 +55,8 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public  DataTableCalculation()
         {
-            dtable = GeneralData.dataTable;
+            Name = "table";
+            currentDTable = GeneralData.dataTable;
 
             columnNull = new ColumnTable();
             columnPlus = new ColumnTable();
@@ -66,22 +68,42 @@ namespace SGUGIT_CourseWork.HelperCode
         }
         public DataTableCalculation(DataTable dataTable) : this()
         {
-            this.dtable = dataTable;
+            this.currentDTable = dataTable;
         }
 
 
 
+
+
+
+
+        public void PointColumn_Fill(bool isRowRead = true)
+        {
+            int rowCount = currentDTable.Rows.Count;
+            int colCount = currentDTable.Columns.Count;
+
+            for(int row = 0; row < rowCount; row++)
+            {
+                PointColumn point = new PointColumn();
+
+                for(int col = 0; col < colCount; col++)
+                {
+                    point.PointAdd(currentDTable.Rows[row][col]);
+                }
+
+                columnNull.pointColumns.Add(point);
+            }
+
+        }
         public void ColumnFill(bool isRowRead = true)
         {
-            if (dtable == null) dtable = GeneralData.dataTable;
-
-            int colCount = dtable.Columns.Count;
-            int rowCount = dtable.Rows.Count;
+            int colCount = currentDTable.Columns.Count;
+            int rowCount = currentDTable.Rows.Count;
 
             if (isRowRead == false)
             {
-                colCount = dtable.Rows.Count;
-                rowCount = dtable.Columns.Count;
+                colCount = currentDTable.Rows.Count;
+                rowCount = currentDTable.Columns.Count;
             }
             for (int col = 0; col < colCount; col++)
             {
@@ -89,19 +111,17 @@ namespace SGUGIT_CourseWork.HelperCode
                 for (int row = 0; row < rowCount; row++)
                 {
                     if (isRowRead)
-                        point.PointAdd(dtable.Rows[row][col]);
+                        point.PointAdd(currentDTable.Rows[row][col]);
                     else
                     {
-                        point.PointAdd(dtable.Rows[col][row]);
+                        point.PointAdd(currentDTable.Rows[col][row]);
                     }
                 }
-                if (isRowRead == false)
-                    point.Points.RemoveAt(0);
 
                 columnNull.pointColumns.Add(point);
             }
 
-            
+
         }
 
         public void Calculation(bool isFullCalculation = true)
@@ -127,8 +147,6 @@ namespace SGUGIT_CourseWork.HelperCode
                     E.Add(Math.Abs(columnPlus.responces[i] - columnMinus.responces[i]));
                     L.Add(Math.Abs(columnNull.responces[i] - columnNull.responces[0]));
                 }
-                //E.Add(Math.Abs(columnPlus.predicates[0] - columnMinus.predicates[0]));
-                //L.Add(Math.Abs(columnNull.predicates[0] - columnNull.responces[0]));
 
                 LE = new List<double>();
                 LEs = new List<string>();
@@ -195,15 +213,18 @@ namespace SGUGIT_CourseWork.HelperCode
 
         private double Predicate_Calculation(double[] doubles)
         {
+            double respon = 0;
             double smooth = GeneralData.smoothValue;
-            double[] responceValues = new double[doubles.Length];
+            double avSum = AvarageSumm(doubles);
+            double[] list = new double[doubles.Count()];
 
-            responceValues[0] = smooth * doubles[0] + (1 - smooth) * AvarageSumm(doubles.ToArray());
-            for (int i = 1; i < responceValues.Length; i++)
+            list[0] = smooth * doubles[0] + (1 - smooth) * avSum;
+
+            for(int i = 1; i < doubles.Count(); i++)
             {
-                responceValues[i] = smooth * doubles[i] + (1 - smooth) * responceValues[i - 1];
+                list[i] = smooth * doubles[i] + (1 - smooth) * list[i-1];
             }
-            double respon = smooth * AvarageSumm(responceValues) + (1 - smooth) * responceValues[responceValues.Length - 1];
+            respon = smooth * AvarageSumm(list) + (1 - smooth) * list[list.Count()-1];
 
             return respon;
 

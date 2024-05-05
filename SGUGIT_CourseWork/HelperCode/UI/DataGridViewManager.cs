@@ -27,14 +27,21 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             this.dataGridView = dataGridView;
             this.isColored = isColored;
 
-            
+            GridViewDesign();
         }
 
 
 
+        public void Clear()
+        {
+            dataGridView.Rows.Clear();
+            dataGridView.Columns.Clear();
+            dataGridView.DataSource = null;
+        }
+
         public void RowAdd(List<double> list, int roundValue = 7, int offset = 0)
         {
-            for (int i = dataGridView.Rows.Count; i < list.Count; i++)
+            for (int i = dataGridView.Rows.Count-1; i < list.Count; i++)
             {
                 dataGridView.Rows.Add();
             }
@@ -70,6 +77,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             RowAdd(list, roundValue);
         }
 
-
+        private void GridViewDesign()
+        {
+            dataGridView.Rows.Clear();
+            dataGridView.Columns.Clear();
+        }
     }
 }

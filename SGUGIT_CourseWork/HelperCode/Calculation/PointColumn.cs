@@ -16,7 +16,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
         public int Time = 0;
-        public List<double> Points { get { return points; } }
+        public List<double> GetPointList { get { return points; } }
         public string ColumnName
         {
             get { return columnName; }
@@ -34,9 +34,9 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             Time = other.Time;
 
-            for (int i = 0; i < other.Points.Count; i++)
+            for (int i = 0; i < other.GetPointList.Count; i++)
             {
-                points.Add(other.Points[i]);
+                points.Add(other.GetPointList[i]);
             }
         }
         public PointColumn(object Time) : this()
@@ -74,8 +74,8 @@ namespace SGUGIT_CourseWork.HelperCode
         public static PointColumn operator *(PointColumn firstPoint, PointColumn secondPoint)
         {
             PointColumn point = new PointColumn();
-            for (int i = 0; i < firstPoint.Points.Count; i++)
-                point.PointAdd(firstPoint.Points[i] * secondPoint.Points[i]);
+            for (int i = 0; i < firstPoint.GetPointList.Count; i++)
+                point.PointAdd(firstPoint.GetPointList[i] * secondPoint.GetPointList[i]);
 
             return point;
         }

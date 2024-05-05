@@ -16,7 +16,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private Chart currentChart;
         private SeriesChartType type;
         private int widthBorder;
-        private string name;
         private List<Series> seriesList;
         private CheckedListBox checkListBox;
 
@@ -25,6 +24,11 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         public int roundX;
         public int roundY;
         public bool isStartToZero = true;
+        public string TitleText
+        {
+            get { return currentChart.Titles[0].Text; }
+            set { currentChart.Titles[0].Text = value;  }
+        }
 
 
 
@@ -37,11 +41,9 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         }
         public ChartManager(
             Chart chart,
-            string name = "График",
             SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
-            this.name = name;
             this.type = type;
 
             chartDesigner();
@@ -49,12 +51,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         public ChartManager(
             Chart chart,
             CheckedListBox listBox,
-            string name = "График",
             SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
             this.checkListBox = listBox;
-            this.name = name;
             this.type = type;
 
             chartDesigner();
@@ -62,6 +62,12 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         }
 
         
+
+        public void Clear()
+        {
+            currentChart.Series.Clear();
+            if (checkListBox != null) checkListBox.Items.Clear();
+        }
 
         public void Series_Add(string name)
         {
@@ -132,11 +138,12 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
         private void chartDesigner()
         {
+            if(currentChart.Titles.Count == 0) currentChart.Titles.Add(string.Empty);
+
             currentChart.Series.Clear();
-            currentChart.Titles.Clear();
+            currentChart.Titles[0].Text = "";
             currentChart.Legends.Clear();
 
-            currentChart.Titles.Add(name);
             currentChart.Titles[0].Font = new System.Drawing.Font(currentChart.Titles[0].Font.Name, 14);
             currentChart.ChartAreas[0].Axes[1].IsStartedFromZero = false;
         }
