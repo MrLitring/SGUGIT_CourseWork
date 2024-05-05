@@ -67,32 +67,23 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("LEs", work.LEs, 10);
 
             ChartManager char_1 = new ChartManager(chart1, checkedListBox1,"Предельные значения функции S(t)");
-            ChartManager char_2 = new ChartManager(chart2, checkedListBox2, "Прогнозные функции для М(t)");
+            ChartManager char_2 = new ChartManager(chart2, checkedListBox2, "Прогнозные функции для М(t)", System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line );
             char_2.isStartToZero = false;
 
-            char_1.Series_Add("M-");
             char_1.Series_Add("M");
+            char_1.Series_Add("M-");
             char_1.Series_Add("M+");
             char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
             char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
             char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
 
-            char_1.AddPointXY("M-", work.columnMinus.predicates[0], work.columnMinus.predicates[1]);
-            char_1.AddPointXY("M", work.columnNull.predicates[0], work.columnNull.predicates[1]);
-            char_1.AddPointXY("M+", work.columnPlus.predicates[0], work.columnPlus.predicates[1]);
-
-            char_2.Series_Add("M-");
             char_2.Series_Add("M");
+            char_2.Series_Add("M-");
             char_2.Series_Add("M+");
             char_2.AddPointY("M-", work.columnMinus.responces);
             char_2.AddPointY("M", work.columnNull.responces);
             char_2.AddPointY("M+", work.columnPlus.responces);
 
-            char_2.AddPointY("M-", work.columnMinus.predicates[0]);
-            char_2.AddPointY("M", work.columnNull.predicates[0]);
-            char_2.AddPointY("M+", work.columnPlus.predicates[0]);
-
-            //char_2.SerieSearch("M").BorderWidth = 0;
         }
     }
 }

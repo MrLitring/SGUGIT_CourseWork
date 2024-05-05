@@ -18,7 +18,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private int widthBorder;
         private string name;
         private List<Series> seriesList;
-
         private CheckedListBox checkListBox;
 
 
@@ -32,7 +31,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private ChartManager()
         {
             seriesList = new List<Series>();
-            widthBorder = 3;
+            widthBorder = 1;
             roundX = 4;
             roundY = 7;
         }
@@ -123,7 +122,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
         public Series SerieSearch(string name)
         {
-            foreach (Series serie in seriesList)
+            foreach (Series serie in currentChart.Series)
             { if (serie.Name == name) return serie; }
 
             return null;
@@ -135,6 +134,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         {
             currentChart.Series.Clear();
             currentChart.Titles.Clear();
+            currentChart.Legends.Clear();
 
             currentChart.Titles.Add(name);
             currentChart.Titles[0].Font = new System.Drawing.Font(currentChart.Titles[0].Font.Name, 14);
