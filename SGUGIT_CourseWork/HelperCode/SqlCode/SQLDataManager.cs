@@ -58,7 +58,7 @@ namespace SGUGIT_CourseWork.HelperCode.SqlCode
         }
 
 
-
+        
         //
         // Добавление значений
         //

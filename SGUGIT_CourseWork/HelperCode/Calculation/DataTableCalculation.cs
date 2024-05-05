@@ -73,28 +73,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
-
-
-
-
-        public void PointColumn_Fill(bool isRowRead = true)
-        {
-            int rowCount = currentDTable.Rows.Count;
-            int colCount = currentDTable.Columns.Count;
-
-            for(int row = 0; row < rowCount; row++)
-            {
-                PointColumn point = new PointColumn();
-
-                for(int col = 0; col < colCount; col++)
-                {
-                    point.PointAdd(currentDTable.Rows[row][col]);
-                }
-
-                columnNull.pointColumns.Add(point);
-            }
-
-        }
         public void ColumnFill(bool isRowRead = true)
         {
             int colCount = currentDTable.Columns.Count;
@@ -184,7 +162,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
         private List<double> Responce_Calculation(List<PointColumn> pointColumn)
         {
-            //// Формула = "Корень(СУММКВ(array[i]))"
             List<double> responce = new List<double>();
             for (int i = 0; i < pointColumn.Count; i++)
             {
@@ -195,7 +172,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
         private List<double> Alphas_Calculation(List<double> responce, List<PointColumn> pointColumnsNull)
         {
-            //// формула = "ГРАДУСЫ(ACOS(СУММПРОИЗВ(array[0],array[1])/(M[0]*M[i])))"
             List<double> list = new List<double>();
             List<double> M = responce;
 
@@ -213,7 +189,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
         private double Predicate_Calculation(double[] doubles)
         {
-            double respon = 0;
             double smooth = GeneralData.smoothValue;
             double avSum = AvarageSumm(doubles);
             double[] list = new double[doubles.Count()];
@@ -224,20 +199,14 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 list[i] = smooth * doubles[i] + (1 - smooth) * list[i-1];
             }
-            respon = smooth * AvarageSumm(list) + (1 - smooth) * list[list.Count()-1];
+            double respon = smooth * AvarageSumm(list) + (1 - smooth) * list[list.Count()-1];
 
             return respon;
-
         }
 
         private double AvarageSumm(double[] doubles)
         {
-            double sum = 0;
-
-            foreach (double elem in doubles)
-                sum += elem;
-
-            return sum / doubles.Length;
+            return doubles.Sum() / doubles.Length;
         }
 
     }

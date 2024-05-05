@@ -90,22 +90,17 @@ namespace SGUGIT_CourseWork.Forms
                     }
                 case "StripLevel2":
                     {
-                        HelperCode.FormOpenCode.OpenForm(new P3_Level2(), panel1);
+                        HelperCode.FormOpenCode.OpenForm(new P2_Level2(), panel1);
                         break;
                     }
                 case "StripLevel3":
                     {
-                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
+                        HelperCode.FormOpenCode.OpenForm(new P2_Level3(), panel1);
                         break;
                     }
                 case "StripLevel4":
                     {
-                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
-                        break;
-                    }
-                case "StripTest":
-                    {
-                        //HelperCode.FormOpenCode.OpenForm(new P2_Level1(), panel1);
+                        HelperCode.FormOpenCode.OpenForm(new P2_Level4(), panel1);
                         break;
                     }
             }

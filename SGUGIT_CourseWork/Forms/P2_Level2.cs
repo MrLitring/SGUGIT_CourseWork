@@ -12,7 +12,7 @@ namespace SGUGIT_CourseWork.Forms
     /// <summary>
     /// Клас, предоставляющие основные общие данные и функциональность для этих данных
     /// </summary>
-    public partial class P3_Level2 : Form
+    public partial class P2_Level2 : Form
     {
         private FormHelperCode formHelperCode;
         private DataTable dTable;
@@ -28,7 +28,7 @@ namespace SGUGIT_CourseWork.Forms
 
 
 
-        public P3_Level2()
+        public P2_Level2()
         {
             InitializeComponent();
         }
@@ -39,7 +39,7 @@ namespace SGUGIT_CourseWork.Forms
         {
             dTable = GeneralData.dataTable;
             formHelperCode = new FormHelperCode();
-            dataTables = new List<DataTableCalculation>();
+            dataTables = GeneralData.dataTables;
 
             gridView = new HelperCode.UI.DataGridViewManager(dataGridView1);
             chartView1 = new HelperCode.UI.ChartManager(chart1, checkedListBox1);
@@ -59,7 +59,7 @@ namespace SGUGIT_CourseWork.Forms
                 dataTables.Add(calculation);
             }
 
-            for(int i = 0; i < dTable.Columns.Count; i++)
+            for(int i = 1; i < dTable.Columns.Count; i++)
             {
                 listBox1.Items.Add(dTable.Columns[i].ColumnName);
             }

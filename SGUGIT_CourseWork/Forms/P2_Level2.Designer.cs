@@ -1,6 +1,6 @@
 ﻿namespace SGUGIT_CourseWork.Forms
 {
-    partial class P3_Level2
+    partial class P2_Level2
     {
         /// <summary>
         /// Required designer variable.

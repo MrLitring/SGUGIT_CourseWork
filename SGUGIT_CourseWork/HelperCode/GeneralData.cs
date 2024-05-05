@@ -24,7 +24,6 @@ namespace SGUGIT_CourseWork.HelperCode
         //
         public const string TableName_First =  "FirstData";
         public const string TableName_Second = "SecondData";
-        public const string TableName_Level2 = "Level2";
 
         //
         // Первичные параметры
@@ -39,6 +38,8 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static DataTable dataTable = new DataTable();
         public static Image imageSheme = null;
+
+        public static List<DataTableCalculation> dataTables = new List<DataTableCalculation>();
 
 
 

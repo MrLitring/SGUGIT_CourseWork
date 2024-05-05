@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,19 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             dataGridView.Columns.Clear();
             dataGridView.DataSource = null;
         }
+
+        public void Colorize(List<bool> bools, int row)
+        {
+            for(int col = 0; col < bools.Count; col++)
+            {
+                if (bools[col] == true)
+                    dataGridView.Rows[row].Cells[col].Style.BackColor = Color.Green;
+                else
+                    dataGridView.Rows[row].Cells[col].Style.BackColor = Color.Red;
+            }
+
+        }
+
 
         public void RowAdd(List<double> list, int roundValue = 7, int offset = 0)
         {
