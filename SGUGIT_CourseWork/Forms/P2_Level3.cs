@@ -29,9 +29,6 @@ namespace SGUGIT_CourseWork.Forms
         private void P2_Level3_Load(object sender, EventArgs e)
         {
             gridView = new DataGridViewManager(dataGridView1);
-            //chartView1 = new ChartManager(chart1, checkedListBox1);
-            //chartView2 = new ChartManager(chart2, checkedListBox2);
-
 
             DataTable a = GeneralData.dataTable;
             a.Columns.RemoveAt(0);

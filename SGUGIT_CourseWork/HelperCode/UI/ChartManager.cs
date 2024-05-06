@@ -63,9 +63,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
         
 
-        public void Clear()
+        public void Clear(Chart chart)
         {
-            currentChart.Series.Clear();
+            chart.Series.Clear();
+            seriesList.Clear();
             if (checkListBox != null) checkListBox.Items.Clear();
         }
 
