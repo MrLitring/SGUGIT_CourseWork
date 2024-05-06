@@ -168,7 +168,7 @@ namespace SGUGIT_CourseWork.Forms
             string query = $"PRAGMA table_info({tableName})";
             List<string> valueName = new List<string>();
             List<string> valueType = new List<string>();
-            int count = 0;
+            int count = 0; 
 
             if (!(connection.State == System.Data.ConnectionState.Open))
             {

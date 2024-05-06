@@ -51,7 +51,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StripTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,26 +69,26 @@
             // StripNewDataBase
             // 
             this.StripNewDataBase.Name = "StripNewDataBase";
-            this.StripNewDataBase.Size = new System.Drawing.Size(247, 22);
+            this.StripNewDataBase.Size = new System.Drawing.Size(169, 22);
             this.StripNewDataBase.Text = "Новый проект";
             this.StripNewDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // StripOpenDataBase
             // 
             this.StripOpenDataBase.Name = "StripOpenDataBase";
-            this.StripOpenDataBase.Size = new System.Drawing.Size(247, 22);
+            this.StripOpenDataBase.Size = new System.Drawing.Size(169, 22);
             this.StripOpenDataBase.Text = "Открыть";
             this.StripOpenDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(244, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
             // 
             // StripClose
             // 
             this.StripClose.Name = "StripClose";
-            this.StripClose.Size = new System.Drawing.Size(247, 22);
+            this.StripClose.Size = new System.Drawing.Size(169, 22);
             this.StripClose.Text = "Выход";
             this.StripClose.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
@@ -117,8 +116,7 @@
             this.StripLevel1,
             this.StripLevel2,
             this.StripLevel3,
-            this.StripLevel4,
-            this.StripTest});
+            this.StripLevel4});
             this.MenuWorkBench.Name = "MenuWorkBench";
             this.MenuWorkBench.Size = new System.Drawing.Size(172, 28);
             this.MenuWorkBench.Text = "Рабочее пространство";
@@ -155,7 +153,7 @@
             // 
             this.StripLevel4.Name = "StripLevel4";
             this.StripLevel4.Size = new System.Drawing.Size(180, 22);
-            this.StripLevel4.Text = "IX Уровень";
+            this.StripLevel4.Text = "IV Уровень";
             this.StripLevel4.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // рабочиеОкнаToolStripMenuItem
@@ -169,7 +167,7 @@
             // StripNewWindow
             // 
             this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(180, 22);
+            this.StripNewWindow.Size = new System.Drawing.Size(152, 22);
             this.StripNewWindow.Text = "Новое окно";
             this.StripNewWindow.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
@@ -238,12 +236,6 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // StripTest
-            // 
-            this.StripTest.Name = "StripTest";
-            this.StripTest.Size = new System.Drawing.Size(180, 22);
-            this.StripTest.Text = "Тестирование";
-            // 
             // F0_MainLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -294,6 +286,5 @@
         private System.Windows.Forms.ToolStripMenuItem StripLevel2;
         private System.Windows.Forms.ToolStripMenuItem StripLevel3;
         private System.Windows.Forms.ToolStripMenuItem StripLevel4;
-        private System.Windows.Forms.ToolStripMenuItem StripTest;
     }
 }
