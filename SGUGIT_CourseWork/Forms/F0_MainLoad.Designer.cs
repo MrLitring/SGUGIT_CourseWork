@@ -40,11 +40,6 @@
             this.StripLevel2 = new System.Windows.Forms.ToolStripMenuItem();
             this.StripLevel3 = new System.Windows.Forms.ToolStripMenuItem();
             this.StripLevel4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.рабочиеОкнаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripNewWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.обАвтореToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.обПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,26 +64,26 @@
             // StripNewDataBase
             // 
             this.StripNewDataBase.Name = "StripNewDataBase";
-            this.StripNewDataBase.Size = new System.Drawing.Size(169, 22);
+            this.StripNewDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripNewDataBase.Text = "Новый проект";
             this.StripNewDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // StripOpenDataBase
             // 
             this.StripOpenDataBase.Name = "StripOpenDataBase";
-            this.StripOpenDataBase.Size = new System.Drawing.Size(169, 22);
+            this.StripOpenDataBase.Size = new System.Drawing.Size(180, 22);
             this.StripOpenDataBase.Text = "Открыть";
             this.StripOpenDataBase.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // StripClose
             // 
             this.StripClose.Name = "StripClose";
-            this.StripClose.Size = new System.Drawing.Size(169, 22);
+            this.StripClose.Size = new System.Drawing.Size(180, 22);
             this.StripClose.Text = "Выход";
             this.StripClose.Click += new System.EventHandler(this.MenuStrip_File_Click);
             // 
@@ -98,9 +93,7 @@
             this.menuStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.MenuWorkBench,
-            this.рабочиеОкнаToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.MenuWorkBench});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MinimumSize = new System.Drawing.Size(0, 32);
             this.menuStrip1.Name = "menuStrip1";
@@ -124,73 +117,37 @@
             // StripEditDataBase
             // 
             this.StripEditDataBase.Name = "StripEditDataBase";
-            this.StripEditDataBase.Size = new System.Drawing.Size(180, 22);
+            this.StripEditDataBase.Size = new System.Drawing.Size(160, 22);
             this.StripEditDataBase.Text = "База данных";
             this.StripEditDataBase.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // StripLevel1
             // 
             this.StripLevel1.Name = "StripLevel1";
-            this.StripLevel1.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel1.Size = new System.Drawing.Size(160, 22);
             this.StripLevel1.Text = "I Уровень";
             this.StripLevel1.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // StripLevel2
             // 
             this.StripLevel2.Name = "StripLevel2";
-            this.StripLevel2.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel2.Size = new System.Drawing.Size(160, 22);
             this.StripLevel2.Text = "II Уровень";
             this.StripLevel2.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // StripLevel3
             // 
             this.StripLevel3.Name = "StripLevel3";
-            this.StripLevel3.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel3.Size = new System.Drawing.Size(160, 22);
             this.StripLevel3.Text = "III Уровень";
             this.StripLevel3.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // StripLevel4
             // 
             this.StripLevel4.Name = "StripLevel4";
-            this.StripLevel4.Size = new System.Drawing.Size(180, 22);
+            this.StripLevel4.Size = new System.Drawing.Size(160, 22);
             this.StripLevel4.Text = "IV Уровень";
             this.StripLevel4.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
-            // 
-            // рабочиеОкнаToolStripMenuItem
-            // 
-            this.рабочиеОкнаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripNewWindow});
-            this.рабочиеОкнаToolStripMenuItem.Name = "рабочиеОкнаToolStripMenuItem";
-            this.рабочиеОкнаToolStripMenuItem.Size = new System.Drawing.Size(112, 28);
-            this.рабочиеОкнаToolStripMenuItem.Text = "Рабочие окна";
-            // 
-            // StripNewWindow
-            // 
-            this.StripNewWindow.Name = "StripNewWindow";
-            this.StripNewWindow.Size = new System.Drawing.Size(152, 22);
-            this.StripNewWindow.Text = "Новое окно";
-            this.StripNewWindow.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
-            // 
-            // справкаToolStripMenuItem
-            // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.обАвтореToolStripMenuItem,
-            this.обПрограммеToolStripMenuItem});
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(75, 28);
-            this.справкаToolStripMenuItem.Text = "Справка";
-            // 
-            // обАвтореToolStripMenuItem
-            // 
-            this.обАвтореToolStripMenuItem.Name = "обАвтореToolStripMenuItem";
-            this.обАвтореToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.обАвтореToolStripMenuItem.Text = "Об авторе";
-            // 
-            // обПрограммеToolStripMenuItem
-            // 
-            this.обПрограммеToolStripMenuItem.Name = "обПрограммеToolStripMenuItem";
-            this.обПрограммеToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.обПрограммеToolStripMenuItem.Text = "Об программе";
             // 
             // toolStripMenuItem4
             // 
@@ -273,14 +230,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem обАвтореToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem обПрограммеToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem MenuWorkBench;
         private System.Windows.Forms.ToolStripMenuItem StripEditDataBase;
-        private System.Windows.Forms.ToolStripMenuItem рабочиеОкнаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem StripNewWindow;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripMenuItem StripLevel1;
         private System.Windows.Forms.ToolStripMenuItem StripLevel2;

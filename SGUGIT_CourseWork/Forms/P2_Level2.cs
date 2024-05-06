@@ -99,7 +99,6 @@ namespace SGUGIT_CourseWork.Forms
         {
             DataTableCalculation currentDTC = DTC_Search(comboBox1.SelectedItem.ToString());
             currentDTable = currentDTC.currentDTable;
-            textBox1.Text = currentDTC.Name;
             listBox2.Items.Clear();
 
             for (int i = 0; i < currentDTable.Columns.Count; i++)
@@ -217,6 +216,15 @@ namespace SGUGIT_CourseWork.Forms
             }
 
             return false;
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            for(int i =0; i < GeneralData.dataTables.Count; i++)
+            {
+                
+            }
         }
     }
 }

@@ -239,19 +239,29 @@ namespace SGUGIT_CourseWork.Forms
             string name = $"cell_{e.ColumnIndex}_{e.RowIndex}";
             SQLDataManager data = data = new SQLDataManager(GeneralData.TableName_First, GeneralData.MainConnection, SQLDataManager.executionNumber.Update);
 
-            double value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-            if (value == currentValue) return;
-            if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
+            string valueS = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            double value;
+
+            if (double.TryParse(valueS, out value) == true)
+            {
+                //value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                if (value == currentValue) return;
+                if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
 
 
-            data.AddValue(
-                $"{dataGridView1.Columns[e.ColumnIndex].HeaderText}", 
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-            data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
-            data.Name = "";
+                data.AddValue(
+                    $"{dataGridView1.Columns[e.ColumnIndex].HeaderText}",
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
+                data.Name = "";
 
-            commandChanges.Add(data);
-            LabelText_Save();
+                commandChanges.Add(data);
+                LabelText_Save();
+            }
+            else
+            {
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dTable.Rows[e.RowIndex][e.ColumnIndex].ToString();
+            }
         }
 
         //

@@ -78,8 +78,8 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             series.BorderWidth = widthBorder;
 
             currentChart.Series.Add(series);
-
             seriesList.Add(series);
+
             if (checkListBox != null)
             {
                 checkListBox.Items.Add(series.Name);
@@ -97,6 +97,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             X = Math.Round(X, roundX);
             Y = Math.Round(Y, roundY);
             serie.Points.AddXY(X, Y);
+            seriesList[SerieSearchIndex(serie.Name, seriesList)].Points.AddXY(X, Y);
         }
         public void AddPointXY(string name, double X, double Y)
         {
@@ -134,6 +135,12 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
             return null;
         }
+        public int SerieSearchIndex(string name, List<Series > series)
+        {
+            for (int i = 0; i < series.Count; i++)
+                if (series[i].Name == name) return i;
+            return -1;
+        }
 
 
 
@@ -165,7 +172,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             if (isChecked)
                 currentChart.Series[itemName].Enabled = false;
             else
+            {
                 currentChart.Series[itemName].Enabled = true;
+            }
+                
 
         }
     }
