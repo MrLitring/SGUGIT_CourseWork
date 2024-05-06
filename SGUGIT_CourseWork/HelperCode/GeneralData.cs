@@ -40,6 +40,7 @@ namespace SGUGIT_CourseWork.HelperCode
         public static Image imageSheme = null;
 
         public static List<DataTableCalculation> dataTables = new List<DataTableCalculation>();
+        public static List<DataTableCalculation> dataTables2 = new List<DataTableCalculation>();
 
 
 

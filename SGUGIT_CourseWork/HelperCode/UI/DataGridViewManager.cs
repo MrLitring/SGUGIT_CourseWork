@@ -33,11 +33,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
 
 
-        public void Clear()
+        public void Clear(DataGridView dataGridView)
         {
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
-            dataGridView.DataSource = null;
         }
 
         public void Colorize(List<bool> bools, int row)
