@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -18,11 +15,13 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private int widthBorder;
         private List<Series> seriesList;
         private CheckedListBox checkListBox;
-
+        private ContextMenuStrip contextHelpMenu;
+        private ContextMenuStrip chartHelpMenu;
 
 
         public int roundX;
         public int roundY;
+        
         public bool isStartToZero = true;
         public string TitleText
         {
@@ -30,7 +29,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             set { currentChart.Titles[0].Text = value;  }
         }
 
-
+         
 
         private ChartManager()
         {
@@ -39,19 +38,14 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             roundX = 4;
             roundY = 7;
         }
-        public ChartManager(
-            Chart chart,
-            SeriesChartType type = SeriesChartType.Spline) : this()
+        public ChartManager(Chart chart, SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
             this.type = type;
 
             chartDesigner();
         }
-        public ChartManager(
-            Chart chart,
-            CheckedListBox listBox,
-            SeriesChartType type = SeriesChartType.Spline) : this()
+        public ChartManager(Chart chart, CheckedListBox listBox, SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
             this.checkListBox = listBox;
@@ -70,6 +64,15 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             if (checkListBox != null) checkListBox.Items.Clear();
         }
 
+        public void AxisSetTitle(string x, string y)
+        {
+            currentChart.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font(currentChart.ChartAreas[0].AxisX.TitleFont.Name, 14);
+            currentChart.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font(currentChart.ChartAreas[0].AxisY.TitleFont.Name, 14);
+
+            currentChart.ChartAreas[0].AxisX.Title = x;
+            currentChart.ChartAreas[0].AxisY.Title = y;
+        }
+
         public void Series_Add(string name)
         {
             Series series = new Series();
@@ -78,7 +81,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             series.BorderWidth = widthBorder;
 
             currentChart.Series.Add(series);
-            seriesList.Add(series);
 
             if (checkListBox != null)
             {
@@ -97,7 +99,6 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             X = Math.Round(X, roundX);
             Y = Math.Round(Y, roundY);
             serie.Points.AddXY(X, Y);
-            seriesList[SerieSearchIndex(serie.Name, seriesList)].Points.AddXY(X, Y);
         }
         public void AddPointXY(string name, double X, double Y)
         {
@@ -159,8 +160,23 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private void checkListBoxDesigner()
         {
             checkListBox.MultiColumn = true;
+            contextHelpMenu = new ContextMenuStrip();
+            ToolStripMenuItem toolClear = new ToolStripMenuItem("Снять все выделения");
+            toolClear.MouseUp += ToolClear_MouseUp;
 
+            contextHelpMenu.Items.Add(toolClear);
+
+            checkListBox.MouseUp += CheckListBox_MouseClick;
             checkListBox.ItemCheck += CheckListBox_ItemCheck;
+            
+        }
+
+        private void ToolClear_MouseUp(object sender, MouseEventArgs e)
+        {
+            for(int i = 0;  i < checkListBox.Items.Count; i++)
+            {
+                checkListBox.SetItemChecked(i, false);
+            }
         }
 
         private void CheckListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -175,7 +191,16 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             {
                 currentChart.Series[itemName].Enabled = true;
             }
-                
+
+            
+        }
+
+        private void CheckListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextHelpMenu.Show(checkListBox.PointToScreen(e.Location));
+            }
 
         }
     }

@@ -41,8 +41,7 @@ namespace SGUGIT_CourseWork.Forms
             GeneralData.DataBasePath = path;
             GeneralData.MainConnection = new SQLiteConnection(GeneralData.Generate_SQLConnection(path));
             GeneralData.MainConnection.Open();
-            GeneralData.DataFullUpdate();
-            this.toolStripStatusLabel1.Text = GeneralData.DataBasePath;
+            GeneralData.DataFullUpdate(); 
         }
 
         //
@@ -65,6 +64,7 @@ namespace SGUGIT_CourseWork.Forms
                     }
                 case "StripOpenDataBase":
                     {
+                        GeneralData.FullRestart();
                         DataBaseOpen(formHelper.FIleBrowser("DB files(*.db)|*.db"));
                         break;
                     }

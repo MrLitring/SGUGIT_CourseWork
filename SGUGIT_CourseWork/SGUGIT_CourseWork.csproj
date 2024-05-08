@@ -69,97 +69,99 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureSettings.cs" />
-    <Compile Include="Forms\F0_MainLoad.cs">
+    <Compile Include="Forms\forms\F0_MainLoad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F0_MainLoad.Designer.cs">
+    <Compile Include="Forms\forms\F0_MainLoad.Designer.cs">
       <DependentUpon>F0_MainLoad.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\F1_Window.cs">
+    <Compile Include="Forms\forms\F1_Window.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F1_Window.Designer.cs">
+    <Compile Include="Forms\forms\F1_Window.Designer.cs">
       <DependentUpon>F1_Window.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\F2_NewDataBase.cs">
+    <Compile Include="Forms\forms\F2_NewDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F2_NewDataBase.Designer.cs">
+    <Compile Include="Forms\forms\F2_NewDataBase.Designer.cs">
       <DependentUpon>F2_NewDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\F3_ErrorForm.cs">
+    <Compile Include="Forms\forms\F3_ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\F3_ErrorForm.Designer.cs">
+    <Compile Include="Forms\forms\F3_ErrorForm.Designer.cs">
       <DependentUpon>F3_ErrorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\P1_DataBase.cs">
+    <Compile Include="Forms\pages\P1_DataBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\P1_DataBase.Designer.cs">
+    <Compile Include="Forms\pages\P1_DataBase.Designer.cs">
       <DependentUpon>P1_DataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\P2_Level1.cs">
+    <Compile Include="Forms\pages\P2_Level1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\P2_Level1.Designer.cs">
+    <Compile Include="Forms\pages\P2_Level1.Designer.cs">
       <DependentUpon>P2_Level1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\P2_Level2.cs">
+    <Compile Include="Forms\pages\P2_Level2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\P2_Level2.Designer.cs">
+    <Compile Include="Forms\pages\P2_Level2.Designer.cs">
       <DependentUpon>P2_Level2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\P2_Level3.cs">
+    <Compile Include="Forms\pages\P2_Level3.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\P2_Level3.Designer.cs">
+    <Compile Include="Forms\pages\P2_Level3.Designer.cs">
       <DependentUpon>P2_Level3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\P2_Level4.cs">
+    <Compile Include="Forms\pages\P2_Level4.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\P2_Level4.Designer.cs">
+    <Compile Include="Forms\pages\P2_Level4.Designer.cs">
       <DependentUpon>P2_Level4.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperCode\Calculation\DataTableCalculation.cs" />
     <Compile Include="HelperCode\Calculation\DataTableLinkCalculation.cs" />
+    <Compile Include="HelperCode\InternalData\GeneralChar.cs" />
+    <Compile Include="HelperCode\Other\DataTableStorage.cs" />
     <Compile Include="HelperCode\UI\ChartManager.cs" />
     <Compile Include="HelperCode\UI\DataGridViewManager.cs" />
     <Compile Include="HelperCode\UI\FormHelperCode.cs" />
     <Compile Include="HelperCode\FormOpenCode.cs" />
-    <Compile Include="HelperCode\GeneralData.cs" />
+    <Compile Include="HelperCode\InternalData\GeneralData.cs" />
     <Compile Include="HelperCode\Calculation\PointColumn.cs" />
     <Compile Include="HelperCode\SqlCode\SQLDataManager.cs" />
     <Compile Include="HelperCode\SqlCode\SQLTableManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\F0_MainLoad.resx">
+    <EmbeddedResource Include="Forms\forms\F0_MainLoad.resx">
       <DependentUpon>F0_MainLoad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\F1_Window.resx">
+    <EmbeddedResource Include="Forms\forms\F1_Window.resx">
       <DependentUpon>F1_Window.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\F2_NewDataBase.resx">
+    <EmbeddedResource Include="Forms\forms\F2_NewDataBase.resx">
       <DependentUpon>F2_NewDataBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\F3_ErrorForm.resx">
+    <EmbeddedResource Include="Forms\forms\F3_ErrorForm.resx">
       <DependentUpon>F3_ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\P1_DataBase.resx">
+    <EmbeddedResource Include="Forms\pages\P1_DataBase.resx">
       <DependentUpon>P1_DataBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\P2_Level1.resx">
+    <EmbeddedResource Include="Forms\pages\P2_Level1.resx">
       <DependentUpon>P2_Level1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\P2_Level2.resx">
+    <EmbeddedResource Include="Forms\pages\P2_Level2.resx">
       <DependentUpon>P2_Level2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\P2_Level3.resx">
+    <EmbeddedResource Include="Forms\pages\P2_Level3.resx">
       <DependentUpon>P2_Level3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\P2_Level4.resx">
+    <EmbeddedResource Include="Forms\pages\P2_Level4.resx">
       <DependentUpon>P2_Level4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

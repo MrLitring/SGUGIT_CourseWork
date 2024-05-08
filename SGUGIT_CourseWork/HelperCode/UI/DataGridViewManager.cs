@@ -1,10 +1,6 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.HelperCode.UI
@@ -48,6 +44,14 @@ namespace SGUGIT_CourseWork.HelperCode.UI
                 else
                     dataGridView.Rows[row].Cells[col].Style.BackColor = Color.Red;
             }
+
+        }
+        public void Colorize(List<bool> bools, int row, int column)
+        {
+                if (bools[column] == true)
+                    dataGridView.Rows[row].Cells[column].Style.BackColor = Color.Green;
+                else
+                    dataGridView.Rows[row].Cells[column].Style.BackColor = Color.Red;
 
         }
 

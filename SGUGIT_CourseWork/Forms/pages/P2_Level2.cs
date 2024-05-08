@@ -37,7 +37,7 @@ namespace SGUGIT_CourseWork.Forms
             GeneralData.ImageUpdate();
             pictureBox1.Image = GeneralData.imageSheme;
 
-            if (GeneralData.dataTables.Count == 0)
+            if (GeneralData.dataTables.Count <= 2)
             {
                 string name = "block_";
                 for (int i = 0; i < GeneralData.blockCount; i++)
@@ -49,12 +49,10 @@ namespace SGUGIT_CourseWork.Forms
                     calculation.Name = name + i.ToString();
                     dataTables.Add(calculation);
                 }
-                DataTableCalculation calculation1 = new DataTableCalculation(new DataTable());
-                calculation1.Name = timeName;
-                dataTables.Add(calculation1);
 
-                for (int i = 1; i < dTable.Columns.Count; i++)
+                for (int i = 0; i < dTable.Columns.Count; i++)
                 {
+                    if(dTable.Columns[i].ColumnName != "Эпоха")
                     listBox1.Items.Add(dTable.Columns[i].ColumnName);
                 }
             }
@@ -86,6 +84,10 @@ namespace SGUGIT_CourseWork.Forms
             linkTable.Columns.Clear();
             SaveBlock(listBox2, linkTable);
 
+            if (DTC_Search(timeName).currentDTable == null)
+            {
+                linkTable = new DataTable();
+            }
             linkTable = DTC_Search(timeName).currentDTable;
             linkTable.Clear();
             linkTable.Rows.Clear();

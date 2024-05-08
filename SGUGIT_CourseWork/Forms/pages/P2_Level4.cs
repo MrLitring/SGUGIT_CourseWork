@@ -26,8 +26,6 @@ namespace SGUGIT_CourseWork.Forms
         {
             chartManager = new ChartManager(chart1, checkedListBox1);
 
-            comboBox1.Items.Add("Main");
-
             for (int i = 0; i < GeneralData.dataTables.Count; i++)
             {
                 DataTableCalculation DTCtable = GeneralData.dataTables[i];

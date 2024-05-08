@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Schema;
 
 namespace SGUGIT_CourseWork.HelperCode
 {
@@ -52,9 +45,19 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static void DataFullUpdate()
         {
+            dataTables.Clear();
+            DataTableCalculation calculation = new DataTableCalculation(dataTable);
+            calculation.Name = "Main";
+            dataTables.Add(calculation);
             DataTableReload();
             ValueReload();
             ImageUpdate();
+        }
+
+        public static void FullRestart()
+        {
+            dataTables = new List<DataTableCalculation> ();
+            dataTables2 = new List<DataTableCalculation> ();
         }
 
         public static void DataTableReload()
@@ -64,6 +67,7 @@ namespace SGUGIT_CourseWork.HelperCode
                 $"Select * from {TableName_First} order by 1",
                 MainConnection);
             adapter.Fill(dataTable);
+            
         }
 
         public static void ValueReload()
@@ -103,5 +107,6 @@ namespace SGUGIT_CourseWork.HelperCode
                 }
             }
         }
+
     }
 }
