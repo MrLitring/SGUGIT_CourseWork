@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using SGUGIT_CourseWork.HelperCode.Other;
+using System.Xml.Serialization;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -15,7 +16,7 @@ namespace SGUGIT_CourseWork.Forms
         private FormHelperCode formHelperCode;
         private DataTable dTable;
         List<DataTableCalculation> dataTables;
-        string timeName = "Block_Other";
+        const string blockName = "Block_";
         string lastName = "";
 
 
@@ -39,47 +40,54 @@ namespace SGUGIT_CourseWork.Forms
             pictureBox1.Image = GeneralData.imageSheme;
 
 
-            if (GeneralData.underBlockStorage_1.Count == 0)
+            if (GeneralData.underBlockStorage_1.Count == 1)
             {
-                string timeName2 = "Block_";
-                DataTableStorage underBlock = new DataTableStorage(timeName, GeneralData.dataTable);
-                GeneralData.underBlockStorage_1.Add(underBlock);
-
-
-                for (int i = 0; i < GeneralData.blockCount; i++)
-                {
-                    string name = timeName2 + i.ToString();
-
-                    underBlock = new DataTableStorage(name, GeneralData.dataTable);
-                    GeneralData.underBlockStorage_1.Add(underBlock);
-                    comboBox1.Items.Add(underBlock.Name);
-                }
-
-                for (int i = 0; i < dTable.Columns.Count; i++)
-                    listBox1.Items.Add(dTable.Columns[i].ColumnName);
+                FirstLoad();
             }
             else
             {
-                for (int i = 0; i < GeneralData.underBlockStorage_1.Count; i++)
-                {
-                    if (GeneralData.underBlockStorage_1[i].Name != timeName)
-                    {
-                        comboBox1.Items.Add(GeneralData.underBlockStorage_1[i].Name);
-                        DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlock();
-                        for (int i2 = 0; i2 < table.Columns.Count; i2++)
-                            listBox2.Items.Add(table.Columns[i2].ColumnName);
-                    }
-                    else
-                    {
-                        for (int i2 = 0; i2 < GeneralData.underBlockStorage_1[i].GetUnderBlock().Columns.Count; i2++)
-                            listBox1.Items.Add(GeneralData.underBlockStorage_1[i].GetUnderBlock().Columns[i2].ColumnName);
-                    }
-
-                }
-
+                SecondsLoad();
             }
 
             comboBox1.SelectedIndex = 0;
+        }
+
+        private void FirstLoad()
+        {
+            DataTableStorage underBlock;
+
+
+            for (int i = 0; i < GeneralData.blockCount; i++)
+            {
+                string name = blockName + i.ToString();
+
+                underBlock = new DataTableStorage(name, GeneralData.dataTable);
+                GeneralData.underBlockStorage_1.Add(underBlock);
+                comboBox1.Items.Add(underBlock.Name);
+            }
+
+            for (int i = 0; i < dTable.Columns.Count; i++)
+                if(dTable.Columns[i].ColumnName != "Эпоха")
+                listBox1.Items.Add(dTable.Columns[i].ColumnName);
+        }
+
+        private void SecondsLoad()
+        {
+            DataTable dataTable = GeneralData.underBlockStorage_1[0].GetUnderBlock();
+            for (int i = 0; i < GeneralData.underBlockStorage_1[0].GetUnderBlock().Columns.Count; i++)
+                listBox1.Items.Add(GeneralData.underBlockStorage_1[0].GetUnderBlock().Columns[i].ColumnName);
+
+            for (int i = 1; i < GeneralData.underBlockStorage_1.Count; i++)
+            {
+                if (GeneralData.underBlockStorage_1[i].Name != blockName + "Other")
+                {
+                    comboBox1.Items.Add(GeneralData.underBlockStorage_1[i].Name);
+                    DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlock();
+                    for (int i2 = 0; i2 < table.Columns.Count; i2++)
+                        listBox2.Items.Add(table.Columns[i2].ColumnName);
+                }
+
+            }
         }
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -97,25 +105,9 @@ namespace SGUGIT_CourseWork.Forms
             if (linkTable == null) return;
             SaveUnderBlock(listBox2, linkTable);
 
-            linkTable = DTS_Search(timeName, GeneralData.underBlockStorage_1);
+            linkTable = DTS_Search(blockName + "Other", GeneralData.underBlockStorage_1);
             if (linkTable == null) return;
             SaveUnderBlock(listBox1, linkTable);
-            //DataTable linkTable = DTC_Search(comboBox1.SelectedItem.ToString()).currentDTable;
-            //linkTable.Clear();
-            //linkTable.Rows.Clear();
-            //linkTable.Columns.Clear();
-            //SaveBlock(listBox2, linkTable);
-
-            //if (DTC_Search(timeName).currentDTable == null)
-            //{
-            //    linkTable = new DataTable();
-            //}
-            //linkTable = DTC_Search(timeName).currentDTable;
-            //linkTable.Clear();
-            //linkTable.Rows.Clear();
-            //linkTable.Columns.Clear();
-
-            //SaveBlock(listBox1, linkTable);
         }
 
 
@@ -129,38 +121,29 @@ namespace SGUGIT_CourseWork.Forms
             listBox2.Items.Clear();
             for (int i = 0; i < currentTable.Columns.Count; i++)
                 listBox2.Items.Add(currentTable.Columns[i].ColumnName);
-
-
-
-
-            //DataTableCalculation currentDTC = DTC_Search(comboBox1.SelectedItem.ToString());
-            //currentDTable = currentDTC.currentDTable;
-            //listBox2.Items.Clear();
-
-            //for (int i = 0; i < currentDTable.Columns.Count; i++)
-            //{
-            //    listBox2.Items.Add(currentDTable.Columns[i].ColumnName);
-            //}
         }
 
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox2.SelectedItem == null) return;
-
+            
 
             string name = comboBox2.SelectedItem.ToString();
+            
 
-            if (lastName != name && name != timeName)
+            if (lastName != name)
             {
-                DataTableCalculation table = DTC_Search(name);
-                if (table == null) return;
+                DataTableStorage DT = DTS_Search(name, GeneralData.underBlockStorage_1);
+                DataTable currentDateTable = DT.GetUnderBlock();
+                DataTableCalculation currentTable = new DataTableCalculation(currentDateTable);
+                if (currentTable == null) return;
 
-                table.ColumnFill(false);
-                table.Calculation(true);
+                currentTable.ColumnFill(false);
+                currentTable.Calculation(true);
 
 
-                formHelperCode.PageLoad(new P2_Level1(table.currentDTable));
+                formHelperCode.PageLoad(new P2_Level1(currentTable.currentDTable));
                 lastName = name;
             }
 
@@ -183,24 +166,10 @@ namespace SGUGIT_CourseWork.Forms
             for (int i = 0; i < listBox.Items.Count; i++)
             {
                 string colName = listBox.Items[i].ToString();
-                if (tableStorage.isColumnExist(colName) == false)
-                {
-                    table.Columns.Add(colName);
-                }
+                table.Columns.Add(colName);
             }
 
             tableStorage.DataTableDeconstuction(table);
-        }
-
-        private DataTableCalculation DTC_Search(string name)
-        {
-            foreach (DataTableCalculation elem in dataTables)
-            {
-                if (elem.Name == name)
-                    return elem;
-            }
-
-            return null;
         }
 
         private DataTableStorage DTS_Search(string name, List<DataTableStorage> DTstorage)
@@ -216,10 +185,34 @@ namespace SGUGIT_CourseWork.Forms
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            for (int i = 0; i < GeneralData.dataTables.Count; i++)
+            if (tabControl1.SelectedIndex == 1)
             {
+                bool isNext = true;
 
+                for(int i = 1; i < GeneralData.underBlockStorage_1.Count-1; i++)
+                {
+                    if (GeneralData.underBlockStorage_1[i].ColumnCount != GeneralData.underBlockStorage_1[i+1].ColumnCount)
+                    {
+                        isNext = false;
+                        break;
+                    }
+                }
+
+                if(isNext == false)
+                {
+                    FormHelperCode.MessageError(GeneralTextData.Error, GeneralTextData.Error_SystemCount);
+                    tabControl1.SelectedIndex = 0;
+                }
+
+                comboBox2.Items.Clear();
+                for (int i = 0; i < GeneralData.underBlockStorage_1.Count; i++)
+                {
+                    if (GeneralData.underBlockStorage_1[i].Name != blockName + "Other")
+                    {
+                        comboBox2.Items.Add(GeneralData.underBlockStorage_1[i].Name);
+                    }
+
+                }
             }
         }
     }

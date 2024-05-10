@@ -56,7 +56,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(250, 20);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Название";
+            this.label1.Text = "Название (обязательно)";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // buttonCreate
@@ -98,9 +98,9 @@
             this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.label2.Location = new System.Drawing.Point(9, 128);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(129, 20);
+            this.label2.Size = new System.Drawing.Size(250, 20);
             this.label2.TabIndex = 9;
-            this.label2.Text = "База данных";
+            this.label2.Text = "База данных (обязательно)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // textBox3
@@ -129,7 +129,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "None"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 243);
+            this.comboBox1.Location = new System.Drawing.Point(12, 256);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(251, 32);
             this.comboBox1.TabIndex = 15;
@@ -141,9 +141,9 @@
             this.label5.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.label5.Location = new System.Drawing.Point(9, 220);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(254, 20);
+            this.label5.Size = new System.Drawing.Size(254, 33);
             this.label5.TabIndex = 16;
-            this.label5.Text = "Выберите где находятся марки";
+            this.label5.Text = "Выберите где находятся марки\r\n(обязательно)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // F2_NewDataBase

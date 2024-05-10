@@ -19,6 +19,7 @@ namespace SGUGIT_CourseWork.HelperCode.Other
         public string Name { get { return name; } }
         public DataTable DataTable { get { return dataTable; } }
         public List<DataTableStorage> DataTableStorages { get { return storages; } }
+        public int ColumnCount { get { return columnNames.Count; } }
 
 
 
@@ -65,24 +66,23 @@ namespace SGUGIT_CourseWork.HelperCode.Other
             columnNames.Clear();
             for(int col =0; col < dataTable.Columns.Count; col++)
                 columnNames.Add(dataTable.Columns[col].ColumnName);
+
+            Sort();
         }
 
-        public void AddColumnName(string name)
+        private void Sort()
         {
-            columnNames.Add(name);
-        }
+            columnNames.Sort((x, y) =>
+            {
+                int num1, num2;
 
-        public void RemoveColumnName(string name)
-        {
-            columnNames.Remove(name);
-        }
-
-        public bool isColumnExist(string name)
-        {
-            foreach(string elm in columnNames)
-                if(elm == name) return true;
-
-            return false;
+                if (int.TryParse(x, out num1) && int.TryParse(y, out num2))
+                {
+                    return num1.CompareTo(num2);
+                }
+                else
+                { return 0; }
+            });
         }
 
 

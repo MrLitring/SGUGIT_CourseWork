@@ -63,6 +63,9 @@ namespace SGUGIT_CourseWork.HelperCode
 
             underBlockStorage_1 = new List<DataTableStorage>();
             underBlockStorage_2 = new List <DataTableStorage>();
+
+            DataTableStorage underBlock = new DataTableStorage("Block_" + "Other");
+            underBlockStorage_1.Add(underBlock);
         }
 
         public static void DataTableReload()

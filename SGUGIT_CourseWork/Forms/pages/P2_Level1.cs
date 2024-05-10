@@ -31,6 +31,13 @@ namespace SGUGIT_CourseWork.Forms
             { 
                 dTable = GeneralData.dataTable; 
             }
+
+            if(dTable.Columns.Count < 2) 
+            {
+                FormHelperCode.MessageError(GeneralTextData.Error, GeneralTextData.Error_MinimumTwoPoints);
+                return;
+            }
+            
             FillData();
         }
 
@@ -41,11 +48,11 @@ namespace SGUGIT_CourseWork.Forms
             ChartManager char_1 = new ChartManager(chart1, checkedListBox1, System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline);
             ChartManager char_2 = new ChartManager(chart2, checkedListBox2, System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line);
 
-            char_1.TitleText = "Предельные значения функции S(t)";
-            char_2.TitleText = "Прогнозные функции для М(t)";
-            char_1.AxisSetTitle(GeneralChar.Assure.ToString(), GeneralChar.Alpha.ToString());
-            char_2.AxisSetTitle("t", GeneralChar.Assure.ToString());
-            char_2.AxisSetTitle("t", GeneralChar.Assure.ToString());
+            char_1.TitleText = "График отклика";
+            char_2.TitleText = "Фазовая траектория";
+            char_1.AxisSetTitle(GeneralTextData.Assure.ToString(), GeneralTextData.Alpha.ToString());
+            char_2.AxisSetTitle("t", GeneralTextData.Assure.ToString());
+            char_2.AxisSetTitle("t", GeneralTextData.Assure.ToString());
             char_2.isStartToZero = false;
 
             DataTable table = dTable.Clone();
@@ -61,9 +68,11 @@ namespace SGUGIT_CourseWork.Forms
 
             List<string> strings = new List<string>();
             for (int i = 0; i < dTable.Rows.Count; i++)
-                strings.Add(dTable.Rows[i][0].ToString());
+                strings.Add(GeneralData.dataTable.Rows[i][0].ToString());
             strings.Add("Прогноз");
 
+            char_1.AnnotanionCreate(strings);
+            char_2.AnnotanionCreate(strings);
             dataGridView.ColumnAdd("№", strings);
             dataGridView.ColumnAdd("M-", work.columnMinus.responces, 4);
             dataGridView.ColumnAdd("M", work.columnNull.responces, 4);
@@ -75,8 +84,8 @@ namespace SGUGIT_CourseWork.Forms
 
             dataGridView.ColumnAdd("E", work.E, 10);
             dataGridView.ColumnAdd("L", work.L, 10);
-            dataGridView.ColumnAdd("L<=E", work.LE, 4);
-            dataGridView.ColumnAdd("LEs", work.LEs, 10);
+            //dataGridView.ColumnAdd("L<=E", work.LE, 4);
+            dataGridView.ColumnAdd("Оценка", work.LEs, 10);
 
             dataGridView.ColorizeCol(work.Flags(), dataGridView.ColumnCount - 1);
             
@@ -95,9 +104,9 @@ namespace SGUGIT_CourseWork.Forms
             char_2.AddPointY("M", work.columnNull.responces);
             char_2.AddPointY("M+", work.columnPlus.responces);
 
-
+            
             if (work.count > 0)
-                formHelp.MessageInfo("Предупреждение", "В данном блоке присутствует нестабильность, перейдите ко 2-му уровеню декомпозиции.");
+                FormHelperCode.MessageInfo(GeneralTextData.Warning, GeneralTextData.Warning_BlockUnstable);
         }
     }
 }

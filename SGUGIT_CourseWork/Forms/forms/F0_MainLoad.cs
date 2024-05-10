@@ -41,7 +41,8 @@ namespace SGUGIT_CourseWork.Forms
             GeneralData.DataBasePath = path;
             GeneralData.MainConnection = new SQLiteConnection(GeneralData.Generate_SQLConnection(path));
             GeneralData.MainConnection.Open();
-            GeneralData.DataFullUpdate(); 
+            GeneralData.DataFullUpdate();
+            
         }
 
         //
@@ -66,6 +67,9 @@ namespace SGUGIT_CourseWork.Forms
                     {
                         GeneralData.FullRestart();
                         DataBaseOpen(formHelper.FIleBrowser("DB files(*.db)|*.db"));
+                        GeneralData.underBlockStorage_1[0] = new HelperCode.Other.DataTableStorage(GeneralData.underBlockStorage_1[0].Name, GeneralData.dataTable);
+                        GeneralData.underBlockStorage_1[0].DataTableDeconstuction(GeneralData.dataTable);
+                        this.statusStrip1.Items[0].Text = GeneralData.DataBasePath;
                         break;
                     }
             }
@@ -111,12 +115,9 @@ namespace SGUGIT_CourseWork.Forms
             string named = (sender as ToolStripMenuItem).Name;
             switch (named)
             {
-                case "StripNewWindow":
+                case "toolHelp":
                     {
-                        F0_MainLoad form = new F0_MainLoad();
-                        form.Show();
-                        form.FormBorderStyle = FormBorderStyle.SizableToolWindow;
-
+                        HelperCode.FormOpenCode.OpenForm(new F3_ErrorForm(), panel1);
                         break;
                     }
             }

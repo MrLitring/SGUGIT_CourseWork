@@ -51,9 +51,13 @@ namespace SGUGIT_CourseWork.HelperCode
                 currentControlOut.Controls.Clear();
         }
 
-        public void MessageInfo(string title, string content)
+        public static void MessageInfo(string title, string content)
         {
             MessageBox.Show(content, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        public static void MessageError(string title, string content)
+        {
+            MessageBox.Show(content, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
 

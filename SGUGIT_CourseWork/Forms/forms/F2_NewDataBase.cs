@@ -27,12 +27,24 @@ namespace SGUGIT_CourseWork.Forms
         {
             if(textBox1.Text != string.Empty )
             {
-                if(textBox3.Text != string.Empty)
+                if (textBox3.Text != string.Empty)
                 {
-                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), textBox1.Text + ".db");
-                    CreateDataBase(path);
+                    if (comboBox1.SelectedIndex > 0)
+                    {
+                        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), textBox1.Text + ".db");
+                        CreateDataBase(path);
+                    }
+                    else
+                    { FormHelperCode.MessageError(GeneralTextData.Error, GeneralTextData.Error_FieldEmpty); }
+
                 }
+
+                else
+                { FormHelperCode.MessageError(GeneralTextData.Error, GeneralTextData.Error_FieldEmpty); }
+
             }
+            else
+            { FormHelperCode.MessageError(GeneralTextData.Error, GeneralTextData.Error_FieldEmpty); }
 
         }
 
