@@ -10,12 +10,13 @@ namespace SGUGIT_CourseWork.Forms
     public partial class P2_Level1 : Form
     {
         DataTable dTable;
-
+        FormHelperCode formHelp;
 
 
         public P2_Level1()
         {
             InitializeComponent();
+            formHelp = new FormHelperCode();
         }
         public P2_Level1(DataTable dataTable) : this ()
         {
@@ -58,7 +59,12 @@ namespace SGUGIT_CourseWork.Forms
             work.ColumnFill(false);
             work.Calculation();
 
-            
+            List<string> strings = new List<string>();
+            for (int i = 0; i < dTable.Rows.Count; i++)
+                strings.Add(dTable.Rows[i][0].ToString());
+            strings.Add("Прогноз");
+
+            dataGridView.ColumnAdd("№", strings);
             dataGridView.ColumnAdd("M-", work.columnMinus.responces, 4);
             dataGridView.ColumnAdd("M", work.columnNull.responces, 4);
             dataGridView.ColumnAdd("M+", work.columnPlus.responces, 4);
@@ -72,6 +78,7 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("L<=E", work.LE, 4);
             dataGridView.ColumnAdd("LEs", work.LEs, 10);
 
+            dataGridView.ColorizeCol(work.Flags(), dataGridView.ColumnCount - 1);
             
 
             char_1.Series_Add("M");
@@ -88,6 +95,9 @@ namespace SGUGIT_CourseWork.Forms
             char_2.AddPointY("M", work.columnNull.responces);
             char_2.AddPointY("M+", work.columnPlus.responces);
 
+
+            if (work.count > 0)
+                formHelp.MessageInfo("Предупреждение", "В данном блоке присутствует нестабильность, перейдите ко 2-му уровеню декомпозиции.");
         }
     }
 }

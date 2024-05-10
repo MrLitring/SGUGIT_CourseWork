@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SGUGIT_CourseWork.HelperCode.Other;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
@@ -34,7 +35,8 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public static List<DataTableCalculation> dataTables = new List<DataTableCalculation>();
         public static List<DataTableCalculation> dataTables2 = new List<DataTableCalculation>();
-
+        public static List<DataTableStorage> underBlockStorage_1 = new List<DataTableStorage>();
+        public static List<DataTableStorage> underBlockStorage_2 = new List<DataTableStorage>();
 
 
 
@@ -58,6 +60,9 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             dataTables = new List<DataTableCalculation> ();
             dataTables2 = new List<DataTableCalculation> ();
+
+            underBlockStorage_1 = new List<DataTableStorage>();
+            underBlockStorage_2 = new List <DataTableStorage>();
         }
 
         public static void DataTableReload()

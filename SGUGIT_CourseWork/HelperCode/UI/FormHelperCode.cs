@@ -51,6 +51,12 @@ namespace SGUGIT_CourseWork.HelperCode
                 currentControlOut.Controls.Clear();
         }
 
+        public void MessageInfo(string title, string content)
+        {
+            MessageBox.Show(content, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+
         public string FIleBrowser(string filter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -67,6 +73,8 @@ namespace SGUGIT_CourseWork.HelperCode
                 return null;
 
         }
+
+        
 
     }
 }

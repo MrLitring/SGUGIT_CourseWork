@@ -190,8 +190,8 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(94, 17);
+            this.toolStripStatusLabel1.Text = "Файл не открыт";
             // 
             // F0_MainLoad
             // 
@@ -208,7 +208,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "F0_MainLoad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "F0_MainLoad";
+            this.Text = "Курсовая работа : Мороз Л.А, Би-22.1";
             this.Load += new System.EventHandler(this.F0_MainLoad_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

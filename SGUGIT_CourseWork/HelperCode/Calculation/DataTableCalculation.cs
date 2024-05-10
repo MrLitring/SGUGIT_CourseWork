@@ -30,6 +30,17 @@ namespace SGUGIT_CourseWork.HelperCode
         public List<double> L;
         public List<double> LE;
         public List<string> LEs;
+        public int count
+        {
+            get
+            {
+                int sum = 0;
+                for (int i = 0; i < LE.Count; i++)
+                    if(LE[i] == 0 ) sum++;
+
+                return sum;
+            }
+        }
 
 
 
@@ -147,6 +158,24 @@ namespace SGUGIT_CourseWork.HelperCode
 
         }
 
+        public List<bool> Flags()
+        {
+            List<bool> result = new List<bool>();
+            foreach(double d in LE)
+            {
+                if (d == 1)
+                {
+                    result.Add(true);
+                }
+                else
+                {
+                    result.Add(false);
+                }
+
+            }
+
+            return result;
+        }
 
 
         private ColumnTable ColumnTable_MainCalculate(ColumnTable columnTable)

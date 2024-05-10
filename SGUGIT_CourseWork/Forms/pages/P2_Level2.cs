@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using SGUGIT_CourseWork.HelperCode.Other;
 
 namespace SGUGIT_CourseWork.Forms
 {
@@ -13,9 +14,9 @@ namespace SGUGIT_CourseWork.Forms
     {
         private FormHelperCode formHelperCode;
         private DataTable dTable;
-        private DataTable currentDTable;
         List<DataTableCalculation> dataTables;
         string timeName = "Block_Other";
+        string lastName = "";
 
 
 
@@ -37,33 +38,45 @@ namespace SGUGIT_CourseWork.Forms
             GeneralData.ImageUpdate();
             pictureBox1.Image = GeneralData.imageSheme;
 
-            if (GeneralData.dataTables.Count <= 2)
+
+            if (GeneralData.underBlockStorage_1.Count == 0)
             {
-                string name = "block_";
+                string timeName2 = "Block_";
+                DataTableStorage underBlock = new DataTableStorage(timeName, GeneralData.dataTable);
+                GeneralData.underBlockStorage_1.Add(underBlock);
+
+
                 for (int i = 0; i < GeneralData.blockCount; i++)
                 {
-                    comboBox1.Items.Add(name + i.ToString());
-                    comboBox2.Items.Add(name + i.ToString());
+                    string name = timeName2 + i.ToString();
 
-                    DataTableCalculation calculation = new DataTableCalculation(new DataTable());
-                    calculation.Name = name + i.ToString();
-                    dataTables.Add(calculation);
+                    underBlock = new DataTableStorage(name, GeneralData.dataTable);
+                    GeneralData.underBlockStorage_1.Add(underBlock);
+                    comboBox1.Items.Add(underBlock.Name);
                 }
 
                 for (int i = 0; i < dTable.Columns.Count; i++)
-                {
-                    if(dTable.Columns[i].ColumnName != "Эпоха")
                     listBox1.Items.Add(dTable.Columns[i].ColumnName);
-                }
             }
             else
             {
-                for (int i = 0; i < dataTables.Count; i++)
+                for (int i = 0; i < GeneralData.underBlockStorage_1.Count; i++)
                 {
-                    comboBox1.Items.Add(GeneralData.dataTables[i].Name);
-                    if(GeneralData.dataTables[i].Name != timeName)
-                        comboBox2.Items.Add(GeneralData.dataTables[i].Name);
+                    if (GeneralData.underBlockStorage_1[i].Name != timeName)
+                    {
+                        comboBox1.Items.Add(GeneralData.underBlockStorage_1[i].Name);
+                        DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlock();
+                        for (int i2 = 0; i2 < table.Columns.Count; i2++)
+                            listBox2.Items.Add(table.Columns[i2].ColumnName);
+                    }
+                    else
+                    {
+                        for (int i2 = 0; i2 < GeneralData.underBlockStorage_1[i].GetUnderBlock().Columns.Count; i2++)
+                            listBox1.Items.Add(GeneralData.underBlockStorage_1[i].GetUnderBlock().Columns[i2].ColumnName);
+                    }
+
                 }
+
             }
 
             comboBox1.SelectedIndex = 0;
@@ -78,38 +91,59 @@ namespace SGUGIT_CourseWork.Forms
             else
                 ValueSwap(listBox2, listBox1, listBox2.SelectedIndex);
 
-            DataTable linkTable = DTC_Search(comboBox1.SelectedItem.ToString()).currentDTable;
-            linkTable.Clear();
-            linkTable.Rows.Clear();
-            linkTable.Columns.Clear();
-            SaveBlock(listBox2, linkTable);
 
-            if (DTC_Search(timeName).currentDTable == null)
-            {
-                linkTable = new DataTable();
-            }
-            linkTable = DTC_Search(timeName).currentDTable;
-            linkTable.Clear();
-            linkTable.Rows.Clear();
-            linkTable.Columns.Clear();
+            DataTableStorage linkTable = DTS_Search(comboBox1.SelectedItem.ToString(), GeneralData.underBlockStorage_1);
 
-            SaveBlock(listBox1, linkTable);
+            if (linkTable == null) return;
+            SaveUnderBlock(listBox2, linkTable);
+
+            linkTable = DTS_Search(timeName, GeneralData.underBlockStorage_1);
+            if (linkTable == null) return;
+            SaveUnderBlock(listBox1, linkTable);
+            //DataTable linkTable = DTC_Search(comboBox1.SelectedItem.ToString()).currentDTable;
+            //linkTable.Clear();
+            //linkTable.Rows.Clear();
+            //linkTable.Columns.Clear();
+            //SaveBlock(listBox2, linkTable);
+
+            //if (DTC_Search(timeName).currentDTable == null)
+            //{
+            //    linkTable = new DataTable();
+            //}
+            //linkTable = DTC_Search(timeName).currentDTable;
+            //linkTable.Clear();
+            //linkTable.Rows.Clear();
+            //linkTable.Columns.Clear();
+
+            //SaveBlock(listBox1, linkTable);
         }
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataTableCalculation currentDTC = DTC_Search(comboBox1.SelectedItem.ToString());
-            currentDTable = currentDTC.currentDTable;
-            listBox2.Items.Clear();
+            DataTableStorage dataTableStorage = DTS_Search(comboBox1.SelectedItem.ToString(), GeneralData.underBlockStorage_1);
+            if (dataTableStorage == null) return;
 
-            for (int i = 0; i < currentDTable.Columns.Count; i++)
-            {
-                listBox2.Items.Add(currentDTable.Columns[i].ColumnName);
-            }
+            DataTable currentTable = dataTableStorage.GetUnderBlock();
+
+            listBox2.Items.Clear();
+            for (int i = 0; i < currentTable.Columns.Count; i++)
+                listBox2.Items.Add(currentTable.Columns[i].ColumnName);
+
+
+
+
+            //DataTableCalculation currentDTC = DTC_Search(comboBox1.SelectedItem.ToString());
+            //currentDTable = currentDTC.currentDTable;
+            //listBox2.Items.Clear();
+
+            //for (int i = 0; i < currentDTable.Columns.Count; i++)
+            //{
+            //    listBox2.Items.Add(currentDTable.Columns[i].ColumnName);
+            //}
         }
 
-        string lastName = "";
+
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox2.SelectedItem == null) return;
@@ -134,38 +168,28 @@ namespace SGUGIT_CourseWork.Forms
 
 
 
-        private DataTable SaveBlock(ListBox listBox, DataTable table)
+        private void ValueSwap(ListBox list1, ListBox list2, int index)
         {
-            List<int> strings = new List<int>();
+            if (index == -1) return;
+
+            list2.Items.Add(list1.Items[index].ToString());
+            list1.Items.RemoveAt(index);
+        }
+
+        private void SaveUnderBlock(ListBox listBox, DataTableStorage tableStorage)
+        {
+            DataTable table = new DataTable();
+
             for (int i = 0; i < listBox.Items.Count; i++)
             {
-                strings.Add(Convert.ToInt32(listBox.Items[i]));
-            }
-            strings.Sort();
-
-            for (int item = 0; item < strings.Count; item++)
-            {
-                string colName = strings[item].ToString();
-                PointColumn column = FillColumnSearch(colName);
-                if (ColumnSearch(colName, table) == false)
+                string colName = listBox.Items[i].ToString();
+                if (tableStorage.isColumnExist(colName) == false)
                 {
-                    table.Columns.Add(colName, typeof(double));
-                    int lastCol = table.Columns.Count - 1;
-
-                    for (int row = table.Rows.Count; row < column.GetPointList.Count; row++)
-                    {
-                        table.Rows.Add();
-                    }
-
-                    for (int row = 0; row < column.GetPointList.Count; row++)
-                    {
-                        table.Rows[row][lastCol] = column.GetPointList[row];
-                    }
+                    table.Columns.Add(colName);
                 }
             }
 
-
-            return table;
+            tableStorage.DataTableDeconstuction(table);
         }
 
         private DataTableCalculation DTC_Search(string name)
@@ -179,53 +203,23 @@ namespace SGUGIT_CourseWork.Forms
             return null;
         }
 
-        private void ValueSwap(ListBox list1, ListBox list2, int index)
+        private DataTableStorage DTS_Search(string name, List<DataTableStorage> DTstorage)
         {
-            if (index == -1) return;
-
-            list2.Items.Add(list1.Items[index].ToString());
-            list1.Items.RemoveAt(index);
-        }
-
-        private PointColumn FillColumnSearch(string colName)
-        {
-            PointColumn column = new PointColumn();
-
-            for (int col = 0; col < dTable.Columns.Count; col++)
+            foreach (DataTableStorage elem in DTstorage)
             {
-                if (dTable.Columns[col].ColumnName == colName)
-                {
-                    column.ColumnName = colName;
-                    for (int row = 0; row < dTable.Rows.Count; row++)
-                    {
-                        column.PointAdd(dTable.Rows[row][col]);
-                    }
-                    break;
-                }
+                if (elem.Name == name)
+                    return elem;
             }
 
-            return column;
-        }
-
-        private bool ColumnSearch(string colName, DataTable dataTable)
-        {
-            for (int col = 0; col < dataTable.Columns.Count; col++)
-            {
-                if (dataTable.Columns[col].ColumnName == colName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return null;
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            for(int i =0; i < GeneralData.dataTables.Count; i++)
+
+            for (int i = 0; i < GeneralData.dataTables.Count; i++)
             {
-                
+
             }
         }
     }
