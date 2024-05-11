@@ -30,7 +30,17 @@ namespace SGUGIT_CourseWork.HelperCode
         public List<double> L;
         public List<double> LE;
         public List<string> LEs;
+        public int count
+        {
+            get
+            {
+                int sum = 0;
+                for (int i = 0; i < LE.Count; i++)
+                    if(LE[i] == 0 ) sum++;
 
+                return sum;
+            }
+        }
 
 
         public struct ColumnTable
@@ -77,6 +87,8 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             int colCount = currentDTable.Columns.Count;
             int rowCount = currentDTable.Rows.Count;
+
+            int rowCount = dtable.Rows.Count;
 
             if (isRowRead == false)
             {
@@ -145,7 +157,25 @@ namespace SGUGIT_CourseWork.HelperCode
 
             }
 
+        public List<bool> Flags()
+        {
+            List<bool> result = new List<bool>();
+            foreach(double d in LE)
+            {
+                if (d == 1)
+                {
+                    result.Add(true);
+                }
+                else
+                {
+                    result.Add(false);
+                }
+            RowAdd(dataGridView, list, roundValue);
+            }
+
+            return result;
         }
+
 
 
 

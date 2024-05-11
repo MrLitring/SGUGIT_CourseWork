@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -17,12 +15,16 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         private SeriesChartType type;
         private int widthBorder;
         private List<Series> seriesList;
-        private CheckedListBox checkListBox;
+        private List<string> annotations;
+        private CheckedListBox currentCheckList;
+        private ContextMenuStrip contextListMenu;
+        private ContextMenuStrip chartHelpMenu;
 
 
 
         public int roundX;
         public int roundY;
+        
         public bool isStartToZero = true;
         public string TitleText
         {
@@ -30,31 +32,27 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             set { currentChart.Titles[0].Text = value;  }
         }
 
-
+         
 
         private ChartManager()
         {
             seriesList = new List<Series>();
+            annotations = new List<string>();
             widthBorder = 1;
             roundX = 4;
             roundY = 7;
         }
-        public ChartManager(
-            Chart chart,
-            SeriesChartType type = SeriesChartType.Spline) : this()
+        public ChartManager(Chart chart, SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
             this.type = type;
 
             chartDesigner();
         }
-        public ChartManager(
-            Chart chart,
-            CheckedListBox listBox,
-            SeriesChartType type = SeriesChartType.Spline) : this()
+        public ChartManager(Chart chart, CheckedListBox listBox, SeriesChartType type = SeriesChartType.Spline) : this()
         {
             this.currentChart = chart;
-            this.checkListBox = listBox;
+            this.currentCheckList = listBox;
             this.type = type;
 
             chartDesigner();
@@ -63,11 +61,21 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
         
 
-        public void Clear(Chart chart)
+        public void Clear()
         {
-            chart.Series.Clear();
+            currentChart.Annotations.Clear();
+            currentChart.Series.Clear();
             seriesList.Clear();
-            if (checkListBox != null) checkListBox.Items.Clear();
+            if (currentCheckList != null) currentCheckList.Items.Clear();
+        }
+
+        public void AxisSetTitle(string x, string y)
+        {
+            currentChart.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font(currentChart.ChartAreas[0].AxisX.TitleFont.Name, 14);
+            currentChart.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font(currentChart.ChartAreas[0].AxisY.TitleFont.Name, 14);
+
+            currentChart.ChartAreas[0].AxisX.Title = x;
+            currentChart.ChartAreas[0].AxisY.Title = y;
         }
 
         public void Series_Add(string name)
@@ -76,31 +84,32 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             series.Name = name;
             series.ChartType = type;
             series.BorderWidth = widthBorder;
+            seriesList.Add(series);
 
+            series = new Series();
+            series.Name = name;
+            series.ChartType = type;
+            series.BorderWidth = widthBorder;
             currentChart.Series.Add(series);
 
-            seriesList.Add(series);
-            if (checkListBox != null)
+            if (currentCheckList != null)
             {
-                checkListBox.Items.Add(series.Name);
-                checkListBox.SetItemChecked(checkListBox.Items.Count - 1, true);
+                currentCheckList.Items.Add(series.Name);
+                currentCheckList.SetItemChecked(currentCheckList.Items.Count - 1, false);
             }
             
         }
 
 
 
-        private void AddPointXY(Series serie, double X, double Y)
+        public void AddPointXY(string name, double X, double Y)
         {
             if (serie == null) return;
 
             X = Math.Round(X, roundX);
             Y = Math.Round(Y, roundY);
-            serie.Points.AddXY(X, Y);
-        }
-        public void AddPointXY(string name, double X, double Y)
-        {
-            Series series = SerieSearch(name);
+            Series series = seriesList[SerieSearch(name)];
+            series.Points.AddXY(X, Y);
 
             AddPointXY(series, X, Y);
         }
@@ -110,31 +119,39 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             int min = Math.Min(X.Count, Y.Count);
 
             for (int i = 0; i < min; i++)
-                AddPointXY(serie, X[i], Y[i]);
+                AddPointXY(name, X[i], Y[i]);
         }
 
         public void AddPointY(string name, double Y)
         {
-            Series series = SerieSearch(name);
-            
-            AddPointXY(series, series.Points.Count + 1, Y);
+            Series series = seriesList[SerieSearch(name)];
+            AddPointXY(name, series.Points.Count + 1, Y);
         }
         public void AddPointY(string name, List<double> Y)
         {
             Series series = SerieSearch(name);
 
             for (int i = 0; i < Y.Count; i++)
-                AddPointXY(series, i, Y[i]);
+                AddPointXY(name, i, Y[i]);
         }
 
-        public Series SerieSearch(string name)
+        public int SerieSearch(string name)
         {
-            foreach (Series serie in currentChart.Series)
-            { if (serie.Name == name) return serie; }
+            for(int i =0; i < seriesList.Count; i++)
+            {
+                if (seriesList[i].Name == name) return i;
+            }
 
-            return null;
+            return -1;
         }
 
+        public void AnnotanionCreate(List<string> text)
+        {
+            for(int i =0; i<text.Count;i++)
+                annotations.Add(text[i]);
+
+
+        }
 
 
         private void chartDesigner()
@@ -151,22 +168,89 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
         private void checkListBoxDesigner()
         {
-            checkListBox.MultiColumn = true;
+            currentCheckList.MultiColumn = true;
+            contextListMenu = new ContextMenuStrip();
+            ToolStripMenuItem toolClear = new ToolStripMenuItem("Снять все выделения");
+            toolClear.MouseUp += ToolClear_MouseUp;
 
-            checkListBox.ItemCheck += CheckListBox_ItemCheck;
+            contextListMenu.Items.Add(toolClear);
+
+            currentCheckList.MouseUp += CheckListBox_MouseClick;
+            currentCheckList.ItemCheck += CheckListBox_ItemCheck;
+            
+        }
+
+        private void ToolClear_MouseUp(object sender, MouseEventArgs e)
+        {
+            for(int i = 0;  i < currentCheckList.Items.Count; i++)
+            {
+                currentCheckList.SetItemChecked(i, false);
+            }
         }
 
         private void CheckListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            string itemName = checkListBox.Items[e.Index].ToString();
-            bool isChecked = checkListBox.GetItemCheckState(e.Index) == CheckState.Checked;
+            string itemName = currentCheckList.Items[e.Index].ToString();
+            bool isChecked = currentCheckList.GetItemCheckState(e.Index) == CheckState.Checked;
 
-
-            if (isChecked)
-                currentChart.Series[itemName].Enabled = false;
+            
+            if(isChecked == false)
+                seriesShow(itemName);
             else
-                currentChart.Series[itemName].Enabled = true;
+                seriesUnShow(itemName);
 
+        }
+
+        private void CheckListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextListMenu.Show(currentCheckList.PointToScreen(e.Location));
+            }
+
+        }
+
+
+
+        private void seriesShow(string name)
+        {
+            int index = SerieSearch(name);
+            if (index == -1) return;
+
+
+            Series targetSerie = currentChart.Series[name];
+
+            for(int i = 0; i < seriesList[index].Points.Count; i++)
+            {
+                targetSerie.Points.Add(seriesList[index].Points[i]);
+                //currentChart.Series[name].Points.Add(seriesList[index].Points[i]);
+            }
+
+            AnnotationShow();
+        }
+
+        private void seriesUnShow(string name)
+        {
+            currentChart.Series[name].Points.Clear();
+            AnnotationShow();
+        }
+
+        private void AnnotationShow()
+        {
+            currentChart.Annotations.Clear();
+
+            foreach (Series series in currentChart.Series)
+            {
+                for(int i = 0; i < series.Points.Count;i++)
+                {
+                    DataPoint point= series.Points[i];
+
+                    TextAnnotation textAnnotation = new TextAnnotation();
+                    textAnnotation.Text = annotations[i];
+                    textAnnotation.AnchorDataPoint = point;
+                    currentChart.Annotations.Add(textAnnotation);
+                }
+            }
         }
     }
 }

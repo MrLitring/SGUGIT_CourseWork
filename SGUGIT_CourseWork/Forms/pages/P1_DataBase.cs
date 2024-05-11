@@ -1,4 +1,4 @@
-﻿ using SGUGIT_CourseWork.HelperCode;
+﻿using SGUGIT_CourseWork.HelperCode;
 using SGUGIT_CourseWork.HelperCode.SqlCode;
 using System;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ namespace SGUGIT_CourseWork.Forms
 
             for (int col = 0; col < dTable.Columns.Count; col++)
             {
-                string colName = dTable.Columns[col].ColumnName; 
+                string colName = dTable.Columns[col].ColumnName;
                 dataGridView1.Columns.Add(colName, colName);
 
                 dataGridView1.Columns[col].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -148,8 +148,8 @@ namespace SGUGIT_CourseWork.Forms
                 data.Execute(SQLDataManager.executionNumber.Delete);
 
                 isFirstStart = true;
-                GeneralData.DataFullUpdate();
                 DataClear();
+                GeneralData.DataFullUpdate();
                 DataLoad();
                 isFirstStart = false;
 
@@ -191,24 +191,60 @@ namespace SGUGIT_CourseWork.Forms
 
             string senderName = (sender as TextBox).Name;
             SQLDataManager dataSave = new SQLDataManager(
-                GeneralData.TableName_Second, 
-                GeneralData.MainConnection, 
+                GeneralData.TableName_Second,
+                GeneralData.MainConnection,
                 SQLDataManager.executionNumber.Update);
 
             switch (senderName)
             {
                 case "textBox1":
                     {
+                        if (double.TryParse(textBox1.Text, out double value) == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0, но меньше 0.9");
+                            textBox1.Text = (0.1).ToString();
+                            return;
+                        }
+                        else if ((value < 1 && value > 0) == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0, но меньше 0.9");
+                            textBox1.Text = (0.1).ToString();
+                            return;
+                        }
                         senderName = "A";
                         break;
                     }
                 case "textBox2":
                     {
+                        if (double.TryParse(textBox2.Text, out double value) == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0");
+                            textBox2.Text = (0.1).ToString();
+                            return;
+                        }
+                        else if (value >= 0 == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0");
+                            textBox2.Text = (0.1).ToString();
+                            return;
+                        }
                         senderName = "E";
                         break;
                     }
                 case "textBox3":
                     {
+                        if (int.TryParse(textBox3.Text, out int value) == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0");
+                            textBox3.Text = (1).ToString();
+                            return;
+                        }
+                        else if (value > 0 == false)
+                        {
+                            FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0");
+                            textBox3.Text = (1).ToString();
+                            return;
+                        }
                         senderName = "BlockCount";
                         break;
                     }
@@ -239,19 +275,29 @@ namespace SGUGIT_CourseWork.Forms
             string name = $"cell_{e.ColumnIndex}_{e.RowIndex}";
             SQLDataManager data = data = new SQLDataManager(GeneralData.TableName_First, GeneralData.MainConnection, SQLDataManager.executionNumber.Update);
 
-            double value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-            if (value == currentValue) return;
-            if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
+            string valueS = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            double value;
+
+            if (double.TryParse(valueS, out value) == true)
+            {
+                //value = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                if (value == currentValue) return;
+                if (value == Convert.ToDouble(dTable.Rows[e.RowIndex][e.ColumnIndex])) return;
 
 
-            data.AddValue(
-                $"{dataGridView1.Columns[e.ColumnIndex].HeaderText}", 
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-            data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
-            data.Name = "";
+                data.AddValue(
+                    $"{dataGridView1.Columns[e.ColumnIndex].HeaderText}",
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                data.AddWhere(dataGridView1.Columns[0].HeaderText, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value));
+                data.Name = "";
 
-            commandChanges.Add(data);
-            LabelText_Save();
+                commandChanges.Add(data);
+                LabelText_Save();
+            }
+            else
+            {
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dTable.Rows[e.RowIndex][e.ColumnIndex].ToString();
+            }
         }
 
         //
@@ -292,7 +338,7 @@ namespace SGUGIT_CourseWork.Forms
         {
             if (toolStripLabelSave.Text.EndsWith("*") == false)
             {
-                toolStripLabelSave.Text = formName + "*" + commandChanges.Count.ToString();
+                toolStripLabelSave.Text = formName + "*";
             }
         }
 
