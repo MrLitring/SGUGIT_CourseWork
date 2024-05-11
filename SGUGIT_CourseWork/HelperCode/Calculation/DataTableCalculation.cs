@@ -24,6 +24,10 @@ namespace SGUGIT_CourseWork.HelperCode
     /// </summary>
     public class DataTableCalculation
     {
+        private int round = -1;
+
+
+
         public string Name;
         public DataTable currentDTable;
         public List<double> E; 
@@ -46,21 +50,64 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public struct ColumnTable
         {
+            public int round;
             public List<PointColumn> pointColumns;
             public List<double> responces;
             public List<double> alphas;
+            public List<double> Alphas
+            {
+                get
+                {
+                    List<double> vs = new List<double>();
+                    for (int i= 0; i < alphas.Count; i++)
+                    {
+                        
+                        if (round <= -1) vs.Add(alphas[i]);
+                        else
+                        {
+                            int a = (int)(alphas[i] * Math.Pow(10, round));
+                            vs.Add(a / Math.Pow(10, round));
+                        }
+                    }
 
-            public void init()
+                    return vs;
+                }
+            }
+
+            public void init(int round = -1)
             {
                 pointColumns = new List<PointColumn>();
                 alphas = new List<double>();
                 responces = new List<double>();
+                this.round = round;
+            }
+
+            public int MaxRound()
+            {
+                int max = 0;
+                for(int i =0; i < alphas.Count; i++)
+                {
+                    int step = max;
+                    while(true)
+                    {
+                        
+                        if((alphas[i] * Math.Pow(10, step)) >= 1)
+                        {
+                            max = step;
+                            break;
+                        }
+                        step++;
+                    }
+                }
+
+                return max;
             }
         }
 
         public ColumnTable columnMinus;
         public ColumnTable columnNull;
         public ColumnTable columnPlus;
+
 
 
 
@@ -77,9 +124,15 @@ namespace SGUGIT_CourseWork.HelperCode
             columnPlus.init();
             columnMinus.init();
         }
-        public DataTableCalculation(DataTable dataTable) : this()
+        public DataTableCalculation(DataTable dataTable, int round = -1) : this()
         {
             this.currentDTable = dataTable;
+            this.round = round;
+            if(round > 0)
+                columnNull.round = columnNull.MaxRound();
+
+            columnPlus.round = columnNull.round;
+            columnMinus.round = columnNull.round;
         }
 
 

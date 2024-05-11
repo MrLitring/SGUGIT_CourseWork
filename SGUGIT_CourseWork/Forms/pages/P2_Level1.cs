@@ -11,16 +11,18 @@ namespace SGUGIT_CourseWork.Forms
     {
         DataTable dTable;
         FormHelperCode formHelp;
-
+        int round;
 
         public P2_Level1()
         {
             InitializeComponent();
             formHelp = new FormHelperCode();
+            round = -1;
         }
-        public P2_Level1(DataTable dataTable) : this ()
+        public P2_Level1(DataTable dataTable, int round = -1) : this ()
         {
             dTable = dataTable;
+            this.round = round;
         }
 
 
@@ -61,7 +63,7 @@ namespace SGUGIT_CourseWork.Forms
                 table.ImportRow(dTable.Rows[row]);
             }
             table.Columns.RemoveAt(0);
-            DataTableCalculation work = new DataTableCalculation(table);
+            DataTableCalculation work = new DataTableCalculation(table, round);
 
             work.ColumnFill(false);
             work.Calculation();
@@ -78,9 +80,9 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("M", work.columnNull.responces, 4);
             dataGridView.ColumnAdd("M+", work.columnPlus.responces, 4);
 
-            dataGridView.ColumnAdd("A-", work.columnMinus.alphas, 4);
-            dataGridView.ColumnAdd("A", work.columnNull.alphas, 4);
-            dataGridView.ColumnAdd("A+", work.columnPlus.alphas, 4);
+            dataGridView.ColumnAdd("A-", work.columnMinus.Alphas);
+            dataGridView.ColumnAdd("A", work.columnNull.Alphas);
+            dataGridView.ColumnAdd("A+", work.columnPlus.Alphas);
 
             dataGridView.ColumnAdd("E", work.E, 10);
             dataGridView.ColumnAdd("L", work.L, 10);
@@ -93,9 +95,9 @@ namespace SGUGIT_CourseWork.Forms
             char_1.Series_Add("M");
             char_1.Series_Add("M-");
             char_1.Series_Add("M+");
-            char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
-            char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
-            char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
+            char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.Alphas);
+            char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.Alphas);
+            char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.Alphas);
 
             char_2.Series_Add("M");
             char_2.Series_Add("M-");

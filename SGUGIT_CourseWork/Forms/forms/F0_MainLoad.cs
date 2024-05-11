@@ -1,4 +1,5 @@
-﻿using SGUGIT_CourseWork.HelperCode;
+﻿using SGUGIT_CourseWork.Forms.forms;
+using SGUGIT_CourseWork.HelperCode;
 using System;
 using System.Data.SQLite;
 using System.IO;
@@ -105,6 +106,11 @@ namespace SGUGIT_CourseWork.Forms
                 case "StripLevel4":
                     {
                         HelperCode.FormOpenCode.OpenForm(new P2_Level4(), panel1);
+                        break;
+                    }
+                        case "toolTest":
+                    {
+                        HelperCode.FormOpenCode.OpenForm(new F4_Test(), panel1);
                         break;
                     }
             }

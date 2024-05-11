@@ -93,6 +93,12 @@
     <Compile Include="Forms\forms\F3_ErrorForm.Designer.cs">
       <DependentUpon>F3_ErrorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\forms\F4_Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\forms\F4_Test.Designer.cs">
+      <DependentUpon>F4_Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\pages\P1_DataBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\forms\F3_ErrorForm.resx">
       <DependentUpon>F3_ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\forms\F4_Test.resx">
+      <DependentUpon>F4_Test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\pages\P1_DataBase.resx">
       <DependentUpon>P1_DataBase.cs</DependentUpon>

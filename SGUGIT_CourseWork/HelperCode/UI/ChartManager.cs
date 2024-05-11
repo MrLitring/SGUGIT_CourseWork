@@ -205,7 +205,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
 
 
-        private void seriesShow(string name)
+        public void seriesShow(string name)
         {
             int index = SerieSearch(name);
             if (index == -1) return;
@@ -234,6 +234,8 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
             foreach (Series series in currentChart.Series)
             {
+                if (annotations.Count == 0) return;
+
                 for(int i = 0; i < series.Points.Count;i++)
                 {
                     DataPoint point= series.Points[i];
