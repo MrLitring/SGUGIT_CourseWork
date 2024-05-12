@@ -52,6 +52,8 @@ namespace SGUGIT_CourseWork.Forms.forms
 
             if(comboBox1.SelectedItem.ToString() == "Скачок")
                 formHelperCode.PageLoad(new P2_Level1(work.currentDTable, 0));
+            else if (comboBox1.SelectedItem.ToString() == "Поступательное движение")
+                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, 0));
             else
                 formHelperCode.PageLoad(new P2_Level1(work.currentDTable, -1));
 

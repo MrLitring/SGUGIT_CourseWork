@@ -48,12 +48,13 @@ namespace SGUGIT_CourseWork.HelperCode
         public static void DataFullUpdate()
         {
             dataTables.Clear();
-            DataTableCalculation calculation = new DataTableCalculation(dataTable);
-            calculation.Name = "Main";
-            dataTables.Add(calculation);
+            
             DataTableReload();
             ValueReload();
             ImageUpdate();
+            DataTableCalculation calculation = new DataTableCalculation(dataTable);
+            calculation.Name = "Main";
+            dataTables.Add(calculation);
         }
 
         public static void FullRestart()
