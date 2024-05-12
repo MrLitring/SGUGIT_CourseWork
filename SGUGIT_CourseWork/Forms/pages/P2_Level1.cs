@@ -11,18 +11,18 @@ namespace SGUGIT_CourseWork.Forms
     {
         DataTable dTable;
         FormHelperCode formHelp;
-        int round;
+        bool isUseWhiteNoise;
 
         public P2_Level1()
         {
             InitializeComponent();
             formHelp = new FormHelperCode();
-            round = -1;
+            isUseWhiteNoise = false;
         }
-        public P2_Level1(DataTable dataTable, int round = -1) : this ()
+        public P2_Level1(DataTable dataTable, bool isUseWhiteNoise) : this ()
         {
             dTable = dataTable;
-            this.round = round;
+            this.isUseWhiteNoise = isUseWhiteNoise;
         }
 
 
@@ -63,7 +63,7 @@ namespace SGUGIT_CourseWork.Forms
                 table.ImportRow(dTable.Rows[row]);
             }
             table.Columns.RemoveAt(0);
-            DataTableCalculation work = new DataTableCalculation(table, round);
+            DataTableCalculation work = new DataTableCalculation(table);
 
             work.ColumnFill(false);
             work.Calculation();
@@ -80,9 +80,22 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("M", work.columnNull.responces, 4);
             dataGridView.ColumnAdd("M+", work.columnPlus.responces, 4);
 
-            dataGridView.ColumnAdd("A-", work.columnMinus.Alphas);
-            dataGridView.ColumnAdd("A", work.columnNull.Alphas);
-            dataGridView.ColumnAdd("A+", work.columnPlus.Alphas);
+            if(isUseWhiteNoise)
+            {
+                dataGridView.ColumnAdd("A-", work.columnMinus.Alphas);
+                dataGridView.ColumnAdd("A", work.columnNull.Alphas);
+                dataGridView.ColumnAdd("A+", work.columnPlus.Alphas);
+                dataGridView.ColumnAdd("A-", work.columnMinus.alphas);
+                dataGridView.ColumnAdd("A", work.columnNull.alphas);
+                dataGridView.ColumnAdd("A+", work.columnPlus.alphas);
+            }
+            else
+            {
+                dataGridView.ColumnAdd("A-", work.columnMinus.alphas, 5);
+                dataGridView.ColumnAdd("A", work.columnNull.alphas, 5);
+                dataGridView.ColumnAdd("A+", work.columnPlus.alphas, 5);
+            }
+            
 
             dataGridView.ColumnAdd("E", work.E, 10);
             dataGridView.ColumnAdd("L", work.L, 10);
@@ -95,9 +108,18 @@ namespace SGUGIT_CourseWork.Forms
             char_1.Series_Add("M");
             char_1.Series_Add("M-");
             char_1.Series_Add("M+");
-            char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.Alphas);
-            char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.Alphas);
-            char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.Alphas);
+            if(isUseWhiteNoise)
+            {
+                char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.Alphas);
+                char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.Alphas);
+                char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.Alphas);
+            }
+            else
+            {
+                char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
+                char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
+                char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
+            }
 
             char_2.Series_Add("M");
             char_2.Series_Add("M-");
@@ -107,7 +129,7 @@ namespace SGUGIT_CourseWork.Forms
             char_2.AddPointY("M+", work.columnPlus.responces);
 
             
-            if (work.count > 0)
+            if (work.count > 0 && isUseWhiteNoise == false)
                 FormHelperCode.MessageInfo(GeneralTextData.Warning, GeneralTextData.Warning_BlockUnstable);
         }
     }

@@ -73,16 +73,16 @@ namespace SGUGIT_CourseWork.Forms
 
         private void SecondsLoad()
         {
-            DataTable dataTable = GeneralData.underBlockStorage_1[0].GetUnderBlock();
-            for (int i = 0; i < GeneralData.underBlockStorage_1[0].GetUnderBlock().Columns.Count; i++)
-                listBox1.Items.Add(GeneralData.underBlockStorage_1[0].GetUnderBlock().Columns[i].ColumnName);
+            DataTable dataTable = GeneralData.underBlockStorage_1[0].GetUnderBlockFrom(GeneralData.dataTable);
+            for (int i = 0; i < GeneralData.underBlockStorage_1[0].GetUnderBlockFrom(GeneralData.dataTable).Columns.Count; i++)
+                listBox1.Items.Add(GeneralData.underBlockStorage_1[0].GetUnderBlockFrom(GeneralData.dataTable).Columns[i].ColumnName);
 
             for (int i = 1; i < GeneralData.underBlockStorage_1.Count; i++)
             {
                 if (GeneralData.underBlockStorage_1[i].Name != blockName + "Other")
                 {
                     comboBox1.Items.Add(GeneralData.underBlockStorage_1[i].Name);
-                    DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlock();
+                    DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlockFrom(GeneralData.dataTable);
                     for (int i2 = 0; i2 < table.Columns.Count; i2++)
                         listBox2.Items.Add(table.Columns[i2].ColumnName);
                 }
@@ -116,7 +116,7 @@ namespace SGUGIT_CourseWork.Forms
             DataTableStorage dataTableStorage = DTS_Search(comboBox1.SelectedItem.ToString(), GeneralData.underBlockStorage_1);
             if (dataTableStorage == null) return;
 
-            DataTable currentTable = dataTableStorage.GetUnderBlock();
+            DataTable currentTable = dataTableStorage.GetUnderBlockFrom(GeneralData.dataTable);
 
             listBox2.Items.Clear();
             for (int i = 0; i < currentTable.Columns.Count; i++)
@@ -135,7 +135,7 @@ namespace SGUGIT_CourseWork.Forms
             if (lastName != name)
             {
                 DataTableStorage DT = DTS_Search(name, GeneralData.underBlockStorage_1);
-                DataTable currentDateTable = DT.GetUnderBlock();
+                DataTable currentDateTable = DT.GetUnderBlockFrom(GeneralData.dataTable);
                 DataTableCalculation currentTable = new DataTableCalculation(currentDateTable);
                 if (currentTable == null) return;
 
@@ -143,7 +143,7 @@ namespace SGUGIT_CourseWork.Forms
                 currentTable.Calculation(true);
 
 
-                formHelperCode.PageLoad(new P2_Level1(currentTable.currentDTable));
+                formHelperCode.PageLoad(new P2_Level1(currentTable.currentDTable, false));
                 lastName = name;
             }
 

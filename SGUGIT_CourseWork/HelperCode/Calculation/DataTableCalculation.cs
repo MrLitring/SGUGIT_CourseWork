@@ -30,7 +30,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public string Name;
         public DataTable currentDTable;
-        public List<double> E; 
+        public List<double> E;
         public List<double> L;
         public List<double> LE;
         public List<string> LEs;
@@ -40,7 +40,7 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 int sum = 0;
                 for (int i = 0; i < LE.Count; i++)
-                    if(LE[i] == 0 ) sum++;
+                    if (LE[i] == 0) sum++;
 
                 return sum;
             }
@@ -50,7 +50,6 @@ namespace SGUGIT_CourseWork.HelperCode
 
         public struct ColumnTable
         {
-            public int round;
             public List<PointColumn> pointColumns;
             public List<double> responces;
             public List<double> alphas;
@@ -58,49 +57,48 @@ namespace SGUGIT_CourseWork.HelperCode
             {
                 get
                 {
+                    int round = Min(alphas);
                     List<double> vs = new List<double>();
-                    for (int i= 0; i < alphas.Count; i++)
+                    for (int i = 0; i < alphas.Count; i++)
                     {
-                        
-                        if (round <= -1) vs.Add(alphas[i]);
-                        else
-                        {
-                            int a = (int)(alphas[i] * Math.Pow(10, round));
-                            vs.Add(a / Math.Pow(10, round));
-                        }
+                        double s = alphas[i];
+                        double a = Math.Pow(10, round);
+                        s = (int)(s * a) / a;
+                        vs.Add(s);
                     }
 
                     return vs;
                 }
             }
 
-            public void init(int round = -1)
+            public void init()
             {
                 pointColumns = new List<PointColumn>();
                 alphas = new List<double>();
                 responces = new List<double>();
-                this.round = round;
             }
 
-            public int MaxRound()
+            public int Min(List<double> doubles)
             {
-                int max = 0;
-                for(int i =0; i < alphas.Count; i++)
+                int min = 20;
+                for (int a = 0; a < doubles.Count; a++)
                 {
-                    int step = max;
-                    while(true)
+                    if (doubles[a] != 0)
                     {
-                        
-                        if((alphas[i] * Math.Pow(10, step)) >= 1)
-                        {
-                            max = step;
-                            break;
-                        }
-                        step++;
+                        min = doubles[a].ToString().Length;
+                        break;
                     }
                 }
 
-                return max;
+                for (int i = 0; i < doubles.Count; i++)
+                {
+                    while ((doubles[i] % 1) * Math.Pow(10, min) >= 1)
+                    {
+                        min--;
+                    }
+                }
+
+                return min + 1;
             }
         }
 
@@ -111,7 +109,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
 
 
-        public  DataTableCalculation()
+        public DataTableCalculation()
         {
             Name = "table";
             currentDTable = GeneralData.dataTable;
@@ -124,15 +122,9 @@ namespace SGUGIT_CourseWork.HelperCode
             columnPlus.init();
             columnMinus.init();
         }
-        public DataTableCalculation(DataTable dataTable, int round = -1) : this()
+        public DataTableCalculation(DataTable dataTable) : this()
         {
             this.currentDTable = dataTable;
-            this.round = round;
-            if(round > 0)
-                columnNull.round = columnNull.MaxRound();
-
-            columnPlus.round = columnNull.round;
-            columnMinus.round = columnNull.round;
         }
 
 
@@ -170,9 +162,9 @@ namespace SGUGIT_CourseWork.HelperCode
         {
             columnNull = ColumnTable_MainCalculate(columnNull);
 
-            if (isFullCalculation == true) 
+            if (isFullCalculation == true)
             {
-                for(int i = 0; i < columnNull.pointColumns.Count; i++)
+                for (int i = 0; i < columnNull.pointColumns.Count; i++)
                 {
                     columnMinus.pointColumns.Add(columnNull.pointColumns[i] - GeneralData.assureValue);
                     columnPlus.pointColumns.Add(columnNull.pointColumns[i] + GeneralData.assureValue);
@@ -184,7 +176,7 @@ namespace SGUGIT_CourseWork.HelperCode
                 int n = columnNull.responces.Count();
                 E = new List<double>();
                 L = new List<double>();
-                for(int i = 0; i < n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     E.Add(Math.Abs(columnPlus.responces[i] - columnMinus.responces[i]));
                     L.Add(Math.Abs(columnNull.responces[i] - columnNull.responces[0]));
@@ -193,7 +185,7 @@ namespace SGUGIT_CourseWork.HelperCode
                 LE = new List<double>();
                 LEs = new List<string>();
 
-                for(int i = 0; i < n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     if (L[i] <= E[i])
                     {
@@ -214,7 +206,7 @@ namespace SGUGIT_CourseWork.HelperCode
         public List<bool> Flags()
         {
             List<bool> result = new List<bool>();
-            foreach(double d in LE)
+            foreach (double d in LE)
             {
                 if (d == 1)
                 {
@@ -277,11 +269,11 @@ namespace SGUGIT_CourseWork.HelperCode
 
             list[0] = smooth * doubles[0] + (1 - smooth) * avSum;
 
-            for(int i = 1; i < doubles.Count(); i++)
+            for (int i = 1; i < doubles.Count(); i++)
             {
-                list[i] = smooth * doubles[i] + (1 - smooth) * list[i-1];
+                list[i] = smooth * doubles[i] + (1 - smooth) * list[i - 1];
             }
-            double respon = smooth * AvarageSumm(list) + (1 - smooth) * list[list.Count()-1];
+            double respon = smooth * AvarageSumm(list) + (1 - smooth) * list[list.Count() - 1];
 
             return respon;
         }

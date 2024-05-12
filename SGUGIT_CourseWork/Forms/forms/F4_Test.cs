@@ -51,11 +51,11 @@ namespace SGUGIT_CourseWork.Forms.forms
             work.Calculation();
 
             if(comboBox1.SelectedItem.ToString() == "Скачок")
-                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, 0));
+                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, true));
             else if (comboBox1.SelectedItem.ToString() == "Поступательное движение")
-                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, 0));
+                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, true));
             else
-                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, -1));
+                formHelperCode.PageLoad(new P2_Level1(work.currentDTable, true));
 
         }
 

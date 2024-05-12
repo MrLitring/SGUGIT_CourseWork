@@ -37,7 +37,7 @@ namespace SGUGIT_CourseWork.HelperCode.Other
 
 
 
-        public DataTable GetUnderBlock()
+        public DataTable GetUnderBlockFrom(DataTable dataTable)
         {
             DataTable table = new DataTable();
             for (int i = 0; i < columnNames.Count; i++)
