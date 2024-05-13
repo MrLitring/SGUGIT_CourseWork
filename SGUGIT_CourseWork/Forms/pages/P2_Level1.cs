@@ -11,16 +11,21 @@ namespace SGUGIT_CourseWork.Forms
     {
         DataTable dTable;
         FormHelperCode formHelp;
+        bool isUseWhiteNoise;
+        bool isNewWhiteNise;
 
 
         public P2_Level1()
         {
             InitializeComponent();
             formHelp = new FormHelperCode();
+            isUseWhiteNoise = false;
         }
-        public P2_Level1(DataTable dataTable) : this ()
+        public P2_Level1(DataTable dataTable, bool isUseWhiteNoise, bool isNewWN = false) : this ()
         {
             dTable = dataTable;
+            this.isUseWhiteNoise = isUseWhiteNoise;
+            this.isNewWhiteNise = isNewWN;
         }
 
 
@@ -65,9 +70,14 @@ namespace SGUGIT_CourseWork.Forms
 
             work.ColumnFill(false);
             work.Calculation();
-
+            if (isNewWhiteNise == true)
+            {
+                int min = Math.Min(work.columnNull.Min(work.columnNull.alphas), work.columnMinus.Min(work.columnMinus.alphas));
+                min = Math.Min(min, work.columnPlus.Min(work.columnPlus.alphas));
+                GeneralData.WhiteRound = min;
+                    }
             List<string> strings = new List<string>();
-            for (int i = 0; i < dTable.Rows.Count; i++)
+            for (int i = 0; i < dTable.Rows.Count && i < GeneralData.dataTable.Rows.Count; i++)
                 strings.Add(GeneralData.dataTable.Rows[i][0].ToString());
             strings.Add("Прогноз");
 
@@ -78,9 +88,22 @@ namespace SGUGIT_CourseWork.Forms
             dataGridView.ColumnAdd("M", work.columnNull.responces, 4);
             dataGridView.ColumnAdd("M+", work.columnPlus.responces, 4);
 
-            dataGridView.ColumnAdd("A-", work.columnMinus.alphas, 4);
-            dataGridView.ColumnAdd("A", work.columnNull.alphas, 4);
-            dataGridView.ColumnAdd("A+", work.columnPlus.alphas, 4);
+            if(isUseWhiteNoise)
+            {
+                dataGridView.ColumnAdd("A-", work.columnMinus.Alphas(GeneralData.WhiteRound));
+                dataGridView.ColumnAdd("A", work.columnNull.Alphas(GeneralData.WhiteRound));
+                dataGridView.ColumnAdd("A+", work.columnPlus.Alphas(GeneralData.WhiteRound));
+                dataGridView.ColumnAdd("A-", work.columnMinus.alphas);
+                dataGridView.ColumnAdd("A", work.columnNull.alphas);
+                dataGridView.ColumnAdd("A+", work.columnPlus.alphas);
+            }
+            else
+            {
+                dataGridView.ColumnAdd("A-", work.columnMinus.alphas, 5);
+                dataGridView.ColumnAdd("A", work.columnNull.alphas, 5);
+                dataGridView.ColumnAdd("A+", work.columnPlus.alphas, 5);
+            }
+            
 
             dataGridView.ColumnAdd("E", work.E, 10);
             dataGridView.ColumnAdd("L", work.L, 10);
@@ -93,9 +116,18 @@ namespace SGUGIT_CourseWork.Forms
             char_1.Series_Add("M");
             char_1.Series_Add("M-");
             char_1.Series_Add("M+");
-            char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
-            char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
-            char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
+            if(isUseWhiteNoise)
+            {
+                char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.Alphas(GeneralData.WhiteRound));
+                char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.Alphas(GeneralData.WhiteRound));
+                char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.Alphas(GeneralData.WhiteRound));
+            }
+            else
+            {
+                char_1.AddPointXY("M-", work.columnMinus.responces, work.columnMinus.alphas);
+                char_1.AddPointXY("M", work.columnNull.responces, work.columnNull.alphas);
+                char_1.AddPointXY("M+", work.columnPlus.responces, work.columnPlus.alphas);
+            }
 
             char_2.Series_Add("M");
             char_2.Series_Add("M-");
@@ -105,7 +137,7 @@ namespace SGUGIT_CourseWork.Forms
             char_2.AddPointY("M+", work.columnPlus.responces);
 
             
-            if (work.count > 0)
+            if (work.count > 0 && isUseWhiteNoise == false)
                 FormHelperCode.MessageInfo(GeneralTextData.Warning, GeneralTextData.Warning_BlockUnstable);
         }
     }

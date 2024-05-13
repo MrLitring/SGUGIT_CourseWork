@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -81,12 +81,19 @@ namespace SGUGIT_CourseWork.HelperCode.UI
         public void Series_Add(string name)
         {
             Series series = new Series();
+            series.MarkerStyle = MarkerStyle.Circle;
+            series.MarkerColor = Color.Black;
+            series.MarkerSize = 4;
             series.Name = name;
             series.ChartType = type;
             series.BorderWidth = widthBorder;
             seriesList.Add(series);
 
+
             series = new Series();
+            series.MarkerStyle = MarkerStyle.Circle;
+            series.MarkerColor = Color.Black;
+            series.MarkerSize = 4;
             series.Name = name;
             series.ChartType = type;
             series.BorderWidth = widthBorder;
@@ -212,7 +219,7 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
 
 
-        private void seriesShow(string name)
+        public void seriesShow(string name)
         {
             int index = SerieSearch(name);
             if (index == -1) return;
@@ -241,6 +248,8 @@ namespace SGUGIT_CourseWork.HelperCode.UI
 
             foreach (Series series in currentChart.Series)
             {
+                if (annotations.Count == 0) return;
+
                 for(int i = 0; i < series.Points.Count;i++)
                 {
                     DataPoint point= series.Points[i];

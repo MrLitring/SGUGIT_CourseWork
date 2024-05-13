@@ -38,15 +38,16 @@
             this.StripEditDataBase = new System.Windows.Forms.ToolStripMenuItem();
             this.StripLevel1 = new System.Windows.Forms.ToolStripMenuItem();
             this.StripLevel2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripLevel3 = new System.Windows.Forms.ToolStripMenuItem();
             this.StripLevel4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolLevelII = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -110,8 +111,9 @@
             this.StripEditDataBase,
             this.StripLevel1,
             this.StripLevel2,
-            this.StripLevel3,
-            this.StripLevel4});
+            this.StripLevel4,
+            this.toolLevelII,
+            this.toolTest});
             this.MenuWorkBench.Name = "MenuWorkBench";
             this.MenuWorkBench.Size = new System.Drawing.Size(172, 28);
             this.MenuWorkBench.Text = "Рабочее пространство";
@@ -137,19 +139,26 @@
             this.StripLevel2.Text = "II Уровень";
             this.StripLevel2.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
-            // StripLevel3
-            // 
-            this.StripLevel3.Name = "StripLevel3";
-            this.StripLevel3.Size = new System.Drawing.Size(180, 22);
-            this.StripLevel3.Text = "III Уровень";
-            this.StripLevel3.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
-            // 
             // StripLevel4
             // 
             this.StripLevel4.Name = "StripLevel4";
             this.StripLevel4.Size = new System.Drawing.Size(180, 22);
             this.StripLevel4.Text = "IV Уровень";
             this.StripLevel4.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
+            // toolTest
+            // 
+            this.toolTest.Name = "toolTest";
+            this.toolTest.Size = new System.Drawing.Size(180, 22);
+            this.toolTest.Text = "Test";
+            this.toolTest.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
+            // toolHelp
+            // 
+            this.toolHelp.Name = "toolHelp";
+            this.toolHelp.Size = new System.Drawing.Size(75, 28);
+            this.toolHelp.Text = "Справка";
+            this.toolHelp.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
             // 
             // toolStripMenuItem4
             // 
@@ -195,12 +204,12 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(94, 17);
             this.toolStripStatusLabel1.Text = "Файл не открыт";
             // 
-            // toolHelp
+            // toolLevelII
             // 
-            this.toolHelp.Name = "toolHelp";
-            this.toolHelp.Size = new System.Drawing.Size(75, 28);
-            this.toolHelp.Text = "Справка";
-            this.toolHelp.Click += new System.EventHandler(this.MenuStrip_Windows_Click);
+            this.toolLevelII.Name = "toolLevelII";
+            this.toolLevelII.Size = new System.Drawing.Size(180, 22);
+            this.toolLevelII.Text = "II Уровень";
+            this.toolLevelII.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
             // 
             // F0_MainLoad
             // 
@@ -245,8 +254,9 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripMenuItem StripLevel1;
         private System.Windows.Forms.ToolStripMenuItem StripLevel2;
-        private System.Windows.Forms.ToolStripMenuItem StripLevel3;
         private System.Windows.Forms.ToolStripMenuItem StripLevel4;
         private System.Windows.Forms.ToolStripMenuItem toolHelp;
+        private System.Windows.Forms.ToolStripMenuItem toolTest;
+        private System.Windows.Forms.ToolStripMenuItem toolLevelII;
     }
 }

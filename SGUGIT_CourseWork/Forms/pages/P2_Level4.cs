@@ -55,7 +55,7 @@ namespace SGUGIT_CourseWork.Forms
             {
                 DataTableStorage tableStorage = StorageSearch(name, GeneralData.underBlockStorage_1);
                 if (tableStorage == null) return;
-                table = tableStorage.GetUnderBlock();
+                table = tableStorage.GetUnderBlockFrom(GeneralData.dataTable);
             }
 
             

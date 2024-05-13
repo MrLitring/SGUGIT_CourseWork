@@ -1,10 +1,8 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SGUGIT_CourseWork.HelperCode.UI
@@ -16,6 +14,11 @@ namespace SGUGIT_CourseWork.HelperCode.UI
     {
         private DataGridView dataGridView;
         private bool isColored;
+
+
+
+        public int ColumnCount { get {  return dataGridView.Columns.Count; } }
+        public int RowCount { get { return dataGridView.Rows.Count;} }
 
 
 
@@ -50,6 +53,19 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             }
 
         }
+        public void ColorizeCol(List<bool> bools, int column)
+        {
+            for (int row = 0; row < bools.Count; row++)
+            {
+                if (bools[row] == true)
+                    dataGridView.Rows[row].Cells[column].Style.BackColor = Color.Green;
+                else
+                    dataGridView.Rows[row].Cells[column].Style.BackColor = Color.Red;
+            }
+
+            
+
+        }
 
 
         public void RowAdd(List<double> list, int roundValue = 7, int offset = 0)
@@ -65,9 +81,10 @@ namespace SGUGIT_CourseWork.HelperCode.UI
             }
 
         }
+
         public void RowAdd(List<string> list, int roundValue = 7, int offset = 0)
         {
-            for (int i = dataGridView.Rows.Count; i < list.Count; i++)
+            for (int i = dataGridView.Rows.Count; i < list.Count+1; i++)
             {
                 dataGridView.Rows.Add();
             }
