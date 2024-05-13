@@ -53,22 +53,19 @@ namespace SGUGIT_CourseWork.HelperCode
             public List<PointColumn> pointColumns;
             public List<double> responces;
             public List<double> alphas;
-            public List<double> Alphas
+            public List<double> Alphas(int rounds)
             {
-                get
+                int round = rounds;
+                List<double> vs = new List<double>();
+                for (int i = 0; i < alphas.Count; i++)
                 {
-                    int round = Min(alphas);
-                    List<double> vs = new List<double>();
-                    for (int i = 0; i < alphas.Count; i++)
-                    {
-                        double s = alphas[i];
-                        double a = Math.Pow(10, round);
-                        s = (int)(s * a) / a;
-                        vs.Add(s);
-                    }
-
-                    return vs;
+                    double s = alphas[i];
+                    double a = Math.Pow(10, round);
+                    s = (int)(s * a) / a;
+                    vs.Add(s);
                 }
+
+                return vs;
             }
 
             public void init()
@@ -80,7 +77,7 @@ namespace SGUGIT_CourseWork.HelperCode
 
             public int Min(List<double> doubles)
             {
-                int min = 20;
+                int min = 0;
                 for (int a = 0; a < doubles.Count; a++)
                 {
                     if (doubles[a] != 0)
@@ -98,7 +95,7 @@ namespace SGUGIT_CourseWork.HelperCode
                     }
                 }
 
-                return min + 1;
+                return min;
             }
         }
 
@@ -122,7 +119,7 @@ namespace SGUGIT_CourseWork.HelperCode
             columnPlus.init();
             columnMinus.init();
         }
-        public DataTableCalculation(DataTable dataTable) : this()
+        public DataTableCalculation(DataTable dataTable, int round = 0) : this()
         {
             this.currentDTable = dataTable;
         }

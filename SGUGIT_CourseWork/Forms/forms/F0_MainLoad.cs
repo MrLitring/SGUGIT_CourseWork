@@ -99,7 +99,7 @@ namespace SGUGIT_CourseWork.Forms
                         HelperCode.FormOpenCode.OpenForm(new P2_Level2(), panel1);
                         break;
                     }
-                case "StripLevel3":
+                case "toolLevelII":
                     {
                         HelperCode.FormOpenCode.OpenForm(new P2_Level3(), panel1);
                         break;

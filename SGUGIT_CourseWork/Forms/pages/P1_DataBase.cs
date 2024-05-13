@@ -239,10 +239,16 @@ namespace SGUGIT_CourseWork.Forms
                             textBox3.Text = (1).ToString();
                             return;
                         }
-                        else if (value > 0 == false)
+                        else if (value >= 0 == false)
                         {
                             FormHelperCode.MessageError(GeneralTextData.Error, "Поле должно быть больше 0");
                             textBox3.Text = (1).ToString();
+                            return;
+                        }
+                        else if(value > dTable.Columns.Count / 2)
+                        {
+                            MessageBox.Show("Значений должно быть меньше, чем " + dTable.Columns.Count/2, GeneralTextData.Error);
+                            textBox3.Text = 2.ToString();
                             return;
                         }
                         senderName = "BlockCount";

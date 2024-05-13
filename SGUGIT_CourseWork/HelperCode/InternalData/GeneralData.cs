@@ -25,6 +25,7 @@ namespace SGUGIT_CourseWork.HelperCode
         public static double smoothValue = 0.9; // Сглаженная велечина A
         public static double assureValue = 0.0001; // Точность измерений E
         public static int blockCount = 1; // Кол-во блоков
+        public static int WhiteRound = 10; // значения после запятой для белого шума
 
         public static SQLiteConnection MainConnection;
         public static string DataBasePath;
@@ -84,7 +85,7 @@ namespace SGUGIT_CourseWork.HelperCode
             SQLiteDataReader reader = new SQLiteCommand(
                 $"SELECT * FROM {TableName_Second}", 
                 MainConnection).ExecuteReader();
-
+             
             if(reader.HasRows)
             {
                 reader.Read();

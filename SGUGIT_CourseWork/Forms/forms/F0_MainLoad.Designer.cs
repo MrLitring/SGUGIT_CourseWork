@@ -47,6 +47,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolLevelII = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -111,6 +112,7 @@
             this.StripLevel1,
             this.StripLevel2,
             this.StripLevel4,
+            this.toolLevelII,
             this.toolTest});
             this.MenuWorkBench.Name = "MenuWorkBench";
             this.MenuWorkBench.Size = new System.Drawing.Size(172, 28);
@@ -202,6 +204,13 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(94, 17);
             this.toolStripStatusLabel1.Text = "Файл не открыт";
             // 
+            // toolLevelII
+            // 
+            this.toolLevelII.Name = "toolLevelII";
+            this.toolLevelII.Size = new System.Drawing.Size(180, 22);
+            this.toolLevelII.Text = "II Уровень";
+            this.toolLevelII.Click += new System.EventHandler(this.MenuStrip_WorkBench_Click);
+            // 
             // F0_MainLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -248,5 +257,6 @@
         private System.Windows.Forms.ToolStripMenuItem StripLevel4;
         private System.Windows.Forms.ToolStripMenuItem toolHelp;
         private System.Windows.Forms.ToolStripMenuItem toolTest;
+        private System.Windows.Forms.ToolStripMenuItem toolLevelII;
     }
 }

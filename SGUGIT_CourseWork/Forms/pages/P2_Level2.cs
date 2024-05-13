@@ -81,6 +81,7 @@ namespace SGUGIT_CourseWork.Forms
             {
                 if (GeneralData.underBlockStorage_1[i].Name != blockName + "Other")
                 {
+                    if(GeneralData.underBlockStorage_1[i].Name != "Эпоха")
                     comboBox1.Items.Add(GeneralData.underBlockStorage_1[i].Name);
                     DataTable table = GeneralData.underBlockStorage_1[i].GetUnderBlockFrom(GeneralData.dataTable);
                     for (int i2 = 0; i2 < table.Columns.Count; i2++)
